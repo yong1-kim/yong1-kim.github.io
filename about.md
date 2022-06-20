@@ -15,4 +15,4 @@ I'm interested in Multimodal learning and Natural Language Processing, especiall
 
 ### Selected Publications
 
-Email: [miles94192@gmail.com](miles94192@gmail.com), [miles94@snu.ac.kr](miles94@snu.ac.kr)
+Email: miles94192@gmail.com, miles94@snu.ac.kr
