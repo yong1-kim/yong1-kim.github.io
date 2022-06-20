@@ -24,7 +24,7 @@
 		"tags": ["Project"]
 	},
 	{
-		"slug": "LREC 2022"
+		"slug": "LREC2022"
 		"name": "Modality Alignment between Deep Representations for Effective Video-and-Language Learning",
 		"image": "placeholder.jpg",
 		"url": "#",
@@ -32,7 +32,7 @@
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
-		"slug": "KCC 2022"
+		"slug": "KCC2022"
 		"name": "Improving cross-modal attention via object detection",
 		"image": "placeholder.jpg",
 		"url": "#", 
@@ -40,11 +40,11 @@
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
-		"slug": "COLING 2022"
-		"name": "Cool project 6",
+		"slug": "COLING2022"
+		"name": "COLING2022",
 		"image": "placeholder.jpg",
 		"url": "#",
-		"date": "Oct 2016",
+		"date": "Oct 2022",
 		"tags": ["Vision-and-Language Learning"]
 	}
 ]
