@@ -8,7 +8,7 @@
 		"tags": ["Computer Vision"]
 	},
 	{
-		"slug": "KCC2021"
+		"slug": "KCC2021",
 		"name": "Improving Video-QA system through Modality Alignment",
 		"image": "placeholder.jpg",
 		"url": "#", 
@@ -16,7 +16,7 @@
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
-		"slug": "Project NIA"
+		"slug": "Project NIA",
 		"name": "Project NIA",
 		"image": "placeholder.jpg",
 		"url": "#",
@@ -24,7 +24,7 @@
 		"tags": ["Project"]
 	},
 	{
-		"slug": "LREC2022"
+		"slug": "LREC2022",
 		"name": "Modality Alignment between Deep Representations for Effective Video-and-Language Learning",
 		"image": "placeholder.jpg",
 		"url": "#",
@@ -32,7 +32,7 @@
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
-		"slug": "KCC2022"
+		"slug": "KCC2022",
 		"name": "Improving cross-modal attention via object detection",
 		"image": "placeholder.jpg",
 		"url": "#", 
@@ -40,7 +40,7 @@
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
-		"slug": "COLING2022"
+		"slug": "COLING2022",
 		"name": "COLING2022",
 		"image": "placeholder.jpg",
 		"url": "#",
