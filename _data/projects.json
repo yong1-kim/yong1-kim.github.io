@@ -1,7 +1,7 @@
 [
 	{
 		"slug": "IEEEAccess2021",
-		"name": "Pairwise Context Similarity for Image Retrieval System using Variational Auto-Encoder",
+		"name": "IEEEAccess2021",
 		"image": "placeholder.jpg",
 		"url": "https://www.google.com", 
 		"date": "Feb 2021",
@@ -9,7 +9,7 @@
 	},
 	{
 		"slug": "KCC2021",
-		"name": "Improving Video-QA system through Modality Alignment",
+		"name": "KCC2021(Best Paper Awards)",
 		"image": "placeholder.jpg",
 		"url": "#", 
 		"date": "Jun 2021",
@@ -25,7 +25,7 @@
 	},
 	{
 		"slug": "LREC2022",
-		"name": "Modality Alignment between Deep Representations for Effective Video-and-Language Learning",
+		"name": "LREC2022",
 		"image": "placeholder.jpg",
 		"url": "#",
 		"date": "Jun 2022",
@@ -33,7 +33,7 @@
 	},
 	{
 		"slug": "KCC2022",
-		"name": "Improving cross-modal attention via object detection",
+		"name": "KCC2022",
 		"image": "placeholder.jpg",
 		"url": "#", 
 		"date": "Jun 2022",
