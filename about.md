@@ -11,10 +11,4 @@ I'm interested in Multimodal learning and Natural Language Processing, especiall
 [Google Scholar](https://scholar.google.com/citations?hl=en&user=QXZ2GEAAAAAJ) <br>
 [[CV]](https://github.com/yong1-kim/yong1-kim.github.io/blob/master/_data/CV_yongil_kim.pdf?raw=True)
 
-### Education
-
-[Machine Intelligence Laboratory](http://milab.snu.ac.kr)
-
-### Selected Publications
-
 Email: miles94192@gmail.com &emsp; miles94@snu.ac.kr
