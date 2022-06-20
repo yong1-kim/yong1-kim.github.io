@@ -4,7 +4,7 @@ title: Yongil Miles Kim
 permalink: /about/
 ---
 
-![image](./_image/yongil_kim.jpg) <br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/blob/master/_image/yongil_kim.jpg) <br>
 I'm a Ph.D student in [Machine Intelligence Laboratory](http://milab.snu.ac.kr) in ECE at Seoul National University.  
 I'm interested in Multimodal learning and Natural Language Processing, especially about (i) Vision-and-Language Learning, (ii) Dialogue system.
 
