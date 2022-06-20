@@ -9,7 +9,7 @@ I'm interested in Multimodal learning and Natural Language Processing, especiall
 
 ### Education
 
-[Machine Intelligence Laboratory](https://milab.snu.ac.kr)
+[Machine Intelligence Laboratory](http://milab.snu.ac.kr)
 
 ### Selected Publications
 
