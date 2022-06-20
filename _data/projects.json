@@ -5,7 +5,7 @@
 		"image": "placeholder.jpg",
 		"url": "https://www.google.com", 
 		"date": "Feb 2021",
-		"tags": ["Vision-and-Language Learning"]
+		"tags": ["Computer Vision"]
 	},
 	{
 		"slug": "KCC2021"
@@ -21,14 +21,15 @@
 		"image": "placeholder.jpg",
 		"url": "#",
 		"date": "Dec 2021",
-		"tags": ["HTML","JQuery","Django"]
+		"tags": ["Project"]
 	},
 	{
 		"slug": "LREC 2022"
 		"name": "Modality Alignment between Deep Representations for Effective Video-and-Language Learning",
 		"image": "placeholder.jpg",
+		"url": "#",
 		"date": "Jun 2022",
-		"tags": ["Python","nodejs"]
+		"tags": ["Vision-and-Language Learning"]
 	},
 	{
 		"slug": "KCC 2022"
@@ -36,13 +37,14 @@
 		"image": "placeholder.jpg",
 		"url": "#", 
 		"date": "Jun 2022",
-		"tags": ["Python","nodejs"]
+		"tags": ["Vision-and-Language Learning"]
 	},
 	{
 		"slug": "COLING 2022"
 		"name": "Cool project 6",
 		"image": "placeholder.jpg",
+		"url": "#",
 		"date": "Oct 2016",
-		"tags": ["Python","nodejs"]
+		"tags": ["Vision-and-Language Learning"]
 	}
 ]
