@@ -3,12 +3,12 @@
 		"slug": "cool-project",
 		"name": "Pairwise Context Similarity for Image Retrieval System using Variational Auto-Encoder",
 		"image": "placeholder.jpg",
-		//"url": "https://www.google.com", 
+		"url": "https://www.google.com", 
 		"date": "Feb 2021",
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
-		//"slug": "KCC2021"
+		"slug": "KCC2021"
 		"name": "Improving Video-QA system through Modality Alignment",
 		"image": "placeholder.jpg",
 		"url": "#", 
@@ -16,30 +16,30 @@
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
-		//"slug": "Project NIA"
+		"slug": "Project NIA"
 		"name": "Project NIA",
 		"image": "placeholder.jpg",
-		"url": "#",//github
+		"url": "#",
 		"date": "Dec 2021",
 		"tags": ["HTML","JQuery","Django"]
 	},
 	{
-		//"slug": "LREC 2022"
+		"slug": "LREC 2022"
 		"name": "Modality Alignment between Deep Representations for Effective Video-and-Language Learning",
 		"image": "placeholder.jpg",
 		"date": "Jun 2022",
 		"tags": ["Python","nodejs"]
 	},
 	{
-		//"slug": "KCC 2022"
+		"slug": "KCC 2022"
 		"name": "Improving cross-modal attention via object detection",
 		"image": "placeholder.jpg",
-		//"url": "#", //github
+		"url": "#", 
 		"date": "Jun 2022",
 		"tags": ["Python","nodejs"]
 	},
 	{
-		//"slug": "COLING 2022"
+		"slug": "COLING 2022"
 		"name": "Cool project 6",
 		"image": "placeholder.jpg",
 		"date": "Oct 2016",
