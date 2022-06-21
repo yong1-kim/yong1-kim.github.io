@@ -1,34 +1,10 @@
 [
 	{
-		"slug": "IEEEAccess2021",
-		"name": "IEEEAccess2021",
-		"image": "placeholder.jpg",
-		"url": "https://www.google.com", 
-		"date": "Feb 2021",
-		"tags": ["Computer Vision"]
-	},
-	{
-		"slug": "KCC2021",
-		"name": "(Best Paper Awards) KCC2021",
-		"image": "placeholder.jpg",
-		"url": "#", 
-		"date": "Jun 2021",
-		"tags": ["Vision-and-Language Learning"]
-	},
-	{
-		"slug": "Project NIA",
-		"name": "Project NIA",
+		"slug": "COLING2022",
+		"name": "COLING2022",
 		"image": "placeholder.jpg",
 		"url": "#",
-		"date": "Dec 2021",
-		"tags": ["Project"]
-	},
-	{
-		"slug": "LREC2022",
-		"name": "LREC2022",
-		"image": "placeholder.jpg",
-		"url": "#",
-		"date": "Jun 2022",
+		"date": "Oct 2022",
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
@@ -40,11 +16,35 @@
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
-		"slug": "COLING2022",
-		"name": "COLING2022",
+		"slug": "LREC2022",
+		"name": "LREC2022",
 		"image": "placeholder.jpg",
 		"url": "#",
-		"date": "Oct 2022",
+		"date": "Jun 2022",
 		"tags": ["Vision-and-Language Learning"]
+	},
+	{
+		"slug": "Project NIA",
+		"name": "Project NIA",
+		"image": "placeholder.jpg",
+		"url": "#",
+		"date": "Dec 2021",
+		"tags": ["Project"]
+	},
+	{
+		"slug": "KCC2021",
+		"name": "(Best Paper Awards) KCC2021",
+		"image": "placeholder.jpg",
+		"url": "#", 
+		"date": "Jun 2021",
+		"tags": ["Vision-and-Language Learning"]
+	},
+	{
+		"slug": "IEEEAccess2021",
+		"name": "IEEEAccess2021",
+		"image": "placeholder.jpg",
+		"url": "https://www.google.com", 
+		"date": "Feb 2021",
+		"tags": ["Computer Vision"]
 	}
 ]
