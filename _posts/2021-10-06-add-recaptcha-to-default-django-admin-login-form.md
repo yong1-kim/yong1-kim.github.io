@@ -5,7 +5,7 @@ date:   2021-10-06 20:41:00 +0700
 categories: [python, django, security]
 ---
 
-Revised 2022-09-06 10:42 </br>
+Revised 2022-09-06 10:42 <\br>
 Previously makesure you already install the [`django-recaptcha`](https://pypi.org/project/django-recaptcha/),
 don't miss also to [Sign up for reCAPTCHA](https://www.google.com/recaptcha/about/)
 
