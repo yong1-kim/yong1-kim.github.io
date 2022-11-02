@@ -38,4 +38,5 @@ $@$ symboal *e.g.* $(u_1, u_2, @, u_4, @)$
 
 shorthand sign that denote dialog $d$ with utterances 3 and 5 masked <br>
 $d_{m(3,5)}$
-
+<br>
+**Inpaint**($d_m{3,5}$) = $(u_1, u_2, \hatu_3, u_4,\hatu_5)$
