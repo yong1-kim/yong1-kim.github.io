@@ -63,9 +63,20 @@ Inpainter 로는 [T5](https://arxiv.org/abs/1910.10683) 가 사용된다. Input 
 이 때, 저자들은 speaker 에게 부족한 정보를 hint 로 제공하기 위해 prompt 를 앞에 붙여준다. 
 prompt 의 형식은 "Hello, I am an automated assistant and can answer questions about (document title)" 이다.
 
-최종적으로, 
+최종적으로, 원하는 parital dialog 는 아래와 같이 입력되어 inpainting 되길 원한다.
 
 $$ ParticalDialog(p) = (s_{prompt}, @, s_1, @, ..., @, s_m). $$
 
+그러나, training 단계에서는 mask $@$를 dialog 당 하나의 utterance 만 학습하도록 하기 때문에, 이렇게는 inference 가 되지 않는다. 
+따라서, 저자들은 $(s_{prompt}, @, s_1}$ 에서 inpainting 을 한 번 한 이후, inpainting 된 utterance $\hat{u_1}$ 을 활용하여, $(s_{prompt}, \hat{u_1}, s_1, @, s_2}$ 의 이어지는 inpainting 을 하도록 설계하였다. 이런 식으로 모든 mask 가 채워질 때까지 반복한다. 
 
+<span style='color:green;font-weight:bold'> Applying dialog inpainting to generate an information sekking dialog dataset </span>
+
+저자들은 inpainter 를 학습한 뒤, 위의 Inference 방법으로 dataset 을 생성한다.
+Inpainter 의 학습에 사용된 dataset 은 **P**ublicDialog, **T**askMaster, **Q**R-QuAC, 그리고 **Q**ReCC 이다.
+이 중, 앞의 두 데이터셋은 양이 많지만, explicit question answering 을 포함하지 않으며, 뒤의 두개는 크기가 작다.
+이를 나누어 저자들은 모델을 학습하여, 앞의 두 개만 학습한 $Inpainter_{PT}$, 뒤에 두 개를 학습한 $Inpainter_{QQ}$, 전부 학습한 $Inpainter_{PTQQ}$ 세 모델을 제시한다.
+<br>
+이후, [Qr-QuA](https://dl.acm.org/doi/10.1145/3397271.3401110)C retrieval corpus 속의 5.9M 크기의 Wikipedia article 과, [Ms Marco](https://arxiv.org/pdf/1611.09268.pdf) retrieval corpus 속의 8.4M 크기의 English web passage 에 inference 방법을 적용하여 dataset 을 생성한다.
+Inpainter 모델에 따라 생성되는 dataset 은 $WikiDialog_{PT}$, $WikiDailog_{QQ}$, $WikiDialog_{PTQQ}$, 그리고, $WebDialog_{PT}$ 가 생성된다.
 
