@@ -82,6 +82,10 @@ layout: compress
     {% if page.header-img %}
       <meta name="twitter:image:src" content="{{ site.url }}/{{ page.header-img }}">
     {% endif %}
+    
+    {% if page.use_math %}
+      {% include mathjax_support.html %}
+    {% endif %}
 
     <!-- Font awesome icons -->
     <link href="/static/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
