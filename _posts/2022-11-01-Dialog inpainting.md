@@ -28,6 +28,8 @@ categories: [Dialogue]
 실험 결과, ConvQA retreival benchmark (QRECC, OR-QUAC, TREC-CAST) 에서 <span style='background-color: #dcffe4'> 기존 State-of-the-Art 모델 보다 40% 가량 좋은 성능을 보여주었으며, zero-shot 실험에서도 finetuning 의 95% 에 해당하는 강력한 성능 </span>을 보여준다. 
 
 # Dialog Inpainting
+Dialog Inpainting 을 하기 위해 ***Inpainter*** 를 우선 학습한다. 
+
 <span style='color:green;font-weight:bold'> Notation </span>
 
 complete dialog $d$  <br>
@@ -38,5 +40,32 @@ $@$ symboal *e.g.* $(u_1, u_2, @, u_4, @)$
 
 shorthand sign that denote dialog $d$ with utterances 3 and 5 masked <br>
 $d_{m(3,5)}$
-<br>
+<br><br>
 **Inpaint**( $d_{m(3,5)}$ ) = $(u_1, u_2, \hat{u_3}, u_4,\hat{u_5})$
+
+<span style='color:green;font-weight:bold'> Training: Dialog reconstruction </span>
+
+Inpainter training 시 에는 random 하게 하나의 utterance 를 mask 한다. 
+
+$$ d_{m(t)} = (u_1, ..., u_{t-1}, @, u_{t+1}, ..., u_T)$$
+
+이후, [BERT](https://aclanthology.org/N19-1423/) 와 마찬가지로 Maximum Likelihood Estimation(MLE) 방법으로 학습한다.
+BERT 에서는 token 하나가 mask 로 되었다면, 이 경우 utterance 하나가 mask 된다.
+
+![image](https://user-images.githubusercontent.com/42200027/199421830-df3f09e8-7a53-4f80-a8e1-1702224391c7.png)
+
+Inpainter 로는 [T5](https://arxiv.org/abs/1910.10683) 가 사용된다. Input 이 하나의 utterance 를 mask 한 text 이고, output 이 하나의 utterance 이기 때문에, text-to-text trasfer transformer 인 T5 가 이상적인 선택이다. 
+
+<span style='color:green;font-weight:bold'> Inference: Transforming documents into dialogs </span>
+<span style='background-color: #dcffe4'> Inpainter 의 역할은 document 를 dialog 로 바꾸기 위함이다. </span>
+원하는 document 혹은 passage $p$ 가 $(s_1, s_2, ..., s_m)$ 의 문장으로 이뤄져 있을 때, 이 것이 answer 라고 생각하고 question 을 만드는 것이 inpainter 의 역할인 것이다.
+따라서 원하는 결과는 $(@,s_1, @, s_2, @, s_3, ..., @, s_m)$ 의 형태의 dialog 이다.
+이 때, 저자들은 speaker 에게 부족한 정보를 hint 로 제공하기 위해 prompt 를 앞에 붙여준다. 
+prompt 의 형식은 "Hello, I am an automated assistant and can answer questions about (document title)" 이다.
+
+최종적으로, 
+
+$$ ParticalDialog(p) = (s_{prompt}, @, s_1, @, ..., @, s_m). $$
+
+
+
