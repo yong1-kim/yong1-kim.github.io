@@ -45,9 +45,9 @@ $d_{m(3,5)}$
 
 <span style='color:green;font-weight:bold'> Training: Dialog reconstruction </span>
 
-Inpainter training 시 에는 random 하게 하나의 utterance 를 mask 한다. 
+Inpainter training 시 에는 random 하게 하나의 utterance 를 mask 한다. <br>
 
-$$ d_{m(t)} = (u_1, ..., u_{t-1}, @, u_{t+1}, ..., u_T)$$
+$ d_{m(t)} = (u_1, ..., u_{t-1}, @, u_{t+1}, ..., u_T)$
 
 이후, [BERT](https://aclanthology.org/N19-1423/) 와 마찬가지로 Maximum Likelihood Estimation(MLE) 방법으로 학습한다.
 BERT 에서는 token 하나가 mask 로 되었다면, 이 경우 utterance 하나가 mask 된다.
@@ -63,9 +63,9 @@ Inpainter 로는 [T5](https://arxiv.org/abs/1910.10683) 가 사용된다. Input 
 이 때, 저자들은 speaker 에게 부족한 정보를 hint 로 제공하기 위해 prompt 를 앞에 붙여준다. 
 prompt 의 형식은 "Hello, I am an automated assistant and can answer questions about (document title)" 이다.
 
-최종적으로, 원하는 parital dialog 는 아래와 같이 입력되어 inpainting 되길 원한다.
+최종적으로, 원하는 parital dialog 는 아래와 같이 입력되어 inpainting 되길 원한다.<br>
 
-$$ ParticalDialog(p) = (s_{prompt}, @, s_1, @, ..., @, s_m). $$
+$ ParticalDialog(p) = (s_{prompt}, @, s_1, @, ..., @, s_m). $
 
 그러나, training 단계에서는 mask $@$를 dialog 당 하나의 utterance 만 학습하도록 하기 때문에, 이렇게는 inference 가 되지 않는다. 
 따라서, 저자들은 $(s_{prompt}, @, s_1)$ 에서 inpainting 을 한 번 한 이후, inpainting 된 utterance $\hat{u_1}$ 을 활용하여, $(s_{prompt}, \hat{u_1}, s_1, @, s_2)$ 의 이어지는 inpainting 을 하도록 설계하였다. 이런 식으로 모든 mask 가 채워질 때까지 반복한다. 
