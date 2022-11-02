@@ -68,7 +68,7 @@ prompt 의 형식은 "Hello, I am an automated assistant and can answer question
 $$ ParticalDialog(p) = (s_{prompt}, @, s_1, @, ..., @, s_m). $$
 
 그러나, training 단계에서는 mask $@$를 dialog 당 하나의 utterance 만 학습하도록 하기 때문에, 이렇게는 inference 가 되지 않는다. 
-따라서, 저자들은 $(s_{prompt}, @, s_1}$ 에서 inpainting 을 한 번 한 이후, inpainting 된 utterance $\hat{u_1}$ 을 활용하여, $(s_{prompt}, \hat{u_1}, s_1, @, s_2}$ 의 이어지는 inpainting 을 하도록 설계하였다. 이런 식으로 모든 mask 가 채워질 때까지 반복한다. 
+따라서, 저자들은 $(s_{prompt}, @, s_1)$ 에서 inpainting 을 한 번 한 이후, inpainting 된 utterance $\hat{u_1}$ 을 활용하여, $(s_{prompt}, \hat{u_1}, s_1, @, s_2)$ 의 이어지는 inpainting 을 하도록 설계하였다. 이런 식으로 모든 mask 가 채워질 때까지 반복한다. 
 
 <span style='color:green;font-weight:bold'> Applying dialog inpainting to generate an information sekking dialog dataset </span>
 
