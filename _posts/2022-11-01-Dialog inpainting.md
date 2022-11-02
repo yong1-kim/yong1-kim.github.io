@@ -32,5 +32,9 @@ categories: [Dialogue]
 complete dialog $d$ 
 $d=(u_1, u_2, ..., u_t, ..., u_T)$ 
 
-unobserved utterances : @ symboal e.g. $(u_1, u_2, @, u_4, @)$  
+unobserved utterances 
+$@$ symboal *e.g.* $(u_1, u_2, @, u_4, @)$
+
+shorthand sign that denote dialog $d$ with utterances 3 and 5 masked
+$d_{m(3,5)}$
 
