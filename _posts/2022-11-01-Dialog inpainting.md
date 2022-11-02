@@ -2,6 +2,7 @@
 layout: post
 title:  "[ICML2022] Dialog Inpainting: Turning Documents into Dialogs"
 date:   2022-11-01 10:01:00 +0900
+use_math: true
 categories: [Dialogue]
 ---
 [[pdf]](https://arxiv.org/pdf/2205.09073.pdf)  &emsp;
