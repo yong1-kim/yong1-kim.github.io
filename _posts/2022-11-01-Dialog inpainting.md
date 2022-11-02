@@ -85,12 +85,15 @@ Inpainter 모델에 따라 생성되는 dataset 은 $WikiDialog_{PT}$, $WikiDail
 ![image](https://user-images.githubusercontent.com/42200027/199425147-321fb9a3-4d87-47a6-933d-042772a4904d.png)
 
 <span style='color:green;font-weight:bold'> How information seeking are the generated utterances? </span>
+
 Rater 들은 dialog 가 information-seeking 한지 여부에 대해 $WikiDialog_{PT}$ 에 94.5점을, 나머지의 경우 99~100 점을 부여하였다.
 
 <span style='color:green;font-weight:bold'> How well answered are the generated questions? </span>
+
 Rater 들은 ***Answer Adequacy*** 에 대해, question 에 대해 answer 가 적절한 지 여부에 대해 평가하였고, 충분히 적절함을 표에서 볼 수 있다.
 
 <span style='color:green;font-weight:bold'> How conversational are the data? </span>
+
 Rater 들은 ***Conversionality*** 에 대해 평가하였고, 생성된 dialog 속의 대화들이 자연스럽게 이어진다고 평가하였다.
 
 <span style='color:green;font-weight:bold'> What types of questions are generated?  </span>
@@ -109,6 +112,7 @@ Open-domain Conversational QA 는 해당 question 에 해당하는 정보를 추
 
 # Evaluation
 <span style='color:green;font-weight:bold'> Dataset , Baseline model, and Metric </span>
+
 Task : ConvQA Retrieval System 
 
 Dataset : QR-QuAC, QReCC, TREC CAsT19, and CAsT20
@@ -118,16 +122,20 @@ Basline : BM25-Query Rewriter, MB25-T5QR, ANCE-Query Rewriter, CONQRR, and ConVD
 Metric : MRR@5, MRR
 
 <span style='color:green;font-weight:bold'> Experiment Results </span>
+<br>
 ![image](https://user-images.githubusercontent.com/42200027/199428148-55bf38bb-0de4-4f5b-90ab-85fed12cc487.png)
 
 기존 state-of-the-art 모델들의 성능을 엄청난 차이로 상회하는 것을 확인할 수 있다. (특히, Reranking 까지 사용할 경우)
 
 <span style='color:green;font-weight:bold'> Retriever performance when T5-Base DE </span>
+<br>
+
 ![image](https://user-images.githubusercontent.com/42200027/199428183-935b2a09-f711-48cb-9ced-122475888a2e.png)
 
 Inpainter 를 학습하기 위한 ConvQA dataset 중 Question answering 이 없는 WiKiD-PT model 의 성능은 기존 state-of-the-art 보다 좋았지만, QQ 를 썼을 때, 그리고 모두 사용했을 때 더욱 좋아진 것을 볼 수 있다. 
 
 <span style='color:green;font-weight:bold'> Zero-shot/few-shot results </span>
+<br>
 ![image](https://user-images.githubusercontent.com/42200027/199428360-fca20547-82fc-4cd0-a4b4-1c58698948cc.png)
 
 Inpainter 가 만든 WikiDialog 와 WebDialog 를 사용했을 때, QReCC data 에서 zero-shot 을 해도 무려 95% 의 성능을 보이는 것을 확인할 수 있다. 
