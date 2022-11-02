@@ -27,3 +27,6 @@ categories: [Dialogue]
 실험 결과, ConvQA retreival benchmark (QRECC, OR-QUAC, TREC-CAST) 에서 <span style='background-color: #dcffe4'> 기존 State-of-the-Art 모델 보다 40% 가량 좋은 성능을 보여주었으며, zero-shot 실험에서도 finetuning 의 95% 에 해당하는 강력한 성능 </span>을 보여준다. 
 
 # Dialog Inpainting
+<span style='color:green;font-weight:bold'> Notation </span>
+$d=(u_1, u_2, ..., u_t, ..., u_T$ : complete dialog $d$
+
