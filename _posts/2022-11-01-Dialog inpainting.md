@@ -28,5 +28,9 @@ categories: [Dialogue]
 
 # Dialog Inpainting
 <span style='color:green;font-weight:bold'> Notation </span>
-$d=(u_1, u_2, ..., u_t, ..., u_T$ : complete dialog $d$
+
+complete dialog $d$ 
+$d=(u_1, u_2, ..., u_t, ..., u_T)$ 
+
+unobserved utterances : @ symboal e.g. $(u_1, u_2, @, u_4, @)$  
 
