@@ -30,12 +30,12 @@ categories: [Dialogue]
 # Dialog Inpainting
 <span style='color:green;font-weight:bold'> Notation </span>
 
-complete dialog $d$ 
+complete dialog $d$  <br>
 $d=(u_1, u_2, ..., u_t, ..., u_T)$ 
 
-unobserved utterances 
+unobserved utterances <br>
 $@$ symboal *e.g.* $(u_1, u_2, @, u_4, @)$
 
-shorthand sign that denote dialog $d$ with utterances 3 and 5 masked
+shorthand sign that denote dialog $d$ with utterances 3 and 5 masked <br>
 $d_{m(3,5)}$
 
