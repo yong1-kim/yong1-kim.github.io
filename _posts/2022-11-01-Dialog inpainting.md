@@ -80,3 +80,55 @@ Inpainter 의 학습에 사용된 dataset 은 **P**ublicDialog, **T**askMaster, 
 이후, [Qr-QuA](https://dl.acm.org/doi/10.1145/3397271.3401110)C retrieval corpus 속의 5.9M 크기의 Wikipedia article 과, [Ms Marco](https://arxiv.org/pdf/1611.09268.pdf) retrieval corpus 속의 8.4M 크기의 English web passage 에 inference 방법을 적용하여 dataset 을 생성한다.
 Inpainter 모델에 따라 생성되는 dataset 은 $WikiDialog_{PT}$, $WikiDailog_{QQ}$, $WikiDialog_{PTQQ}$, 그리고, $WebDialog_{PT}$ 가 생성된다.
 
+# Evaluating WikiDialog as a Dataset
+저자들은 생성된 데이터셋들을 human evaluation 을 통해 평가한다. 
+![image](https://user-images.githubusercontent.com/42200027/199425147-321fb9a3-4d87-47a6-933d-042772a4904d.png)
+
+<span style='color:green;font-weight:bold'> How information seeking are the generated utterances? </span>
+Rater 들은 dialog 가 information-seeking 한지 여부에 대해 $WikiDialog_{PT}$ 에 94.5점을, 나머지의 경우 99~100 점을 부여하였다.
+
+<span style='color:green;font-weight:bold'> How well answered are the generated questions? </span>
+Rater 들은 ***Answer Adequacy*** 에 대해, question 에 대해 answer 가 적절한 지 여부에 대해 평가하였고, 충분히 적절함을 표에서 볼 수 있다.
+
+<span style='color:green;font-weight:bold'> How conversational are the data? </span>
+Rater 들은 ***Conversionality*** 에 대해 평가하였고, 생성된 dialog 속의 대화들이 자연스럽게 이어진다고 평가하였다.
+
+<span style='color:green;font-weight:bold'> What types of questions are generated?  </span>
+![image](https://user-images.githubusercontent.com/42200027/199425753-9b87aca8-ee0a-4649-a97f-d33285c71332.png)
+
+Dialog 시작은 정형적인 definitional question (*e.g.* "what is", "who is", "where is") 등으로 시작하지만, 이후 follow-up utterance 들에서는 "did, "is there", "how" 와 같은 diverse 한 질문이 생성되는 것을 볼 수 있다.
+
+# Application : Open-domain Conversational Retrieval 
+![image](https://user-images.githubusercontent.com/42200027/199426075-8a82d39a-f552-463e-8bb5-3a0f514c70dc.png)
+
+Open-domain Conversational QA 는 해당 question 에 해당하는 정보를 추출해오는 retrieval part 와, retreived passage 와 dialog 정보를 통해 다음 utterance 를 생성하는 generator 단으로 구성된다. 이 논문에서는 generator 는 future work 으로 남겨두고, retriever 에 집중하여 실험을 진행한다. 
+
+위의 그림과 같이, two-stage ConvQA retrieval system 을 활용한다. 일단, [dual-encoder](https://arxiv.org/pdf/1908.10084.pdf) 구조의 Retriever 에서, dialog history 와 passage 를 각각 embedding 한 후 top-K 개의 passage 를 추출한 이후, corss-attention model 을 이용해 [Reranker](https://arxiv.org/pdf/1901.04085.pdf) 에서 다시 점수를 측정하여 retrieval 한다. 
+
+생성한 WikiDialog 와 WebDialog 로 Pre-training 할 때, 추출해오려는 label passage 는 원래의 answer sentence 를 구성하던 document 이므로, 이를 그대로 활용하면 string-match 를 학습할 확률이 높다. 따라서, 저자들은 추출해오려는 label passage, 즉 원래 answer sentence 가 포함된 문서에서, dialog 를 구성하는 answer sentence 를 제거한 후 passage 를 찾아오게 학습을 진행하였다. 이후, Fine-tuning 단계에서는 downstream ConvQA dataset 에 대해서 fine-tuning 을 진행하였다.
+
+# Evaluation
+<span style='color:green;font-weight:bold'> Dataset , Baseline model, and Metric </span>
+Task : ConvQA Retrieval System 
+
+Dataset : QR-QuAC, QReCC, TREC CAsT19, and CAsT20
+
+Basline : BM25-Query Rewriter, MB25-T5QR, ANCE-Query Rewriter, CONQRR, and ConVDR
+
+Metric : MRR@5, MRR
+
+<span style='color:green;font-weight:bold'> Experiment Results </span>
+![image](https://user-images.githubusercontent.com/42200027/199428148-55bf38bb-0de4-4f5b-90ab-85fed12cc487.png)
+
+기존 state-of-the-art 모델들의 성능을 엄청난 차이로 상회하는 것을 확인할 수 있다. (특히, Reranking 까지 사용할 경우)
+
+<span style='color:green;font-weight:bold'> Retriever performance when T5-Base DE </span>
+![image](https://user-images.githubusercontent.com/42200027/199428183-935b2a09-f711-48cb-9ced-122475888a2e.png)
+
+Inpainter 를 학습하기 위한 ConvQA dataset 중 Question answering 이 없는 WiKiD-PT model 의 성능은 기존 state-of-the-art 보다 좋았지만, QQ 를 썼을 때, 그리고 모두 사용했을 때 더욱 좋아진 것을 볼 수 있다. 
+
+<span style='color:green;font-weight:bold'> Zero-shot/few-shot results </span>
+![image](https://user-images.githubusercontent.com/42200027/199428360-fca20547-82fc-4cd0-a4b4-1c58698948cc.png)
+
+Inpainter 가 만든 WikiDialog 와 WebDialog 를 사용했을 때, QReCC data 에서 zero-shot 을 해도 무려 95% 의 성능을 보이는 것을 확인할 수 있다. 
+그만큼 본 연구에서 제안한 방법을 통해 ConvQA 에 강력한 representation 이 학습되었음을 알 수 있다.
