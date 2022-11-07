@@ -26,3 +26,24 @@ Generative model 은 Content Generation, Representation Learning, Artistic Tools
 ![image](https://user-images.githubusercontent.com/42200027/200235994-df851d3d-02e4-4f89-8055-d4ea4602d739.png)
 
 그림에서 볼 수 있듯이, 최근 연구되는 Denoising Diffusion model 은 ImageNet 과 같이 Challenging 한 dataset 들에 대해서도 굉장히 좋은 퀄리티의 이미지를 생성할 수 있고, 또 다양한 결과를 내어놓는다. 왼쪽은 openAi 에서, 오른쪽은 Google 에서 연구된 최신 diffusion model results 이다. 이것들은 GAN 을 뛰어넘는 성과를 보였다.
+Diffusion model 은 이미 super-resolution, text-to-image generation 에서 매우 강력한 성능을 보여준다.
+
+![image](https://user-images.githubusercontent.com/42200027/200236326-f229a992-035e-45bd-97c6-68c9e0321c26.png)
+
+![image](https://user-images.githubusercontent.com/42200027/200236370-06c622a6-2546-49a9-aa56-a042e5b0942f.png)
+
+# Denoising Diffusion Probabilistic Models
+
+
+
+# Score-based Generative Modeling with Differenital Equations
+
+# Advanced Techniques : Accelerated Sampling, Conditional Generation, and Beyond
+
+# Application (1) : Image Synthesis, Text-to-Image, Controllable Generation
+
+# Application (2) : Image Editing, Image-to-Image, Super-resolution, Segmentation
+
+# Application (3) : Video Synthesis, Medical imaging, 3D Generation, Discrete State Models
+
+# Conclusions, Open Problems
