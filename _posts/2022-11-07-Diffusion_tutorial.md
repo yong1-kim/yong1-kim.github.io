@@ -34,6 +34,45 @@ Diffusion model 은 이미 super-resolution, text-to-image generation 에서 매
 
 # Denoising Diffusion Probabilistic Models
 
+![image](https://user-images.githubusercontent.com/42200027/200237051-48c210cf-4d0a-4cee-861d-5dc653324766.png)
+
+Denoising Diffusion model 은 두 가지 process 로 구성된다.
+
+(1) Forward diffusion process that gradually adds noise to input
+(2) Reverse denoising process that learns to generate data by denoising
+
+첫 번째로, forward pass 에 대해서 살펴보면,
+
+![image](https://user-images.githubusercontent.com/42200027/200237508-88d40f19-9dad-4b59-adf6-d08eb441c2b3.png)
+
+위의 그림과 같이, T-step 동안 normal distribution 같은 noise 를 단순하게 추가해주는 방식으로 진행된다.
+$\beta$ (noise schedule) 값은 0.0001 정도로 작은 값으로 설정된다. 이후 Join probability 가 Markov Process 로 생성이 된다.
+
+<span style='color:green;font-weight:bold'> Diffusion Kernel </span>
+
+Forward process 는 simple gaussian kernel 의 markov chain 이기 때문에, step 을 건너뛸 수 있다. Diffusion kernel 로 불리는 이 방법은 아래와 같다.
+마지막 step 에서는 white noise 만 남게 $\alpha$ 값이 0 이 되게끔 noise schedule 이 design 된다.
+
+![image](https://user-images.githubusercontent.com/42200027/200237949-ddec1851-7081-48a5-ae7c-594b51f6f4a1.png)
+
+지금까지는 conditional disturbition $q(x_t | x_0 )$ 를 생각했는데, 그렇다면 diffused data distribution $q(x_t)$는 어떻게 정의될까?
+
+![image](https://user-images.githubusercontent.com/42200027/200238673-b178c986-3cd5-4b06-ab84-8126a2be8005.png)
+
+위의 그림에서, input data dist. $x_0$ 에 대해서, 최종 $x_T$ 까지 가는 동안 Diffused data distrubition 이 noise 로 smooth 해지는 것을 볼 수 있다. 
+따라서, diffusion kernel은 step 을 진행할 수록 distribution 을 smoother and smoother 하게 해주는 **Gaussian convolution** 이다.
+
+<span style='color:green;font-weight:bold'> Generative Learning by Denoising </span>
+
+이제 반대로, 어떻게 standard normal distribution 에서 sample 을 해서 원하는 data distribution value 를 얻을 수 있을까?
+우리는 $q(x_t)$ 의 diffusion dist. 를 가지고 있으므로, 반복적으로 $x_{t-1}$ 를 True Denoising Dist. 를 활용해 sample 하면 된다.
+그러나 문제는, 이 denoising distribution 이  **intractable** 하다는 것이다. 즉 다시 말해, 이 dist. 에 access 할 수 없다는 것이다.
+이 식에서 $q(x_{t-1})$ 는 미래의 dist. 이기 때문에 접근할 수가 없기 때문이다. 
+따라서, 우리가 해야할 것은 **approximation** 이다. 이 때 중요한 것은 each step 의 noise schedule $\beta$ 값이 굉장히 작아야 한다는 것이다. 
+
+![image](https://user-images.githubusercontent.com/42200027/200239381-e24be212-4ea1-4244-ac23-3b72b2b73d17.png)
+
+
 
 
 # Score-based Generative Modeling with Differenital Equations
