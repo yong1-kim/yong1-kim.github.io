@@ -56,7 +56,7 @@ Forward process 는 simple gaussian kernel 의 markov chain 이기 때문에, st
 
 ![image](https://user-images.githubusercontent.com/42200027/200237949-ddec1851-7081-48a5-ae7c-594b51f6f4a1.png)
 
-지금까지는 conditional disturbition $q(x_t | x_0 )$ 를 생각했는데, 그렇다면 diffused data distribution $q(x_t)$는 어떻게 정의될까?
+지금까지는 conditional disturbition $q(x_t \| x_0 )$ 를 생각했는데, 그렇다면 diffused data distribution $q(x_t)$는 어떻게 정의될까?
 
 ![image](https://user-images.githubusercontent.com/42200027/200238673-b178c986-3cd5-4b06-ab84-8126a2be8005.png)
 
