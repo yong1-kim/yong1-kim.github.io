@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[CVPR 2022 Tutorial] Denoising Diffusion-based Generative Modeling: Foundations and Applications"
+title:  "[CVPR 2022 Tutorial] Denoising Diffusion-based Generative Modeling: Foundations and Applications(1)"
 date:   2022-11-05 19:12:00 +0900
 use_math: true
 categories: [Diffusion]
@@ -38,8 +38,8 @@ Diffusion model 은 이미 super-resolution, text-to-image generation 에서 매
 
 Denoising Diffusion model 은 두 가지 process 로 구성된다.
 
-(1) Forward diffusion process that gradually adds noise to input
-(2) Reverse denoising process that learns to generate data by denoising
+(1) Forward diffusion process that gradually adds noise to input <br>
+(2) Reverse denoising process that learns to generate data by denoising <br>
 
 첫 번째로, forward pass 에 대해서 살펴보면,
 
@@ -71,6 +71,7 @@ Forward process 는 simple gaussian kernel 의 markov chain 이기 때문에, st
 따라서, 우리가 해야할 것은 **approximation** 이다. 이 때 중요한 것은 each step 의 noise schedule $\beta$ 값이 굉장히 작아야 한다는 것이다. 
 
 ![image](https://user-images.githubusercontent.com/42200027/200239381-e24be212-4ea1-4244-ac23-3b72b2b73d17.png)
+
 
 
 
