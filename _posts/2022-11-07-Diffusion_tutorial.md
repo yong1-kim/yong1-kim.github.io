@@ -16,6 +16,7 @@ categories: [Diffusion]
 # Deep Generative Learning
 
 <span style='color:green;font-weight:bold'>  Learning to generate data  </span>
+
 Generative model 은 data distribution 으로 부터 학습(train)한 후, 추론(inference) 시에 하나의 sample 을 generation 하는 모델을 의미한다.
 Generative model 은 Content Generation, Representation Learning, Artistic Tools 등에서 이미 굉장히 좋은 성능을 보이고 있다. 
 
