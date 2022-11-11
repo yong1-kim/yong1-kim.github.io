@@ -165,7 +165,6 @@ Decoder-only + FLM 구조가 zero-shot 성능은 더 좋고, Encoder-Decoder + M
 
 <span style='color:green;font-weight:bold'> Influence of the tasks and prompts used for zero-shot evaluation </span>
 <br>
-![image](https://user-images.githubusercontent.com/42200027/201316361-3a2c3658-0a47-4b14-9a08-a5ad727099a7.png)
 
 EAI-Eval 과 T0-Eval 은 거의 모든 task 가 겹치는데 (T0-Eval 의 11개 task 중 10 개가 EAI-Eval 에 존재), prompts 는 항상 다르다.
 EAI-Eval 은 [Brown et al.](https://arxiv.org/abs/2005.14165) 로 부터, GPT-3 에 최적화된 hand-tuned prompt 를 사용한다. 
