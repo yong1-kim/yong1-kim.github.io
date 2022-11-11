@@ -99,7 +99,7 @@ Fine-tuning 과 다르게, downstream data 가 전혀 사용되지 않으며, *o
 
 <span style='background-color: #dcffe4'> Multitask fine-tuning </span>
 <br>
-보통 pre-training 은 web crawling 으로 많은 corpora 를 긁어모은 뒤 학습을 진행한다. 이후, cujrated high-quality corss-domain data 들에 대해 fine-tuning 을 진행하면, zero-shot generalization 이 좋아지는 것을 확인할 수 있다. MLM + encodeer-decoder model 의 T0 model 과 FLM + causal decoder-only [model](https://arxiv.org/pdf/2109.01652.pdf) 에서 multitask fine-tuning 이 zero-shot 성능을 좋게한다는 연구결과를 볼 수 있다. 이들은 task 에 prompt 를 붙여 fine-tuning 을 진행한다. 논문에서는 T- 학습을 위해 사용된 dataset 과 prompt 를 multitask fine-tuning 을 위해 사용한다.
+보통 pre-training 은 web crawling 으로 많은 corpora 를 긁어모은 뒤 학습을 진행한다. 이후, curated high-quality corss-domain data 들에 대해 fine-tuning 을 진행하면, zero-shot generalization 이 좋아지는 것을 확인할 수 있다. MLM + encodeer-decoder model 의 T0 model 과 FLM + causal decoder-only [model](https://arxiv.org/pdf/2109.01652.pdf) 에서 multitask fine-tuning 이 zero-shot 성능을 좋게한다는 연구결과를 볼 수 있다. 이들은 task 에 prompt 를 붙여 fine-tuning 을 진행한다. 논문에서는 T- 학습을 위해 사용된 dataset 과 prompt 를 multitask fine-tuning 을 위해 사용한다.
 
 <span style='color:green;font-weight:bold'> Zero-shot evaluation </span>
 <br>
