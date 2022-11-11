@@ -29,7 +29,7 @@ Large Language Model(LLMs) 들은 unstructured text data 에 pre-train 된 후, 
 
 Transformer 모델들은 다양한 <span style='background-color: #f7b6b0'> self-supervised training objective </span> 를 가질 수 있다. 보통, causal decoder-only LLM 들은 <span style='background-color: #f7b6b0'> full language modeling (FLM) </span> objective 로, encoder-decoder model 은 <span style='background-color: #f7b6b0'> masked language modeling (MLM) </span> objective 로 학습을 진행한다. MLM 에는 span corruption 등이 포함될 수 있다. 추가적인 downstream task finetuning 에 대해, MLM 의 효과에 대해서는 이미 많은 연구에서 검증이 되었다. 최근 가장 강력한 성능을 보이는 [T0 model](https://arxiv.org/pdf/2110.08207.pdf) 역시 MLM 을 사용하였다. 최근, [Lester et al.](https://arxiv.org/pdf/2104.08691.pdf) 은 <span style='background-color: #fabbeb'> adaptation stage </span> (extending pretraining but with a different objective) 를 소개한다. 이는 MLM 모델을 prompted text generation task 를 수행하는 것을 가능하게 하며, objective 사이의 gap 을 줄여준다.
 
-이러한 결과들은 <span style='color:green;font-weight:bold'> which architecuter and which pre-training objective pair </span> 가 LLM 에 가장 강력한 (strongest) zero-shot generalization capability 를 부여하는지에 대한 의문점을 남긴다. 기존에 이러한 구조와 목적함수 조합에 대한 연구가 있었지만, zero-shot 성능에 관한 연구는 아니었고, 대부분 transfer learning 을 위한 연구([[7]](https://arxiv.org/abs/2102.11972), [[8]](https://jmlr.org/papers/v21/20-074.html)) 였다. 또, 추가적으로 최근 multitask finetuning 이 효과적이라는 것이 증명되면서, 어떠한 조합이 multitask finetuning 과 잘 맞을지에 대한 궁금증도 생긴다.
+이러한 결과들은 **which architecture and which pre-training objective pair**  가 LLM 에 가장 강력한 (strongest) zero-shot generalization capability 를 부여하는지에 대한 의문점을 남긴다. 기존에 이러한 구조와 목적함수 조합에 대한 연구가 있었지만, zero-shot 성능에 관한 연구는 아니었고, 대부분 transfer learning 을 위한 연구([[7]](https://arxiv.org/abs/2102.11972), [[8]](https://jmlr.org/papers/v21/20-074.html)) 였다. 또, 추가적으로 최근 multitask finetuning 이 효과적이라는 것이 증명되면서, 어떠한 조합이 multitask finetuning 과 잘 맞을지에 대한 궁금증도 생긴다.
 
 <span style='color:green;font-weight:bold'> Large-scale systematic study </span>
 <br>
@@ -48,3 +48,4 @@ Transformer 모델들은 다양한 <span style='background-color: #f7b6b0'> self
 여러 조합에 대한 adaptation 으로 두 가지를 고려한다.
 첫 번째는 <span style='background-color: #fabbeb'> full language modeling adaptation</span> 으로 MLM-trained non-causal decoder model 을 FLM + causal decoder 로 변환한다. 이렇게 할 경우, FLM task 에서 1.6 배 빠르게 수렴을 한다. 두 번째는, <span style='background-color: #fabbeb'> non-causal MLM adaptation </span> 으로, FLM + causal decoder 를 MLM + non-causal decoder 로 바꾼다. 이렇게 바꾼 경우, MLM task 에 대해 3.3 배 빠르게 수렴한다. 이러한 adaptation 방법은 new version of model suited for multitask finetuning 을 생산하고, benchmark 에서 두 번째로 좋은 성능의 결과를 보인다.
 
+# Background
