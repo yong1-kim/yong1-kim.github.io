@@ -142,5 +142,71 @@ T0-Eval 은 prompt 별로 중간값을 취하고, 11 task 에 평균값을 취�
 42B, 84B, 168B token 들에 대해 model checkpoint 를 저장하였다.
 
 # Experiments 
+<span style='color:green;font-weight:bold'> After self-supervised pretraining only </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201313096-51fa9244-5ca5-4d2e-8066-7ed4d13c2eb5.png)
+첫 번째로, sefl-supervised learning 학습 이후 zero-shot 성능을 본다. MLM 은 알맞지 않기 때문에, 사용되지 않았다. 
+- Causal Decoder-only + FLM 모델이 가장 좋았고, non-causal decoder-only + PLM 가 뒤따르며, encoder-decoder + PLM 는 좋지 못하다.
+- T0-Eval 에서의 실험결과는 random-baseline 과 크게 차이가 없지만, EAI-Eval 에서는 차이가 있다.
+![image](https://user-images.githubusercontent.com/42200027/201312954-f5d61c16-dda1-4b2f-a711-8642503e3f29.png)
+
+<span style='color:green;font-weight:bold'> After multitask finetuning </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201314543-ae798a39-5035-4560-a9f1-2dbfdb16e9ad.png)
+
+Decoder-only + FLM 구조가 zero-shot 성능은 더 좋고, Encoder-Decoder + MLM 구조가 fine-tuning 이후 성능이 더 좋다는 것이 이미 여러 연구에서 보여졌다.
+따라서 저자들은 모든 architecture/objective 조합을 multitask fine-tuning 을 한 뒤 실험을 진행한다.
+실험 결과는 위에서 불 수 있다. 
+- EAI-Eval set 에 대하여, **Encoder-Decoder + MLM** 의 결과가 가장 좋았고, non-causal decoder with MLM 이 거의 비슷하게 뒤따랐다. 
+- T0-Eval 에서는 확연한 차이가 나타나는데, **Encoder-Decoder + MLM 의 성능이 다른 모델들에 비해 압도적으로 좋았다**
+- Encoder-decoder + PLM 이 가장 좋지 못한 성능을 보여준다. 
+
+![image](https://user-images.githubusercontent.com/42200027/201315003-6bed0dad-82be-4d23-af1f-638db64aadf2.png)
+
+<span style='color:green;font-weight:bold'> Influence of the tasks and prompts used for zero-shot evaluation </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201316361-3a2c3658-0a47-4b14-9a08-a5ad727099a7.png)
+
+EAI-Eval 과 T0-Eval 은 거의 모든 task 가 겹치는데 (T0-Eval 의 11개 task 중 10 개가 EAI-Eval 에 존재), prompts 는 항상 다르다.
+EAI-Eval 은 [Brown et al.](https://arxiv.org/abs/2005.14165) 로 부터, GPT-3 에 최적화된 hand-tuned prompt 를 사용한다. 
+반면, T0-Eval 은 집단 지성을 통해 각 primary goal 을 높이기 위한 prompt 를 사용한다. 
+이러한 점에서, EAI-Eval 에서의 결과가 T0-Eval 에서의 결과보다 좋으며, 이는 causal decoder-only + FLM 에서의 without multitask (After self-supervised pretraining only section 의 결과) 에서 도드라지는데, causal decoder-only + FLM model 이 GPT-3 와 거의 유사한 구조이기 때문이다.
+따라서, 저자들은 EAI-Eval 에서 사용되는 prompt 를 모든 task 에 적용하여 T0-Eval 에서도 적용하여 보았다.
+결과는 위의 그림과 같다. EAI-Eval 과 T0-Eval 에서 겹치는 task 들은 성능이 확 좋아졌다. Prompt 를 빌려주기 전에는 차이가 나는 것에 비하면, prompt 의 효과가 상당하다는 것을 확인할 수 있다. 반면, T0-Eval 에 없는 task 에서 causal decoder performance 가 엄청나게 올라갔고, 특히 [LAMBADA](https://arxiv.org/abs/1606.06031) 라는 task 에서 매우 큰 차이를 보였다. 
+
+# Can models be adapted from one architecture/objective to another?
+앞선 실험 결과에서, multitask fine-tuning 이 zero-shot 성능 결과에 지대한 영향을 미치는 것을 볼 수 있다.
+Multitask fine-tuning 을 진행하지 않았을 때는 decoder-only model + FLM 이 zero-shot 성능이 좋았고, multitask fine-tuning 을 진행한 후에는 encoder-decoder + MLM 이 성능이 훨씬 더 좋았다.
+이는 불편한 진실을 담고 있는데, multitask fine-tuned encoder-decoder model 은 open-ended generative task 에 잘 맞지 않으며, multitask fine-tuned decoder-only model 은 많은 zero-shot task 에서 best 결과를 보이지 않았다.
+이에 저자들은 **adaptation** 실험을 진행한다.
+
+<span style='color:green;font-weight:bold'> Language modeling adaptation (LM-A) </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201322475-8d6ff5cb-848e-4bf5-a954-56d0beaa0ff9.png)
+
+Non-causal decoder-only + MLM -> causal decoder + FLM 으로 adaptation 한다.
+이 adaptation 은 simple 한데, architecture 구조는 그대로 두고, attention mask 만 변경하면 된다.
+실험 결과, Validation loss 기준으로 같은 성능을 보이는데 168B token 을 봐야하던 것에서, 105B 로 줄어들어 1.6 배 빨라진 것을 알 수 있다.
+
+<span style='color:green;font-weight:bold'> Non-causal masked language modeling adaptation(NC-A) </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201322513-383e136f-7997-4311-a309-652fadfda114.png)
+이번엔 새로운 adaptation 방법을 소개한다. : *non-causal masked language modeling* 기법이다.
+Causal decoder-only + FLM -> non-causal decoder-only + MLM 으로 adaptation 시킨다.
+이는 위의 Language modeling adaptation (LM-A) 의 역과정과 같으며, 방법은 역시 단순하게 attention mask 를 변형시킴으로써 구현 가능하다.
+Validation Loss 는 Figure 6. 의 오른쪽에서 볼 수 있다. 기존의 MLM 기반의 decoder-only 모델들보다 3.3배 내지 9.1 배 빨르게 수렴한다.
+<span style='background-color: #dcffe4'> 이 adaptation 방법으로 single model 의 1.3 배 cost 만으로 zero-shot model 과 excellent generative model 을 얻는 것이 가능하다.  </span>
+
+마지막으로, validation loss 의 improvement 가 zero-shot improvement 로 이어지는 것에 대한 실험 결과이다.
+저자들은 adapted non-causal + MLM 모델이 기존의 causal + FLM 보다 zero-shot 성능이 더 좋은 것을 확인했다. 
+실험은 causal decoder + FLM with 219B tokens before multitask fine-tuning, causal decoder + FLM with 219B tokens after mulitask fine-tuning, causal decoer + FLM with 168 tokens + MLM-adapted as an non causal for 51B token after multitask fine-tuned. 세 모델에 대해서 진행하고, 이후 세 모델은 13B tokens 으로 한 번 더 multitask fine-tuning 을 진행하였다.
+![image](https://user-images.githubusercontent.com/42200027/201324134-fcd9b88f-d493-4598-ad5c-86fd9dbaaedb.png)
+
+결과는 위와 같고, Adaptation 의 효과가 매우 좋은 것을 볼 수 있다. 
+
+![image](https://user-images.githubusercontent.com/42200027/201324604-7d0e294e-80b0-44e3-bf0d-770465ba55b7.png)
+
+
+
 
 
