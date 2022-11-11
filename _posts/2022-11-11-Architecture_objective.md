@@ -118,3 +118,29 @@ Fine-tuning 과 다르게, downstream data 가 전혀 사용되지 않으며, *o
 <br>
 ![image](https://user-images.githubusercontent.com/42200027/201307029-972092e3-64c6-4037-a10e-6ef1195d5322.png)
 
+앞서 말한대로 *computational cost* 를 동일하게 하기 위해, architecture 들이 구성된다. 위의 table 에 자세한 사항이 기록되어 있다.
+
+<span style='color:green;font-weight:bold'> Pre-training </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201309198-54911c4a-1478-496d-814d-16c4208be9c0.png)
+
+MLM 은 [T5 model](https://jmlr.org/papers/volume21/20-074/20-074.pdf) 에서 사용한 span corrpution objective 를 사용하였다. 
+Computing budget 을 맞추기 위해, pre-training 에서 loss 계산 시 사용되는 token 수 대신 *pre-training 에 사용되는* token 의 수를 조절한다.
+예를 들어, Full language modeling 의 경우, 모든 token 이 loss 계산에 사용되고, prefix language modeling 에서 prefix 는 loss 계산에 사용되지 않는다. 
+평균적으로, FLM 에 비해 PLM 은 반절의 token 이 loss 계산에 사용된다. MLM 의 경우, T5 와 같이 15% 의 input token 이 length 3 의 span mask 로 corrpution 되고, 평균적으로 18% 정도의 token 이 loss 계산에 사용된다. 
+
+<span style='color:green;font-weight:bold'> Multitask finetuning </span>
+<br>
+Pre-training 이후 13B token 으로 구성된 T0 training dataset 에 fine-tuning 한다. 
+Dropout 이 zero-shot 성능에 큰 영향을 미치는 것을 발견하여 추가한다. 
+
+<span style='color:green;font-weight:bold'> Evaluation </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201311832-822a99f9-aba2-4baa-9d8a-782aa61b43b1.png)
+T0-Eval 은 각 task 마다 multiple prompt 를 제공하고, EAI-EVal 은 하나의 태스크당 하나의 prompt 만을 제공한다.
+T0-Eval 은 prompt 별로 중간값을 취하고, 11 task 에 평균값을 취해 report 하였다.
+42B, 84B, 168B token 들에 대해 model checkpoint 를 저장하였다.
+
+# Experiments 
+
+
