@@ -20,7 +20,8 @@ categories: [LLM, Transformer]
 - (Results) causal decoder-only + autoregressive 방법이 zero-shot 성능은 제일 좋았으나, non-causal + mlm + multi-task finetuning 방법이 실험 성능은 제일 좋았다.
  
 # Introduction
-* 위의 그림의 module 블록들의 색과 아래의 색을 연결
+<span style='color:green;font-weight:bold'> 위의 그림의 module 블록들의 색과 아래의 색을 연결 </span> 
+<br>
 
 Large Language Model(LLMs) 들은 unstructured text data 에 pre-train 된 후, additional training or labeled data 없이 다양한 방면의 task 에서 좋은 성능을 보인다. 이러한 능력을 <span style='background-color: #a5e5f2'> zero-shot generalization </span> 이라고 한다. 현재 대부분의 LLM 들은 <span style='background-color: #f7efb0'> [Transformer](https://papers.nips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf) architecure </span>  기반으로 구성되어 있다. Original Transformer 는 encoder-decoder 구조로 되어있지만, 많은 최근 LLM 들은 <span style='background-color: #f7efb0'> causal decoder-only </span> 모델로, auto-regressive 방법으로 학습한다([[1]](https://arxiv.org/pdf/1801.10198.pdf), [[2]](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf), [[3]](https://ojs.aaai.org/index.php/AAAI/article/view/4182)) 그러나, [T5 model](https://arxiv.org/pdf/1910.10683.pdf) 에서는 <span style='background-color: #f7efb0'> Encoder-Decoder (ED) </span> model 을 통해 transfer learning 으로 decoder-only LLM 을 outperform 한다. 추가적으로, [UniLM](https://arxiv.org/pdf/1905.03197.pdf) 등의 <span style='background-color: #f7efb0'> Non-causal decoders-only </span> 구조는 attnetion mask 를 활용하여 decoder-only 와 encoder-decoder model 의 구조 사이의 gap 을 줄인다.
 
