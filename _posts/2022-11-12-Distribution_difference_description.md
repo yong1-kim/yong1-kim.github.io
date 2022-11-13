@@ -3,7 +3,7 @@ layout: post
 title:  "[ICML2022] Describing Differences between Text Distributions with Natural Language"
 date:   2022-11-12 17:38:00 +0900
 use_math: true
-categories: [LLM, Transformer]
+categories: [LLM, Transformer, PLM]
 ---
 [[pdf]](https://proceedings.mlr.press/v162/zhong22a/zhong22a.pdf)  &emsp;
 [[github]](https://github.com/ruiqi-zhong/DescribeDistributionalDifferences) <br>
