@@ -48,10 +48,17 @@ X 를 set of all text input 이라고 하면, natural language hypothesis $h$ �
 
 ![image](https://user-images.githubusercontent.com/42200027/201512293-2207804b-a03d-4165-97ae-051d7d61a7fd.png)
 
-where $ h_s(x_1,x_0) = 1$ means $x_1$ is more $s$ than $x_0$.
+where $h_s(x_1,x_0) = 1$ means $x_1$ is more $s$ than $x_0$.
 예를 들어, $s$ 가 *"is longer in sentence length"* 일 때, $h_s(x_1,x_0) = 1$ 은 $x_1$ 이 $x_0$ 보다 길다는 것을 의미한다.
 정리하면, $h_s$ 의 semantic 은 
 
 ![image](https://user-images.githubusercontent.com/42200027/201512363-64880c33-683d-4f82-b289-fca2979d4553.png)
 
 으로 정리할 수 있다.
+$D_0$ 와 $D_1$ 이 X 의 두 distribution 이라고 하고, $H$ 를 $h$ 의 space 라고 했을 때, 이 task 의 목적은 $H$ 속의 $h$ 중 다음의 "classification accuracy" CA 가 높은 것을 찾아내는 것이다.
+
+![image](https://user-images.githubusercontent.com/42200027/201512430-d13fc2f2-f66e-4873-b9cb-1de3f9c91bbb.png)
+
+식에 대해서 잠시 살펴보면, 두 distribution $D_0$ 와 $D_1$ 으로 부터 뽑힌 sample 들에 대해, $h$ 가 어디로 부터 와쓴ㄴ지를 classify 하는 기존의 statistical machine learning 과 같다. 하지만, traditional statistical machine learning 과 다르게, 이 문제는 두 가지 문제를 가지고 있는데, 첫 번째는 **Search** 문제로, discrete string space 에서 hypothesis 를 searching 하는 것은 어렵다는 것이다. 그리고 두 번째는 **Verify** 문제로, $h_s(x_1,x_0)$를 계산하는 데는 human annotation 이 필요한데, 이 것으 매우 비싸다. 이 연구에서는 neural network 로 human response 를 approximating 하는 방법에 대해서 다룬다.
+
+# Method
