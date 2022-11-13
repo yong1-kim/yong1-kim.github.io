@@ -170,7 +170,11 @@ Human annotation 와 top-5 description pair 들을 BERTScore 로 계산한다.
 <span style='color:green;font-weight:bold'> Comparing Verifiers. </span>
 <br>
 
-<span style='background-color: #dcffe4'> 저자들은 verifier 가 실제로 효과적인지 실험적으로 검증할 수 없었다고 한다.</span> 그러나, repeatedly 반복되는 hypothesis 를 verifier 가 제거해주는 효과가 있다고 한다. Verifier 를 비교하기 위해, 앞에서의 CA 수식에 대하여, 저자들은 larger and fine-tuned verifier 가 더 좋을 것이라고 추측한다.
+<span style='background-color: #dcffe4'> 저자들은 verifier 가 실제로 효과적인지 실험적으로 검증할 수 없었다고 한다.</span> 그러나, repeatedly 반복되는 hypothesis 를 verifier 가 제거해주는 효과가 있다고 한다. 
+
+![image](https://user-images.githubusercontent.com/42200027/201516951-2549b823-a6c9-409e-b5c9-cd3376cead52.png)
+
+Verifier 를 비교하기 위해, 위의 CA 수식에 대하여, 저자들은 larger and fine-tuned verifier 가 더 좋을 것이라고 추측한다.
 
 ![image](https://user-images.githubusercontent.com/42200027/201515727-87b0c7fe-e554-44a6-89a1-4eaa22cecc81.png)
 
@@ -181,3 +185,31 @@ Human annotation 와 top-5 description pair 들을 BERTScore 로 계산한다.
 
 <span style='color:green;font-weight:bold'> Summarizing Training Tasks </span>
 <br>
+SUBJ dataset 은 subjective vs. objective text 를 구분하는 binary classification task 의 datset 이다.
+많은 연구에서 해당 dataset 을 zero/few-shot classification benchmark 로 활용한다.
+그러나, 본 연구의 시스템으로 SUBJ 를 describe 해보니, objective class 에는 *"is a plot summary of a film"* 이, subjective class 에는 *"is a quote from a film review"* 문장이 생성되었다. 
+이에 저자들은 SUBJ dataset 논문을 읽어보니 아래와 같은 구절을 발견하였다.
+
+![image](https://user-images.githubusercontent.com/42200027/201516274-9523c373-776d-4ea9-8846-6556b79a01ad.png)
+
+따라서, 본 연구의 시스템에 따른 description 이 정확하다는 것을 알 수 있다. SUBJ 이후로도, 같은 방법으로 sub vs. obj 를 뽑은 데이터셋이 여럿 있어서([[2]](https://arxiv.org/abs/2104.08773), [[3]](https://arxiv.org/abs/2110.08207)) 유의가 필요하다고 지적하고 있다.
+
+<span style='color:green;font-weight:bold'> Debugging Dataset Shortcuts </span>
+<br>
+Natural Language Inference (NLI) 에서 대표적으로 사용되는 [MNLI](https://aclanthology.org/N18-1101/) dataset 의 경우, 본 연구의 시스템으로 negative class description 을 뽑아보니 "negation" 의 포함 여부로 description 을 생성하였다. 따라서 MNLI datset 들의 contradiction class 는 "not", "never" 같은 "negation" 이 포함이 많이 되어있다는 것이고, 이 것을 푸는 모델들이 이 것을 발견하도록 설계되었을 수 있음을 지적하고 있다.
+
+또, 다른 예시로, spam classification dataset 에 많이 사용되는 [Gomez et al.](https://dl.acm.org/doi/abs/10.1145/1166160.1166191) 은 spam 으로 분류된 negative class sample 들이 hyperlink 를 모두 포함하고 있다고 한다. 이는 본 연구의 시스템이 "has a higher number of hyperlinks" 라는 description 을 생성한 것으로부터 알 수 있었다고 한다.
+
+<span style='color:green;font-weight:bold'> Describing Distribution Shifts. </span>
+<br>
+본 연구의 시스템을 통해 training-test set distribution difference 를 설명하는 것도 가능하다. 
+또 다른 예시로는, [TwitterPPDB](https://aclanthology.org/D17-1126/) 와 QQP 는 모두 paraphrase detection dataset 이지만, 전자는 tweet 에서, 후자는 Quora question 에서 구성된 데이터셋들이라, 전자의 설명으로는 "talks about a news story more", 후자의 설명으로는 "contains a question." 으로 설명이 다름을 통해 distribution shift 를 찾아낼 수 있다고 한다.
+
+<span style='color:green;font-weight:bold'> Labelling Text Clusters. </span>
+<br>
+본 연구의 시스템으로 쉽게 unlabeld text clustering 을 진행할 수 있다.
+
+![image](https://user-images.githubusercontent.com/42200027/201516669-8835e3b1-cf7e-463a-8336-276f8265f752.png)
+
+이를 위해, 우선 RoBERTa Base 로 [wikitext-2](https://arxiv.org/abs/1609.07843) 를 embed 한 후, [Aharoni & Goldberg](https://aclanthology.org/2020.acl-main.692/) clustering 방법을 이용해 64 cluster 를 생성한다. 그 중, 10 개를 evaluation 을 위해 뽑은 후, 한 명의 저자가 그 cluster 속의 20개의 sample 을 읽은 후, cluster 를 설명하는 자연어 description 문장 s* 를 생성한다. 이후, 모델이 내어놓은 top-5 description 에서 가장 좋게 평가한 하나의 description $\hat{s}$ 를 고른다. 
+
