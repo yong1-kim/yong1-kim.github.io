@@ -139,3 +139,45 @@ Verifier fine-tuning 을 위하여, $V(s,x_1,x_0)=1$ 이 되게, $V(s,x_0,x_1)=0
 out-of-distribution robusteness 를 위해, 기존 unifiedQA 의 weight 과 fine-tuned unifedQA weight 을 average 하였다.([[1]](https://arxiv.org/pdf/2109.01903.pdf))
 
 # Benchmarking Performance
+<span style='color:green;font-weight:bold'> Dataset </span>
+<br>
+저자들의 [previous paper](https://aclanthology.org/2021.findings-emnlp.244.pdf) 에서, 54 개의 binary text classification task 에 대해 positive class 에 하나 이상의 자연어 description 이 있는 eval set 모음을 차용한다.
+이 eval set 들에는 topic classifciation, grammaticallity classifciation, stance classification 등을 포함한다.
+각각에 대하여, 제안된 시스템에 postiive class sample 들이 negative class sample 들과 어떻게 다른지를 설명하도록 시키고, human annotation 과 top-5 비교를 한다. human annotation description 을 위한 $s^\*$ 를 "correct" 라고 가정한다.
+
+<span style='color:green;font-weight:bold'> Evaluated Systems. </span>
+<br>
+larger proposer, a fine-tuned proposer, and a verifier for re-ranking 의 세 요소를 모두 갖추면 description generation 성능이 올라갈 것이라고 추측한다. 
+따라서 저자들은 "(1) : Our best system which use fine-tuned GPT-3 Davinci (175B) as the proposer, (2) : a smaller proposer size (fine-tuned Curie, 13B), (3) : no fine-tuning (zero-shot Curie 13B), (4) : no fine-tuning (zero-shot Cuire, 13B) + no verifier for re-ranking, (5): "memorization proposer", where the proposer only generates the hypothesis we curated" 라는 5 개의 모델을 제시하고, 그들의 가정이 맞다면, <span style='background-color: #dcffe4'> (1)>(2)>(3)>(4), 그리고 (2)>(5) </span> 가 될 것이라고 추측한다.
+
+<span style='color:green;font-weight:bold'> Automatic Evaluation. </span>
+<br>
+Automatic metric 으로는 [BERTScore](https://arxiv.org/abs/1904.09675) 를 활용한다. 
+Human annotation 와 top-5 description pair 들을 BERTScore 로 계산한다. 
+54 개의 task 에 대해 average 한 후, 5 개의 top-5 중 가장 높은 pair 를 선택한다.
+그 결과, (1) : 0.930, (2) : (0.927), (3) : 0.907, (4) : 0.899, (5) : (0.916) 으로, 저자들이 추측한 결과가 나왔다. 하지만. 이 결과들이 모두 높게 측정이 되었기 때문에, manual evaluation 을 추가적으로 진행한다. 
+
+<span style='color:green;font-weight:bold'> Manual Evaluation. </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201515540-46a24ff2-0c35-4af0-b959-cc6362e56edb.png)
+
+사람들에게 위와 같이 평가해달라고 했을 때, 아래와 같이 모델들에 대해서 결과가 나왔다.
+
+![image](https://user-images.githubusercontent.com/42200027/201514874-1052138f-0fce-4e07-8178-8d518f579349.png)
+
+(4)번 모델 GPT-3 Curie(no fine-tuning proposer + no re-ranking model) 은 (A)+(B) 평가에서 7% 의 human annotation 과 일치하지 않았지만 (4/54), (2)번 모델은 GPT-3 Curie의 proposer fine-tuning  을 통해 61% 일치도 (33/54), (1)번 모델은 GPT-3 Davinci proposer fine-tuning 를 통해 76% 의 일치도(41/54)를 보인 것을 확인할 수 있다.
+
+<span style='color:green;font-weight:bold'> Comparing Verifiers. </span>
+<br>
+
+<span style='background-color: #dcffe4'> 저자들은 verifier 가 실제로 효과적인지 실험적으로 검증할 수 없었다고 한다.</span> 그러나, repeatedly 반복되는 hypothesis 를 verifier 가 제거해주는 효과가 있다고 한다. Verifier 를 비교하기 위해, 앞에서의 CA 수식에 대하여, 저자들은 larger and fine-tuned verifier 가 더 좋을 것이라고 추측한다.
+
+![image](https://user-images.githubusercontent.com/42200027/201515727-87b0c7fe-e554-44a6-89a1-4eaa22cecc81.png)
+
+결과는 위와 같은데, CA 수식은 여전히 approximation 이므로 automatic evaluation 은 infeasible 하지만, unifedQA 가 verifier 로서의 역할을 하고, fine-tuned verifier 의 효과가 더 좋았다. 그리고, 실제 [state-of-the-art model](https://arxiv.org/pdf/2112.11446.pdf) 은 unifiedQA 보다 25x 크기 때문에, 그래프의 해석대로라면 훨씬 더 좋은 성능을 보일 수 있다.
+
+# Application
+본 연구의 시스템은 suumarize training task, debug dataset shortcut, describe distribution shift, 그리고 label text cluster 에 사용될 수 있다.
+
+<span style='color:green;font-weight:bold'> Summarizing Training Tasks </span>
+<br>
