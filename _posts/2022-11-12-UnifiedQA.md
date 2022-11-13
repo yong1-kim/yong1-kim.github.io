@@ -99,3 +99,43 @@ neural network $V$ 에 대해, $V(s,x_1,x_0)=1$ 은 $x_1$ 이 $x_0$ 보다 더 $
 <span style='color:green;font-weight:bold'> (3) Collecting Data for Supervision </span>
 <br>
 
+(1) 에서 proposer 로 사용된 GPT-3 와 (2) 에서 verifier 로 사용된 unifiedQA 모두 이 태스크를 위해 학습된 것이 아니기 때문에 최적화되어 있지 않다. 따라서 fine-tuning 을 통해 그 성능을 향상 시킬 수 있다. 
+그러나 이러한 태스크를 풀기 위한 corpus 가 없기 때문에 fine-tuning 을 진행할 수 없기 때문에, new dataset 을 collect 한다.
+
+Proposer 의 fine-tuning 을 위해서는 more $s$ 스러운 5 개의 sample, less $s$ 스러운 5 개의 sample 이 있어야 하고, verifier 를 fine-tuning 하기 위해서는 $x_1$ 이 $x_0$ 보다 더 $s$ 스러운 triplet $(s,x_1,x_0) 가 필요하다.
+이를 위해서 저자들은 특정 hypothesis $s$ 에 대해, GPT-3 에 $s$ 를 만족하는 sample 과 그렇지 않은 sample 들을 생성시키게 하였다.
+
+<span style='color:green;font-weight:bold'> Curating Hypothesis </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201513759-4cbfd64b-d161-42f6-83fb-07f079283a6d.png)
+
+첫 번째로, hypothesis 를 여러개 추출하기 위하여, [GPT-3](https://arxiv.org/pdf/2005.14165.pdf)의 도움을 받는다. 
+자세히는 <span style='background-color: #dcffe4'> 10개의 hypothesis 를 직접 생성한 후, GPT-3 에게 "brainstrom 해" 라는 prompt 를 활용해 생성</span>하였다. 생성되는 hypothesis 는 shallow (e.g. "contains the word 'yay' at the ned of the sentence') 한 것부터, topical ("loves school")한 것, 그리고 social and linguistic cue 를 다루는 complex 한 것("supports universal healthcare", "is written in first person")까지 다양하다. 
+
+<span style='color:green;font-weight:bold'> Conditional Generation </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201513908-da6121fb-22c3-4c3b-aa5b-a955eb982734.png)
+
+hypothesis $s$ 가 "love school" 이라고 했을 때, positive sample 은 "My advisor is really helpful and I learned a lot" 등이 있다. 모델을 fine-tuning 하기 위해서는 positive sample 과 negative sample 이 모두 필요하다.
+<span style='background-color: #dcffe4'> Positive sample 을 생성하기 위해 위의 그림처럼 GPT-3 모델을 활용한다.</span>  가끔 $s$ 가 "love school" 인데, *"I love school"* 과 같이 겹치는 문장이 생성될 수 있어, $s$ 에 나오는 token 을 생성하지 않게 막아놓는다.
+
+<span style='background-color: #dcffe4'> Negative sample 을 생성하기 위해서 다른 hypothesis 의 positive sample 을 이용한다. </span> 
+*"talks about microwaves"* 와 같은 highly-specific 한 예시에 대해서는, 다른 아무 hypothesis 의 positive sample 이 negative sample 이 될 수 있다.
+그러나, *"uses past tense"* 와 같은 경우, 직접 contrast hypothesis 인 *"uses future tense"* 를 만들었다. 이렇게 expanded hypothesis pool 이 352 개로 늘어났고 (기존 300개), 이 것들을 이용하여 15 postive sample 들을 만들어 negative sample 로 활용한다.
+
+<span style='color:green;font-weight:bold'> Verifying with Human Annotations. </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201514151-7e7c2b5b-15a6-4d95-bfda-3162db777e92.png)
+
+instruct GPT-3 의 성능이 매우 좋지만, reliability 를 위해 human tucker 를 활용하여 verify 한다. 
+이 Majority vote 를 통해 302 hypothesis 와 각각에 대응하는 5개의 positive/negative sample 들이 남았다.
+
+<span style='color:green;font-weight:bold'> Fine-tuning</span>
+<br>
+Proposer fine-tuning 을 위해 302 개의 hypothesis 에 대해서, positive/negative sample 5 개 씩 주어주고, hypothesis 를 generate 하게하여 GPT-3 를 fine-tuning 하였다. 2 epoch 을 돌리고, 20 batchsize, 0.05 의 learning rate 를 사용하였다.
+
+Verifier fine-tuning 을 위하여, $V(s,x_1,x_0)=1$ 이 되게, $V(s,x_0,x_1)=0$ 이 되게 하여 unifiedQA 를 fine-tuning 하였다.
+하나의 $s$ 당 30 개의 $(x_1,x_0)$ pair를 생성하였고, 250 step, batchsize 32, lr 5e-5 를 사용하였다.
+out-of-distribution robusteness 를 위해, 기존 unifiedQA 의 weight 과 fine-tuned unifedQA weight 을 average 하였다.([[1]](https://arxiv.org/pdf/2109.01903.pdf))
+
+# Benchmarking Performance
