@@ -59,6 +59,6 @@ $D_0$ 와 $D_1$ 이 X 의 두 distribution 이라고 하고, $H$ 를 $h$ 의 spa
 
 ![image](https://user-images.githubusercontent.com/42200027/201512430-d13fc2f2-f66e-4873-b9cb-1de3f9c91bbb.png)
 
-식에 대해서 잠시 살펴보면, 두 distribution $D_0$ 와 $D_1$ 으로 부터 뽑힌 sample 들에 대해, $h$ 가 어디로 부터 와쓴ㄴ지를 classify 하는 기존의 statistical machine learning 과 같다. 하지만, traditional statistical machine learning 과 다르게, 이 문제는 두 가지 문제를 가지고 있는데, 첫 번째는 **Search** 문제로, discrete string space 에서 hypothesis 를 searching 하는 것은 어렵다는 것이다. 그리고 두 번째는 **Verify** 문제로, $h_s(x_1,x_0)$를 계산하는 데는 human annotation 이 필요한데, 이 것으 매우 비싸다. 이 연구에서는 neural network 로 human response 를 approximating 하는 방법에 대해서 다룬다.
+식에 대해서 잠시 살펴보면, 두 distribution $D_0$ 와 $D_1$ 으로 부터 뽑힌 sample 들에 대해, $h$ 가 어디로 부터 지를 classify 하는 기존의 statistical machine learning 과 같다. 하지만, traditional statistical machine learning 과 다르게, 이 문제는 두 가지 문제를 가지고 있는데, 첫 번째는 **Search** 문제로, discrete string space 에서 hypothesis 를 searching 하는 것은 어렵다는 것이다. 그리고 두 번째는 **Verify** 문제로, $h_s(x_1,x_0)$를 계산하는 데는 human annotation 이 필요한데, 이 것으 매우 비싸다. 이 연구에서는 neural network 로 human response 를 approximating 하는 방법에 대해서 다룬다.
 
 # Method
