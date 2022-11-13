@@ -211,5 +211,5 @@ Natural Language Inference (NLI) 에서 대표적으로 사용되는 [MNLI](http
 
 ![image](https://user-images.githubusercontent.com/42200027/201516669-8835e3b1-cf7e-463a-8336-276f8265f752.png)
 
-이를 위해, 우선 RoBERTa Base 로 [wikitext-2](https://arxiv.org/abs/1609.07843) 를 embed 한 후, [Aharoni & Goldberg](https://aclanthology.org/2020.acl-main.692/) clustering 방법을 이용해 64 cluster 를 생성한다. 그 중, 10 개를 evaluation 을 위해 뽑은 후, 한 명의 저자가 그 cluster 속의 20개의 sample 을 읽은 후, cluster 를 설명하는 자연어 description 문장 s* 를 생성한다. 이후, 모델이 내어놓은 top-5 description 에서 가장 좋게 평가한 하나의 description $\hat{s}$ 를 고른다. 
+이를 위해, 우선 RoBERTa Base 로 [wikitext-2](https://arxiv.org/abs/1609.07843) 를 embed 한 후, [Aharoni & Goldberg](https://aclanthology.org/2020.acl-main.692/) clustering 방법을 이용해 64 cluster 를 생성한다. 그 중, 10 개를 evaluation 을 위해 뽑은 후, 한 명의 저자가 그 cluster 속의 20개의 sample 을 읽은 후, cluster 를 설명하는 자연어 description 문장 s* 를 생성한다. 이후, 모델이 내어놓은 top-5 description 에서 가장 좋게 평가한 하나의 description $\hat{s}$ 를 고른다. 이후, 결과는 위의 그래프와 같다. 10 개의 모든 cluster 에 대하여, 평균적으로 본 연구의 시스템은 CA=0.8 을 달성하였지만, expert는 0.77 을 달성하였다. 즉, 시스템이 expert 와 비교해서 거의 같거나 더 낫다고 이야기하고 있다.
 
