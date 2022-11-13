@@ -62,3 +62,40 @@ $D_0$ 와 $D_1$ 이 X 의 두 distribution 이라고 하고, $H$ 를 $h$ 의 spa
 식에 대해서 잠시 살펴보면, 두 distribution $D_0$ 와 $D_1$ 으로 부터 뽑힌 sample 들에 대해, $h$ 가 어디로 부터 지를 classify 하는 기존의 statistical machine learning 과 같다. 하지만, traditional statistical machine learning 과 다르게, 이 문제는 두 가지 문제를 가지고 있는데, 첫 번째는 **Search** 문제로, discrete string space 에서 hypothesis 를 searching 하는 것은 어렵다는 것이다. 그리고 두 번째는 **Verify** 문제로, $h_s(x_1,x_0)$를 계산하는 데는 human annotation 이 필요한데, 이 것으 매우 비싸다. 이 연구에서는 neural network 로 human response 를 approximating 하는 방법에 대해서 다룬다.
 
 # Method
+![image](https://user-images.githubusercontent.com/42200027/201512602-6e130777-5e1a-4995-8fc6-0449d5370a33.png)
+본 논문에서는 GPT-3 를 prompt 하여 small set 에 대해 hypothesis 를 만들고(1), UnifiedQA 를 통해 larger set 에서 hypothesis 를 검증하고(2), data collection pipeline(3) 을 통해, proposer 와 verifier 를 fine-tuning(4) 한다. 이 과정들은 위의 그림에 요약되어있으며 하나씩 차례대로 살펴본다.
+
+<span style='color:green;font-weight:bold'> (1) Hypothesis Proposer </span>
+<br>
+![image](https://user-images.githubusercontent.com/42200027/201512732-d7699698-64f5-47e3-8d3c-0096544c3ab9.png)
+
+저자들은 GPT-3 를 이용하여 hypothesis 를 생성한다. 그림과 같이 $D_1$ 으로부터 몇 개의 sample을, $D_0$ 로 부터 몇 개의 sample 을 추출 하고, *"Compared to group 0, each sentence from group 1 ___"* 이라는 prompt 를 집어 넣어준다.
+GPT-3 는 2048 의 context size limit 이 있기 때문에, 각 sample 크기는 5 개이다.
+Controlled decoding 기법이 없으면, prompt completion 이 *"is more positive, while sentences from group 0 are ungrammatical."* 과 같이 나타난다.
+그러나, 이러한 completion 은 undesirable 한데, verifier 가 한 번에 두 개 (positive, ungrammatical) 을 확인해야 하고, 두 번째 hypothesis 는 group 을 평가해야 하는데, verifier 는 sample 들을 평가할 수만 있기 때문이다.
+<span style='background-color: #dcffe4'> 따라서, 저자들은 GPT-3 가 "group" 이라는 token 을 decode 하는 것을 막고, "," 와 "or" 같은 token 을 생성하는 것을 금지시킨다.</span>
+
+그리고, $D_0$ 와 $D_1$ 이 완전히 같거나 많이 유사할 경우, optimal hypothesis $h^\*$ 는 이들을 잘 구분할 수 없어야 한다.
+그러나, 몇 가지 sample 을 뽑아서 GPT-3 를 prompt 할 경우에는 이 optimal hypothesis 를 만족시킬 수 없으므로, proposer 를 혼동시킬 수 있다. 
+이 것을 막기 위해 저잗르은 [RoBERTa-Large](https://arxiv.org/abs/1907.11692) model 을 학습시켜, 각 sample 이 $D_0$ 와 $D_1$ 중 어디서 오는지 예측하게 한 다음에, confidence score 를 기준으로 top-$p$ group 을 만든다.
+실험에서는 top-5, top-20, top-100 group 에서 각각 10 번씩 sample 들을 뽑은 후, 2 개의 completion 을 만들게 하여 최종적으로 3 x 10 x 2 = 60 의 hypotheses 를 얻고, 이를 re-rank 한다.
+
+<span style='color:green;font-weight:bold'> (2) Hypothesis Verifier </span>
+<br>
+위의 CA 수식을 검증해야하는데, $h_s(x_1,x_0)$ 는 expensive human annotation 이 필요하기 때문에, neural network 를 이용하여 approximation 한다.
+
+![image](https://user-images.githubusercontent.com/42200027/201513189-a09a4c2b-7d28-4907-8749-c314fe61d5a8.png)
+
+neural network $V$ 에 대해, $V(s,x_1,x_0)=1$ 은 $x_1$ 이 $x_0$ 보다 더 $s$ 하다는 것을 의미한다. 
+
+이후, 저자들은 [UnifiedQA](https://aclanthology.org/2020.findings-emnlp.171/) 를 verifier 로 활용한다. 이 것은 [T5](https://arxiv.org/abs/1910.10683) model 을 기반으로 한 Question answering 모델이다. 
+
+![image](https://user-images.githubusercontent.com/42200027/201513277-cb6cea98-79ea-493e-85e2-c3fd4e40c017.png)
+
+위의 그림과 같이, context $c$ 는 pair of sentence A from $D_1$, and sentence B from $D_0$ 이다. quesiont $q$ 는 *"is it true that sentence A is more positive?"* 이고, *"is more positive"* 부분은 hypothesis $s$ 이다. 이후, 이것을 QA 모델인 UnifiedQA 에 돌렸을 때 1 이 나오면 "yes", 아니면 "no" 가 나온다. 
+이후, $V(s,x_1,x_0)$ 값을 통해 CA 를 re-ranking 한다. 
+전부 re-ranking 하지는 않고, 400 개의 random $(x_1,x_0)$ sample 에 대해서만 $V(s,x_1,x_0)$ 값을 구하고, 최종적으로, 5 개의 hyphothesis $s$ 를 남긴다.
+
+<span style='color:green;font-weight:bold'> (3) Collecting Data for Supervision </span>
+<br>
+
