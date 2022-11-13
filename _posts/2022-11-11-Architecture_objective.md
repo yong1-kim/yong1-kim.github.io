@@ -3,7 +3,7 @@ layout: post
 title:  "[ICML2022] What Language Model Architecture and Pretraining Objective Work Best for Zero-Shot Generalization?"
 date:   2022-11-11 15:48:00 +0900
 use_math: true
-categories: [LLM, Transformer]
+categories: [LLM, Transformer, PLM]
 ---
 [[pdf]](https://proceedings.mlr.press/v162/wang22u/wang22u.pdf)  &emsp;
 [[github]](https://github.com/bigscience-workshop/architecture-objective) <br>
