@@ -201,7 +201,7 @@ Pre-trained OpenAI CLIP model 의 language encoder 와 randomly initialized visi
 
 <span style='color:green;font-weight:bold'>  Effect of using templates </span>
 <br> 
-![image](https://user-images.githubusercontent.com/42200027/201630018-276b7c7c-ec53-498b-9c8b-e20f2b897af5.png)
+![Uploading image.png…]()
 
 OPenAI CLIP model 의 template ("A photo of a {label}") 과 같이 prompt template 을 줄 경우에 대한 실험에서도, 성능은 좋아지지만, robustness 는 좋아지지 않았다.
 따라서 template 역시 robustness 에 cuase 는 아니다.
