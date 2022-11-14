@@ -10,6 +10,8 @@ categories: [Transformer, Vision-and-Language]
 **Alex Fang<sup>1</sup>, Gabriel Ilharco<sup>1</sup>, Mitchell Wortsman<sup>1</sup>, Yuhao Wan<sup>1</sup>, Vaishaal Shankar<sup>2</sup>, Achal Dave<sup>2</sup>, Ludwig Schmidt<sup>1 3</sup>**
 <br><sup>1</sup>University of Washington ,<sup>2</sup> Amazon, <sup>3</sup> Allen Institute for Artificial Intelligence. &emsp; 
 
+![image](https://user-images.githubusercontent.com/42200027/201623127-78b9bcaf-d323-4ec1-a34d-245fced4c477.png)
+
 ![image](https://user-images.githubusercontent.com/42200027/201605458-96e586c0-2ca1-4ce9-8e81-7e895c3d732d.png)
 
 # Abstract
@@ -164,3 +166,4 @@ ImageNet-Captions 은 90% 이상은 영어지만, 127개의 다른 언어도 포
 따라서, ImageNet-Captions 의 caption 들이 class 에 relevant information 을 포함하고 있고, image-text model 의 training 에 적합한 좋은 caption 을 갖고 있다는 것을 알 수 있다.
 
 # Imagenet-Captions experiments 
+Effective robustness 실험을 위해 ImageNet-Captions 데이터셋을 활용한다.
