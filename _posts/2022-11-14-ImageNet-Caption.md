@@ -167,3 +167,91 @@ ImageNet-Captions 은 90% 이상은 영어지만, 127개의 다른 언어도 포
 
 # Imagenet-Captions experiments 
 Effective robustness 실험을 위해 ImageNet-Captions 데이터셋을 활용한다.
+ResNet50 CLIP model 을 IamgeNet-Captions 를 활용해 contrastive loss 로 학습하고, CLIP model 의 vision encoder 위에 additional linear layer를 통해 equivalent image classification dataset 을 학습한다. 
+
+<span style='color:green;font-weight:bold'> Caption construction </span>
+<br> 
+![image](https://user-images.githubusercontent.com/42200027/201624074-d421aa3b-5f25-4e28-889e-8523ca3e04fe.png)
+
+ImageNet-Captions 에 대해, caption 으로 어떠한 metadata(title/desc/tags) 를 써야 하는지 선정해야 한다.
+이를 위해 여러가지 varaint 에 대한 실험을 했다.[ Radford et al.](http://proceedings.mlr.press/v139/radford21a.html) 은  영어만을 사용하기 위해 filter 를 사용했는데, 이와 유사한 filter 를 사용하여 variant 를 주었다.
+실험 결과, filter 가 image-text pair 개수의 손실을 보상할 만큼 좋은 결과를 내지 못하였으며, 성능에 가장 중요한 것은 size 라는 것을 볼 수 있다.
+
+<span style='color:green;font-weight:bold'> Robustness </span>
+<br> 
+ImageNet-Captions 로 학습한 모델의 robustness 를 보기 위해, ImageNet 과 natural distribution shift 데이터셋들에 대해 비교를 한다.
+![image](https://user-images.githubusercontent.com/42200027/201624954-d9436c79-ebf5-4a23-92bf-e93c945e1ed4.png)
+
+그림에서 보듯이, ImageNet-Captions CLIP 과 ImageNet-Captions classification 이 거의 유사한 linear trend 를 보이는 것을 볼 수 있다.
+<span style='background-color: #dcffe4'> This shows that CLIP models are not more robust than classification models trained on the same dataset, despite the difference of language supervision </span> 이라고 분석할 수 있다.
+ImageNet-Captions 에 대한 실험은 ImageNet classification model 보다 더 나은 비교라고 할 수 있는데, 더 이상 different image distribution 에 대한 confounding factor 가 없기 때문이다. (**즉, 초록색<-> 주황색 비교가 파란색<-> 보라색 비교보다 훨씬 낫다는 것이다**)
+그럼에도 불구하고, 이러한 모델들은 Radford et al. CLIP 모델의 robustness 를 볼 수 없었다.
+
+<span style='color:green;font-weight:bold'>  Pre-training on language </span>
+<br> 
+따라서 위의 분석 결과로, ImageNet-Captions 의 language supervision 이 model 의 robustness 에 큰 도움이 되지 않는다는 것을 보았다.
+그러나 이 분석만으로, OpenAI CLIP model 의 robustness 에 대한 language supervision 기여 여부를 rule out 할 수는 없다.
+따라서 저자들은 추가적인 실험을 진행한다.
+Pre-trained OpenAI CLIP model 의 language encoder 와 randomly initialized vision encoder 를 가져와서, ImageNet-Captions 를 학습시킨다.
+이 때, language wieght 의 freeze 여부로 variant 를 준다.
+
+![image](https://user-images.githubusercontent.com/42200027/201627192-c97a93d8-4e7c-45ca-9a0e-cf9cc04da99a.png)
+
+위의 그래프에서 볼 수 있듯이, language head 를 freeze 한 것과 unfreeze 한 것 모두 random initialize 된 것 (초록색점)보다 accuracy 를 좋게 만들었지만, 어떠한 variant 도 effective robustness 를 부여하지 않았다. 따라서 natural language supervision 이 robustness 에 기여했다고는 할 수 없다. 
+
+<span style='color:green;font-weight:bold'>  Effect of using templates </span>
+<br> 
+![image](https://user-images.githubusercontent.com/42200027/201630018-276b7c7c-ec53-498b-9c8b-e20f2b897af5.png)
+
+OPenAI CLIP model 의 template ("A photo of a {label}") 과 같이 prompt template 을 줄 경우에 대한 실험에서도, 성능은 좋아지지만, robustness 는 좋아지지 않았다.
+따라서 template 역시 robustness 에 cuase 는 아니다.
+
+<span style='color:green;font-weight:bold'> Improving ImageNet performance using captions</span>
+<br> 
+![image](https://user-images.githubusercontent.com/42200027/201631441-d671b775-340c-4653-8559-c569ddfc129e.png)
+
+# YFCC experiments
+지금까지의 실험으로 *language supervision alone* 은 robustness 를 향상시키지 않는다는 것을 실험적으로 보였다.
+CLIP 의 robustness 에 대한 더 깊은 이해를 위해, 최소한/혹은 language supervision 이 주어지지 않은 경우, representation 학습이 같은 robustness 를 부여할 수 있을지 검증한다.
+이 실험 결과는 CLIP 의 robustness 가 language supervision 이 아닌 **다양한 data distribution** 으로 부터 온다는 것을 보일 수 있을 것이다.
+
+실험을 위해 Yahoo Flickr Creative Commons dataset([YFCC](https://www.arxiv-vanity.com/papers/1503.01817/)) 데이터셋을 사용한다.
+CLIP 의 YFCC datset 에 대해서도 향상된 robustness 를 갖고 있다.
+YFCC 의 image data 만 사용해도 robustness 를 향상시킬지 테스트 하기 위해, YFCC 의 language part 가 없는 "standard" image representation 을 contrastively pre-train 한다. 
+이 image-only representation 으로, 최소한의 text processing (substring matching) 으로 zero-shot classifier 를 fine-tuning 한다.
+그 결과, 이 zero-shot classifier 가 CLIP 과 유사한 effective robustness를 보인다.
+<span style='background-color: #dcffe4'> This demonstrates that the training distribution, not language supervision at training time, is the main reason behind CLIP’s robustness. </span> 라고 할 수 있다.
+
+<span style='color:green;font-weight:bold'> Dataset </span>
+<br> 
+[YFCC-100M](https://www.arxiv-vanity.com/papers/1503.01817/) 의 subset 인 [YFCC-15M](http://proceedings.mlr.press/v139/radford21a.html) 을 활용한다.
+이는 English title 과 description 만을 filter 한 것으로, 14,829,396 image 와 함께 자연어 캡션을 가지고 있다.
+YFCC-15M 의 image classifier 를 학습하기 위해, YFCC-15M 을 classifciation dataset 으로 바꾼 YFCC-15M-Cls 를 만들었다.
+단순한 방법론으로 YFCC-15M 에 ImageNet class label 을 부여한다 : title/description 에 class label 혹은 그 synonym 이 보이면 그 것을 label 로 한다.
+이러한 label 이 없으면 image 는 버린다. 그 결과, 953 개의 class 를 cover 하는 1,694,125 (11.4 % of full dataset) 개의 image 가 뽑혔다.
+가장 많은 class 에는 28만 개의 image 가, 가장 적은 class 에는 1 개의 image 가 assign 된다.
+
+<span style='color:green;font-weight:bold'> Classification training. </span>
+<br> 
+Classification model 은 Vit-B/16 모델에 softmax cross-entropy loss 로 YFCC-15M-Cls 를 finetuning 한다. 
+YFCC-15M 에 pre-trained 된 SimCLR model 로 initialize 한다.
+
+<span style='color:green;font-weight:bold'> Result. </span>
+<br> 
+![image](https://user-images.githubusercontent.com/42200027/201635095-27a45e87-8d1f-4fe3-8d85-8ca6e70bedf1.png)
+
+![image](https://user-images.githubusercontent.com/42200027/201634998-f835962f-1558-4312-95bd-b49baf72b2b2.png)
+
+결과는 위의 표와 그림에서 볼 수 있다.
+SimCLR + 11% Finetuning classification model 이 CLIP 학습의 결과와 거의 유사하다.
+그리고 Avg OOD 의 실험결과 <span style='background-color: #dcffe4'> CLIP 의 robustness 와 거의 유사한 결과를 보인다. </span>
+이에 대한 해석은 아래와 같다.
+
+![image](https://user-images.githubusercontent.com/42200027/201636629-83baacc9-40b4-457d-bbc4-a3d66704c485.png)
+
+# Effect of test time prompts 
+![image](https://user-images.githubusercontent.com/42200027/201637150-bf6cbfb4-1cd6-4ddd-a25a-6dd2b429a390.png)
+
+# Effect of contrastive training losses
+![image](https://user-images.githubusercontent.com/42200027/201637434-5f664918-29c3-42e9-83c7-b5ccf7f5d394.png)
+
