@@ -85,7 +85,7 @@ Robustness 측정단계에서, 이러한 교란 인자(confounder)를 처리하�
 Figure 1 에서 파란색 선에서 수직으로 뻗는 *Effiective Robustness* 가 그것이다.
 [Radford et al.](http://proceedings.mlr.press/v139/radford21a.html) 은 Figure 1 의 purple line 처럼 high effective robustness 를 달성한 CLIP model 을 구현했다고 증명한다.
 수식적으로, 이 effective robustness 비교는 다음의 식으로 표현가능하다.
-Baseline fucntion $\Beta$ : $R -> R$ 에 대해, $\Beta$는 $acc_{D_1}(f)$ 으로부터 $acc_{D_2}(f)$ 로 mapping 하는 함수이다.
+Baseline fucntion $\beta$ : $R -> R$ 에 대해, $\beta$는 $acc_{D_1}(f)$ 으로부터 $acc_{D_2}(f)$ 로 mapping 하는 함수이다.
 New model $f'$ 에 대하여, effective robustness 는 다음과 같이 표시할 수 있다.
-$\rho(f') = acc_{D_2}(f') - \Beta(acc_{D_1}(f'))$.
+$\rho(f') = acc_{D_2}(f') - \beta(acc_{D_1}(f'))$.
 이 수식이 이 논문에서 CLIP model 들의 robustness 를 이해하기 위해 visualize 하는 main quantity 이다.
