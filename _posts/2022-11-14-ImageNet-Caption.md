@@ -13,9 +13,10 @@ categories: [Transformer, Vision-and-Language]
 ![image](https://user-images.githubusercontent.com/42200027/201530852-d42832d4-ee65-47d1-92bd-e127c1648c0a.png)
 
 # Abstract
-- (Motivation) Pre-trained Language Model (PLM) 이 NLP task 를 푸는 굉장히 강력한 standard 가 되었지만, train 하기에는 computation cost 가 너무 비싸다. 
-- (Solution) 이 연구에서는 simple and efficient learning framework **TLM** 을 제안하여, large-scale pretraining 에 rely 하지 않는 학습 방법을 제안한다. 
-- (Method) Labeled task data 와 large general corpus 에 대하여, TLM 은 task data 를 Query 로 하여 general corpus 로부터 tiny subset 을 retrieval 한 후, task objective 를 jointly optimize 한다.  
-- (Result) 4개 domain 의 8개 데이터셋에 대한 실험 결과, TLM 은 PLM 과 비교하여 FLOP 은 두 자리수나 적으면서 성능은 더 좋거나 유사한 성능을 보인다. 
+- (Motivation) CLIP, ALIGN, BASIC 과 같은 contrastive learning 기반의 vision-language model 들은 distribution shift 에 굉장한 robustness 를 보인다. 이렇게 큰 robustness gain 을 얻는 원인에 대한 질문은 굉장히 중요하다.
+- (Solution) 체계적인 실험 조사(systematic experimental investigation) 으로 이 질문에 대해 탐구한다. 
+- (Method) (1) Training set size (2) Training distribution (3) Language supervision at training time (4) Language supervision at test time (5) contrastive loss function 다섯 가지 possible cause 에 대해서 실험 조사를 진행한다.
+- (Result) (2) Training distribution 이 다양할 수록 robustness gain 이 컸고, 나머지 네 개의 factor 들은 전혀 robustness 에 관련이 없었다.
+- (New Dataset) Flickr annotation 으로  이뤄진 ImageNet version 의 새로운 dataset 인  **ImageNet-Captions** 을 공개한다. 이 데이터셋은 controllable vision-and-language training 이 가능하게 한다.
 
 # Introduction
