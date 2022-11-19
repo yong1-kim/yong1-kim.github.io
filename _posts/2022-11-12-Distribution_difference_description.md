@@ -34,7 +34,7 @@ categories: [LLM, Transformer, PLM]
 하지만 이러한 task 를 위한 corpus 가 존재하지 않으므로, 저자들은 GPT-3 를 이용하여 data 를 collection 하여 fine-tuning 에 사용한다.
 위의 그림과 같이, hypothesis $s$ 에 대해, GPT-3 를 활용하여 sample 들을 generation 한 이후, 그 것들을 human 이 annotate 하여, proposer fine-tuning 에 활용한다. 
 
-[54 real-world binary classification datasets](https://aclanthology.org/2021.findings-emnlp.244/) 에 대해서 검증을 진행한다. 이 dataset 들은 positive class 들에 대해 자연어 description 으로 annotate 되어 있다. 이 문제로 적용을 위해, positive/negative class input 들을 $D_1$/$D_0$ 로 여기고, top-5 description 이 human annotation 과 일치하는 지 비교한다. GPT-3 Curie (13B) 모델을 적용했을 때는 7%의 일치도를 보였지만, fine-tuning 이후 61% 의 일치도를 보여 크게 향상되었고, GPT-3 Davinci model 을 했을 때는 76% 에 도달하였다.
+저자들은 [54 real-world binary classification datasets](https://aclanthology.org/2021.findings-emnlp.244/) 에 대해서 검증을 진행한다. 이 dataset 들은 positive class 들에 대해 자연어 description 으로 annotate 되어 있다. 이 문제로 적용을 위해, positive/negative class input 들을 $D_1$/$D_0$ 로 여기고, top-5 description 이 human annotation 과 일치하는 지 비교한다. GPT-3 Curie (13B) 모델을 적용했을 때는 7%의 일치도를 보였지만, fine-tuning 이후 61% 의 일치도를 보여 크게 향상되었고, GPT-3 Davinci model 을 했을 때는 76% 에 도달하였다.
 
 ![image](https://user-images.githubusercontent.com/42200027/201511897-6326947c-2269-45c8-98a7-28a73aef7751.png)
 
@@ -48,18 +48,18 @@ X 를 set of all text input 이라고 하면, natural language hypothesis $h$ �
 
 ![image](https://user-images.githubusercontent.com/42200027/201512293-2207804b-a03d-4165-97ae-051d7d61a7fd.png)
 
-where $h_s(x_1,x_0) = 1$ means $x_1$ is more $s$ than $x_0$.
+where $h_s(x_1,x_0) = 1$ means $x_1$ is more $s$ than $x_0$. <br>
 예를 들어, $s$ 가 *"is longer in sentence length"* 일 때, $h_s(x_1,x_0) = 1$ 은 $x_1$ 이 $x_0$ 보다 길다는 것을 의미한다.
 정리하면, $h_s$ 의 semantic 은 
 
 ![image](https://user-images.githubusercontent.com/42200027/201512363-64880c33-683d-4f82-b289-fca2979d4553.png)
 
-으로 정리할 수 있다.
+으로 정리할 수 있다. <br>
 $D_0$ 와 $D_1$ 이 X 의 두 distribution 이라고 하고, $H$ 를 $h$ 의 space 라고 했을 때, 이 task 의 목적은 $H$ 속의 $h$ 중 다음의 "classification accuracy" CA 가 높은 것을 찾아내는 것이다.
 
 ![image](https://user-images.githubusercontent.com/42200027/201512430-d13fc2f2-f66e-4873-b9cb-1de3f9c91bbb.png)
 
-식에 대해서 잠시 살펴보면, 두 distribution $D_0$ 와 $D_1$ 으로 부터 뽑힌 sample 들에 대해, $h$ 가 어디로 부터 지를 classify 하는 기존의 statistical machine learning 과 같다. 하지만, traditional statistical machine learning 과 다르게, 이 문제는 두 가지 문제를 가지고 있는데, 첫 번째는 **Search** 문제로, discrete string space 에서 hypothesis 를 searching 하는 것은 어렵다는 것이다. 그리고 두 번째는 **Verify** 문제로, $h_s(x_1,x_0)$를 계산하는 데는 human annotation 이 필요한데, 이 것으 매우 비싸다. 이 연구에서는 neural network 로 human response 를 approximating 하는 방법에 대해서 다룬다.
+식에 대해서 잠시 살펴보면, 두 distribution $D_0$ 와 $D_1$ 으로 부터 뽑힌 sample 들에 대해, $h$ 가 어디로 부터 오는지를 classify 하는 기존의 statistical machine learning 과 같다. 하지만, traditional statistical machine learning 과 다르게, 이 문제는 두 가지 문제를 가지고 있는데, 첫 번째는 **Search** 문제로, discrete string space 에서 hypothesis 를 searching 하는 것은 어렵다는 것이다. 그리고 두 번째는 **Verify** 문제로, $h_s(x_1,x_0)$를 계산하는 데는 human annotation 이 필요한데, 이 것은 매우 비싸다는 것이다. 이 연구에서는 neural network 로 human response 를 approximating 하는 방법에 대해서 다룬다.
 
 # Method
 ![image](https://user-images.githubusercontent.com/42200027/201512602-6e130777-5e1a-4995-8fc6-0449d5370a33.png)
@@ -77,7 +77,7 @@ Controlled decoding 기법이 없으면, prompt completion 이 *"is more positiv
 
 그리고, $D_0$ 와 $D_1$ 이 완전히 같거나 많이 유사할 경우, optimal hypothesis $h^\*$ 는 이들을 잘 구분할 수 없어야 한다.
 그러나, 몇 가지 sample 을 뽑아서 GPT-3 를 prompt 할 경우에는 이 optimal hypothesis 를 만족시킬 수 없으므로, proposer 를 혼동시킬 수 있다. 
-이 것을 막기 위해 저잗르은 [RoBERTa-Large](https://arxiv.org/abs/1907.11692) model 을 학습시켜, 각 sample 이 $D_0$ 와 $D_1$ 중 어디서 오는지 예측하게 한 다음에, confidence score 를 기준으로 top-$p$ group 을 만든다.
+이 것을 막기 위해 저자들은 [RoBERTa-Large](https://arxiv.org/abs/1907.11692) model 을 학습시켜, 각 sample 이 $D_0$ 와 $D_1$ 중 어디서 오는지 예측하게 한 다음에, confidence score 를 기준으로 top-$p$ group 을 만든다.
 실험에서는 top-5, top-20, top-100 group 에서 각각 10 번씩 sample 들을 뽑은 후, 2 개의 completion 을 만들게 하여 최종적으로 3 x 10 x 2 = 60 의 hypotheses 를 얻고, 이를 re-rank 한다.
 
 <span style='color:green;font-weight:bold'> (2) Hypothesis Verifier </span>
@@ -92,7 +92,7 @@ neural network $V$ 에 대해, $V(s,x_1,x_0)=1$ 은 $x_1$ 이 $x_0$ 보다 더 $
 
 ![image](https://user-images.githubusercontent.com/42200027/201513277-cb6cea98-79ea-493e-85e2-c3fd4e40c017.png)
 
-위의 그림과 같이, context $c$ 는 pair of sentence A from $D_1$, and sentence B from $D_0$ 이다. quesiont $q$ 는 *"is it true that sentence A is more positive?"* 이고, *"is more positive"* 부분은 hypothesis $s$ 이다. 이후, 이것을 QA 모델인 UnifiedQA 에 돌렸을 때 1 이 나오면 "yes", 아니면 "no" 가 나온다. 
+위의 그림과 같이, context $c$ 는 pair of sentence A from $D_1$, and sentence B from $D_0$ 이다. question $q$ 는 *"is it true that sentence A is more positive?"* 이고, *"is more positive"* 부분은 hypothesis $s$ 이다. 이후, 이것을 QA 모델인 UnifiedQA 에 돌렸을 때 1 이 나오면 "yes", 아니면 "no" 가 나온다. 
 이후, $V(s,x_1,x_0)$ 값을 통해 CA 를 re-ranking 한다. 
 전부 re-ranking 하지는 않고, 400 개의 random $(x_1,x_0)$ sample 에 대해서만 $V(s,x_1,x_0)$ 값을 구하고, 최종적으로, 5 개의 hyphothesis $s$ 를 남긴다.
 
@@ -143,7 +143,7 @@ out-of-distribution robusteness 를 위해, 기존 unifiedQA 의 weight 과 fine
 <br>
 저자들의 [previous paper](https://aclanthology.org/2021.findings-emnlp.244.pdf) 에서, 54 개의 binary text classification task 에 대해 positive class 에 하나 이상의 자연어 description 이 있는 eval set 모음을 차용한다.
 이 eval set 들에는 topic classifciation, grammaticallity classifciation, stance classification 등을 포함한다.
-각각에 대하여, 제안된 시스템에 postiive class sample 들이 negative class sample 들과 어떻게 다른지를 설명하도록 시키고, human annotation 과 top-5 비교를 한다. human annotation description 을 위한 $s^\*$ 를 "correct" 라고 가정한다.
+각각에 대하여, 제안된 시스템에 positive class sample 들이 negative class sample 들과 어떻게 다른지를 설명하도록 시키고, human annotation 과 top-5 비교를 한다. human annotation description 을 위한 $s^\*$ 를 "correct" 라고 가정한다.
 
 <span style='color:green;font-weight:bold'> Evaluated Systems. </span>
 <br>
@@ -181,7 +181,7 @@ Verifier 를 비교하기 위해, 위의 CA 수식에 대하여, 저자들은 la
 결과는 위와 같은데, CA 수식은 여전히 approximation 이므로 automatic evaluation 은 infeasible 하지만, unifedQA 가 verifier 로서의 역할을 하고, fine-tuned verifier 의 효과가 더 좋았다. 그리고, 실제 [state-of-the-art model](https://arxiv.org/pdf/2112.11446.pdf) 은 unifiedQA 보다 25x 크기 때문에, 그래프의 해석대로라면 훨씬 더 좋은 성능을 보일 수 있다.
 
 # Application
-본 연구의 시스템은 suumarize training task, debug dataset shortcut, describe distribution shift, 그리고 label text cluster 에 사용될 수 있다.
+본 연구의 시스템은 summarizing training task, debugging dataset shortcut, describing distribution shift, 그리고 labeling text cluster 에 사용될 수 있다.
 
 <span style='color:green;font-weight:bold'> Summarizing Training Tasks </span>
 <br>
