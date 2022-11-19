@@ -14,9 +14,9 @@ categories: [LLM, Transformer, PLM]
 ![image](https://user-images.githubusercontent.com/42200027/201280889-750c58c2-b68b-4b58-9f82-2feb39f72b08.png)
 
 # Abstract
-- (Motivation) Large Language Model (LLM) 이 zero-shot generalization 에 좋은 성능을 보이지만, 많은 state-of-the-art 모델들이 각기 다른 architecture 와 pre-training objective 를 통해 학습되는데, 이 요소들에 대한 체계적인 비교(systematic comparison) 이 적다. 
+- (Motivation) Large Language Model (LLM) 이 zero-shot generalization 에 좋은 성능을 보인다. 하지만, 많은 State-of-the-Art 모델들이 각기 다른 architecture 와 pre-training objective 를 통해 학습되는데, 이 요소들에 대한 체계적인 비교(systematic comparison) 이 적다. 
 - (Solution) 이 논문에서는 여러 LLM 들의 modeling choice 와 zero-shot generalization 에 대한 영향력을 평가하는 large-scale evaluation 방법을 제안한다.
-- (Experiment) (causal decoder-only / non-causal decoder-only / encoder-decoder) 세 구조 (architecture)와 (autoregressive, masked language modeling) 두 가지 pre-training objective, 그리고 with/without multitask finetuning 조합들을 실험을 진행한다.
+- (Experiment) (causal decoder-only / non-causal decoder-only / encoder-decoder) 세 구조 (architecture) 와 (autoregressive, masked language modeling) 두 가지 pre-training objective, 그리고 with/without multitask finetuning 조합들을 실험을 진행한다.
 - (Results) causal decoder-only + autoregressive 방법이 zero-shot 성능은 제일 좋았으나, non-causal + mlm + multi-task finetuning 방법이 실험 성능은 제일 좋았다.
  
 # Introduction
@@ -53,11 +53,11 @@ Transformer 모델들은 다양한 <span style='background-color: #f7b6b0'> self
 
 <span style='color:green;font-weight:bold'> Transformer </span>
 <br>
-거의 모든 LLM 들은 [transformer](https://papers.nips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html) 기반으로 설계된다. 굉장히 많이 쓰이기 떄문에, main architecutre 만 다루면, Transformer block 이 main architecutre 이다. Transformer block 은 multi-head attnetion, layer normalization, dense two-layer feedforward network, residual connections 로 이루어져 있다.
+거의 모든 LLM 들은 [transformer](https://papers.nips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html) 기반으로 설계된다. LLM 을 구성하는 데는 여러 기술들이 굉장히 많이 쓰이기 때문에, 다른 것은 제한하고 main architecutre 만 생각했을 때 Transformer block 이 main architecutre 이다. Transformer block 은 multi-head attention, layer normalization, dense two-layer feedforward network, residual connections 로 이루어져 있다.
 
 <span style='color:green;font-weight:bold'> Encoder-Decoder </span>
 <br>
-Transformer 는 encoder-decoder 구조로 되어있다. Encoder 에서는 input token 을 bidirectional conditioning 을 통해, 모든 input token 끼리 서로 볼 수 있으며, decoder 에서는 autoregressive 하게 target sequence 를 token-by-token 예측한다. Decoder 의 self-attention layer 에서는 *causal* masking pattern (그림2 오른쪽) 을 통해 future token 을 보는 것을 방지한다. Encoder-Decoder 구조를 활용하는 Pre-trained Language model (PLM) 에는 [BART](https://arxiv.org/abs/1910.13461), [T5](https://arxiv.org/abs/1910.10683) 등이 있다. 
+Transformer 는 encoder-decoder 구조로 되어있다. Encoder 에서는 input token 을 bidirectional conditioning 을 통해, 모든 input-token 끼리 서로 볼 수 있으며, decoder 에서는 autoregressive 하게 target sequence 를 token-by-token 예측한다. Decoder 의 self-attention layer 에서는 *causal* masking pattern (그림2 오른쪽) 을 통해 future token 을 보는 것을 방지한다. Encoder-Decoder 구조를 활용하는 Pre-trained Language model (PLM) 에는 [BART](https://arxiv.org/abs/1910.13461), [T5](https://arxiv.org/abs/1910.10683) 등이 있다. 
 
 <span style='color:green;font-weight:bold'> Causal decoder-only</span>
 <br>
@@ -65,7 +65,7 @@ Transformer 는 encoder-decoder 구조로 되어있다. Encoder 에서는 input 
 
 <span style='color:green;font-weight:bold'> Non-causal decoder-only</span>
 <br>
-Decoder-only 구조에 input/conditioning text 에 대한 richer representation 을 build 하기 위해, attnetion mask 수정을 통한 간단한 방법이 제안되었다. self-attention masking pattern 을 그림 2의 중간과 같이 바꿔줌으로써, 구현할 수 있다. 이러한 구조를 *prefix* Language model ([[10]](https://arxiv.org/abs/2110.04725))이라고도 한다. 
+Decoder-only 구조에 input/conditioning text 에 대한 richer representation 을 build 하기 위해, attention mask 수정을 통한 간단한 방법이 제안되었다. self-attention masking pattern 을 그림 2의 중간과 같이 바꿔줌으로써, 구현할 수 있다. 이러한 구조를 *prefix* Language model ([[10]](https://arxiv.org/abs/2110.04725))이라고도 한다. 
 
 <span style='color:green;font-weight:bold'> Encoder-only</span>
 <br>
@@ -85,17 +85,17 @@ GPT-2 이후로, large-scale decoder-only 모델이 autoregressive NLG 에서 �
 
 <span style='color:green;font-weight:bold'> Prefix Language modeling </span>
 <br>
-non-casual decoder-only model 과 encoder-decoder model 들이 Language modeling (LM) 을 수행하기 위해, prefix 를 지정할 수 있다. FLM 과 비슷하게, model 은 이전의 token 들롭퉈 바로 다음 token 을 예측하지만, prefix 는 고정되어 bidrectional 하게 볼 수 있다. 앞으로 이 논문 소개에서 <span style='background-color: #f7b6b0'> PLM 은 prefix langugage modeling 을 의미</span> 한다. 
+non-casual decoder-only model 과 encoder-decoder model 들이 Language modeling (LM) 을 수행하기 위해, prefix 를 지정할 수 있다. FLM 과 비슷하게, model 은 이전의 token 들로부터 바로 다음 token 을 예측하지만, prefix 는 고정되어 bidrectional 하게 볼 수 있다. 앞으로 이 논문 소개에서 <span style='background-color: #f7b6b0'> PLM 은 prefix langugage modeling 을 의미</span> 한다. 
 
 <span style='color:green;font-weight:bold'> Masked Language modeling </span>
 <br>
-Input token 의 일부가 special [Mask] token 으로 대체된 후, 이를 예측하는 modeling 기법이다. 연속되는 token 을 하나의 mask 로 처리하는 span corruption 기술 등이 tkdydehlrleh gksek. 
+Input token 의 일부가 special [Mask] token 으로 대체된 후, 이를 예측하는 modeling 기법이다. 연속되는 token 을 하나의 mask 로 처리하는 span corruption 기술 등이 사용되기도 한다. 
 
 <span style='background-color: #fabbeb'> Model adaptation</span>
 <br>
 Adaptation 은 기존의 pre-training 기법을 다른 objective, 또는 다른 architecture 로 확장시키는 방법을 의미한다. 
 Fine-tuning 과 다르게, downstream data 가 전혀 사용되지 않으며, *only additional pre-training data* 만이 사용된다.
-<span style='background-color: #fabbeb'> Language modeling adaptation (LM-A) </span> 는 보통 MLM 으로 학습된 모델은 PLM, FLM 으로 확장시킨다. 이는 MLM 으로 학습된 encoder-decoder model 을 NLG 에 사용되기 위해 적용된다. 이는 [prompt tuning](https://arxiv.org/abs/2104.08691) 이 제안되기 전부터 사용된 방법이고, T0 에서 multitask finetuning 전에 model 설계에 사용된다.
+<span style='background-color: #fabbeb'> Language modeling adaptation (LM-A) </span> 는 보통 MLM 으로 학습된 모델을 PLM, FLM 으로 확장시킨다. 이는 MLM 으로 학습된 (NLG 에 약한) encoder-decoder model 을 NLG 에 사용되기 위해 적용된다. 이는 [prompt tuning](https://arxiv.org/abs/2104.08691) 이 제안되기 전부터 사용된 방법이고, T0 에서 multitask finetuning 전에 model 설계에 사용된다.
 
 <span style='background-color: #dcffe4'> Multitask fine-tuning </span>
 <br>
@@ -106,7 +106,7 @@ Fine-tuning 과 다르게, downstream data 가 전혀 사용되지 않으며, *o
 [Radford et al.](https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf) 은 처음으로 LLM 들이 zero-shot 성능이 매우 좋다는 것을 보였다. Zero-shot 은 **prompting** 기술에 의존하는데, 이는 task 를 자연어 형태의 포맷으로 포맷화시키는 것이다. 이 때 사용된 템플릿이 prompt 이다. 불행히도, prompt 에 따라 성능이 sensitive 하게 달라진다. 최근 zero-shot capability 에 대한 주목도가 높아지는 것은 labeld example 이 필요없고, unseen task 에 대해서 fine-tuning 에 대한 complexity 가 사라지기 때문이다.
 
 # Methods
-모든 <architecture, objective> pair 가 C4 의 168B token 으로 학습이 된다. 이후, multi-task finetuning 을 고려하여 zero-shot 성능을 측정한다.
+모든 <architecture, objective> pair 가 C4 의 168 B token 으로 학습이 된다. 이후, multi-task finetuning 을 고려하여 zero-shot 성능을 측정한다.
 또, adaptation 이 architecture/objecdtive 변경으로부터 효과적인 이득을 얻을 수 있는 가능성을 확인한다.
 
 <span style='color:green;font-weight:bold'> Compute budget guideline </span>
@@ -137,7 +137,7 @@ Dropout 이 zero-shot 성능에 큰 영향을 미치는 것을 발견하여 추�
 <span style='color:green;font-weight:bold'> Evaluation </span>
 <br>
 ![image](https://user-images.githubusercontent.com/42200027/201311832-822a99f9-aba2-4baa-9d8a-782aa61b43b1.png)
-T0-Eval 은 각 task 마다 multiple prompt 를 제공하고, EAI-EVal 은 하나의 태스크당 하나의 prompt 만을 제공한다.
+T0-Eval 은 각 task 마다 multiple prompt 를 제공하고, EAI-Eval 은 하나의 태스크당 하나의 prompt 만을 제공한다.
 T0-Eval 은 prompt 별로 중간값을 취하고, 11 task 에 평균값을 취해 report 하였다.
 42B, 84B, 168B token 들에 대해 model checkpoint 를 저장하였다.
 
@@ -145,7 +145,7 @@ T0-Eval 은 prompt 별로 중간값을 취하고, 11 task 에 평균값을 취�
 <span style='color:green;font-weight:bold'> After self-supervised pretraining only </span>
 <br>
 ![image](https://user-images.githubusercontent.com/42200027/201313096-51fa9244-5ca5-4d2e-8066-7ed4d13c2eb5.png)
-첫 번째로, sefl-supervised learning 학습 이후 zero-shot 성능을 본다. MLM 은 알맞지 않기 때문에, 사용되지 않았다. 
+첫 번째로, self-supervised learning 학습 이후 zero-shot 성능을 본다. MLM 은 알맞지 않기 때문에, 사용되지 않았다. 
 - Causal Decoder-only + FLM 모델이 가장 좋았고, non-causal decoder-only + PLM 가 뒤따르며, encoder-decoder + PLM 는 좋지 못하다.
 - T0-Eval 에서의 실험결과는 random-baseline 과 크게 차이가 없지만, EAI-Eval 에서는 차이가 있다.
 ![image](https://user-images.githubusercontent.com/42200027/201312954-f5d61c16-dda1-4b2f-a711-8642503e3f29.png)
@@ -194,7 +194,7 @@ Non-causal decoder-only + MLM -> causal decoder + FLM 으로 adaptation 한다.
 이번엔 새로운 adaptation 방법을 소개한다. : *non-causal masked language modeling* 기법이다.
 Causal decoder-only + FLM -> non-causal decoder-only + MLM 으로 adaptation 시킨다.
 이는 위의 Language modeling adaptation (LM-A) 의 역과정과 같으며, 방법은 역시 단순하게 attention mask 를 변형시킴으로써 구현 가능하다.
-Validation Loss 는 Figure 6. 의 오른쪽에서 볼 수 있다. 기존의 MLM 기반의 decoder-only 모델들보다 3.3배 내지 9.1 배 빨르게 수렴한다.
+Validation Loss 는 Figure 6. 의 오른쪽에서 볼 수 있다. 기존의 MLM 기반의 decoder-only 모델들보다 3.3배 내지 9.1 배 빠르게 수렴한다.
 <span style='background-color: #dcffe4'> 이 adaptation 방법으로 single model 의 1.3 배 cost 만으로 zero-shot model 과 excellent generative model 을 얻는 것이 가능하다.  </span>
 
 마지막으로, validation loss 의 improvement 가 zero-shot improvement 로 이어지는 것에 대한 실험 결과이다.
