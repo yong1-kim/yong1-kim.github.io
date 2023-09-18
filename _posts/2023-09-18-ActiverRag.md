@@ -1,4 +1,4 @@
-![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/d69eaa15-24ae-4412-ac4f-1a7b80ff81bb)---
+---
 layout: post
 title:  "Active Retrieval Augmented Generation"
 date:   2023-09-18 16:44:00 +0900
@@ -114,7 +114,7 @@ Empiricially, next sentence을 사용한 검색이 previous context 을 사용�
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/d6196366-c6e0-4fb8-b79f-a60357da5078)
 
-<span style='color:green;font-weight:bold'> Masked sentences as implicit querie </span> :
+<span style='color:green;font-weight:bold'> Masked sentences as implicit querie </span> : 첫 번째 방법은 $\hat{s_t}$ 내에서 신뢰도가 낮은 토큰을 임계값 β ∈ [0, 1] 아래의 확률로 마스킹 처리한다. 높은 β는 더 강력한 마스킹을 의미하며, 이로 인해 문장에서 잠재적인 산만 요소가 제거되어 검색 정확도가 향상된다.
 
 
 
