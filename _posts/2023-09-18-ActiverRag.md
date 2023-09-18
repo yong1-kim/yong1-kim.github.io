@@ -57,8 +57,26 @@ FLARE 는 어떠한 LM 에도 적용가능하지만, GPT-3.5 (text-davinci-003)�
 <span style='color:green;font-weight:bold'> Notations and Definitions </span> <br>
 <br>
 Given user input $x$, document corpus $D$ 에 대하여, retrieval-LM 의 goal 은 $y=[s_1, s_2, ..., s_m] = [w_1, w_2, ..., w_n]$ 을 추출 하는 것이다. ($m$ 개의 문장 혹은 $n$ 개의 token)
+Retrieval 을 활용하기 때문에, $y=LM([D_q, x])$ 가 된다. (where $D_q = ret(q)$ with query $q$).
 
+<span style='color:green;font-weight:bold'> Single-time Retrieval-Augmented Generation </span> <br>
+<br>
+Single-time retrieval-augmented LM 모델은 user input $x$ 를 query $q$ 로 하여, 직접적으로 단 한 번만 retrieval 을 이용한, $y=LM([D_q, x])$ 의 형태가 된다.
 
+<span style='color:green;font-weight:bold'> Activer Retrieval Augmented Generation </span> <br>
+<br>
+Active RAG 의 formulation 은 다음과 같다.
+Step $t$ 에 대하여, retrieval query $q_t$ 는 input $x$ 와 그 전까지 생성된 generated output $y_{<t} = [y_0, ...,. y_{t-1}]$ 에 의존한다. 따라서 query $q_t = qry(x,y_{<t}) 가 된다(where *qry* is the query formulation function).
+처음 시작 때는 query 가 input 이다 ($q_1 = x$).
+따라서, 최종적으로 output 은 $y_t = LM([D_{q_t}, x , y_{<t}])$ 가 된다.
+
+# FLARE: Forward-Looking Activer REtrieval Augmented Generation
+저자들은 두 가지를 가정한다: (1) necessary 정보를 가져올 필요가 없을 때 Retrieval 을 해올 필요가 없으며, (2) future generation 의 intent 를 반영하여 query 가 구성되어야 한다는 것이다. 
+이 들을 고려하여 FLARE method 를 제안한다.
+[Toolformer](https://arxiv.org/abs/2302.04761) 의 영감을 받아, retrieval query 를 생성하기 위해 LM 에게 instruction prompt 를 부여하는 $FLARE_{instruct}$ 방법과, LM 의 생성결과를 direct search query 로 사용하는 $FLARE_{direct}$ 두 가지 방법이 있다.
+
+<span style='color:green;font-weight:bold'> A FLARE with Retrieval Instructions </span> <br>
+<br>
 
 
 
