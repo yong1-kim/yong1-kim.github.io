@@ -77,8 +77,26 @@ Step $t$ 에 대하여, retrieval query $q_t$ 는 input $x$ 와 그 전까지 �
 
 <span style='color:green;font-weight:bold'> A FLARE with Retrieval Instructions </span> <br>
 <br>
+첫 번째 방법은 Toolformer 에서 그러한 것처럼 **"[Search(query)]"** 를 통해 필요한 정보를 retrieval 해오는 것이다. (e.g, "The colors on the flag of Ghana have the following meanings. Red is for [Search(Ghana flag red meaning)] the bloodof martyrs, ...")
+GPT-3.5 model 에 few-shot prompting 을 통해 이 행동을 elicit 한다. 
+
+이 행동을 위해 두 가지 스킬이 필요한데, 하나는 seacrh query 를 만드는 skill 을 instruction prompt 로 알려주는 것이고, 다른 하나는 LM 이 answer 를 생성하여 downstream task 를 해결하게 하는 instruction 이다. instruction 에 관한 prompt 들은 아래의 그림과 같이 정리된다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/08814565-0e68-47af-86b3-c208bf60f0e9)
+
+아래의 그림과 같이, LM 이 "[Search(query)]" 를 생성하면, generation 을 멈추고, query term 을 통해 relevant document 를 retreival 해온다. 미래의 user input 전체 prepend 되기 때문에 future generation 에 도움이 된다. 
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/bc049ca7-c57c-4bf8-8383-b2d9cdb40574)
+
+저자들은 LM 이 이 두 가지 skill 을 효과적으로 combine 하여 meaningful 하게 search query 를 생성하고 task 를 수행하는 것을 확인한다.
+그러나, 여기에는 두 가지 issue 가 있다: <span style='background-color: #ffdce0'> (1) LM 은 필요한 것보다 적게 search query 를 생성하고, (2) 지나친 (excessive) search query 를 생성하는 것은 answer generation 을 방해하여 perforamnce 에 부정적인 영향을 미친다는 것이다.</span>
+
+각 문제를 해결하기 위해 저자들은 두 가지 방법을 각각 적용했는데, 첫 번째로는 "[" token 의 logit 을 2.0 으로 만들어, "[Search(query)]" 가 최대한 많이 나오게끔 한다.
+두 번째로, 한 번 "[Search(query)]" 를 통해 search 가 이뤄진 이후에는 next few token 안에 다시 "[Search(query)]" 가 나오지 않게끔 "[" 에 large negative logit 을 부여한다.
 
 
+<span style='color:green;font-weight:bold'> Direct FlARE </span> <br>
+<br>
 
 
 
