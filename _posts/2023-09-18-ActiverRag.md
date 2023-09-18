@@ -115,8 +115,80 @@ Empiricially, next sentence을 사용한 검색이 previous context 을 사용�
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/d6196366-c6e0-4fb8-b79f-a60357da5078)
 
-<span style='color:green;font-weight:bold'> Masked sentences as implicit querie </span> : 첫 번째 방법은 $\hat{s_t}$ 내에서 신뢰도가 낮은 토큰을 임계값 β ∈ [0, 1] 아래의 확률로 마스킹 처리한다. 높은 β는 더 강력한 마스킹을 의미하며, 이로 인해 문장에서 잠재적인 산만 요소가 제거되어 검색 정확도가 향상된다.
+<span style='color:green;font-weight:bold'> Masked sentences as implicit querie </span> : 첫 번째 방법은 $\hat{s_t}$ 내에서 신뢰도가 낮은 토큰을 임계값 β ∈ [0, 1] 아래의 확률로 마스킹 처리한다. 높은 β는 더 강력한 마스킹을 의미하며, 이로 인해 문장에서 잠재적인 distraction 요소가 제거되어 검색 정확도가 향상된다.
 
+<span style='color:green;font-weight:bold'> Generated questions as explicit queries </span>: 다른 방법은 $\hat{s_t}$ 의 확신이 낮은 span 을 대상으로 명확한 질문을 생성하는 것이다. 예를 들어, 만약 LM 이 '펜실베니아 대학교'에 대해 확신하지 못한다면, '조 바이든은 어떤 대학을 다녀왔나요?'와 같은 질문은 관련 정보를 검색하는 데 도움이 될 수 있다. Self-ask ([Press et al., 2022](https://arxiv.org/abs/2210.03350)) 는 이를 수행하기 위해 프롬프트 4.1 (뒤에 등장)에서 나중에 나오는 downstream task exemplar 에 직접 follow-up 질문을 수동으로 삽입하는 방식으로 이루어져 있으며 이는 작업 additional annotaion 을 필요로 한다. Specifically, 저자는 추가적인 어노테이션 없이 낮은 확신 스팬에 대한 질문을 생성하는 범용적인 방법을 개발했다. 구체적으로, $\hat{s_t}$에서 β 아래의 확률로 모든 span을 추출한 다음 각 추출된 span $z$에 대해 답할 수 있는 질문 $q_{t,z}$를 생성하도록 GPT-3.5-turbo에 프롬프트를 지시한다. 프롬프트는 아래와 같다.
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/b2a803f2-3a5c-47aa-8374-22bfccccfc7f)
 
+이후 저자들은 generated question 과returend document 를 통해 answer 를 생성한다. 정리하면 $\hat{s_t}$ 를 위한 $q_t$ 는 아래와 같다.
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/7b755c8c-6c62-4c63-825b-73ef4c82f6a1)
 
+# Implementation Details
+Method 검증을 위해, GPT-3.5 LM 인 text-davinci-003 을 이용하여 API 를 반복적으로 query 하여 확인한다. 
+
+**Inital qeury**
+시작 query 는 FLARE 가 user input $x$ 를 통해 문서를 검색하고, 첫 번째 문장인 $\hat{s_1} = LM([D_x, x])$ 를 생성하여 반복적인 생성프로세스를 시작한다. 
+
+**Sentence tokenization**
+
+각 step $t$ 마다 대부분의 문장보다 긴 64개의 토큰을 생성하고, NLTK 문장 토크나이저를 사용하여 첫 번째 문장을 추출하고 나머지는 삭제한다. 
  
+ **Document corpus and retrievers**
+이 연구에서는 retrieval과 generation의 통합에 중점을 두고 있기 때문에, 입력으로 query를 받고 relevant document list 를 반환하는 off-the-shelf retriever를 사용한다. Wikipedia에서 지식을 주로 활용하는 데이터셋의 경우, [Karpukhin et al. (2020)](https://aclanthology.org/2020.emnlp-main.550/)의 Wikipedia 덤프를 사용하여 문서 코퍼스로 사용하며, 문서는 100-토큰 단위로 분할되고 BM25 ([Robertson and Zaragoza, 2009](https://www.nowpublishers.com/article/Details/INR-019))를 retriever로 사용한다. Open-web 에서 지식을 활용하는 데이터셋의 경우, Bing 검색 엔진을 retriever 로 사용한다.
+
+**Retrieved document formatting**
+ ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/76c592e9-7b98-4210-b001-cce44ee4e792)
+Multiple retrieved document 는 그들의 순위에 따라 linearized 되어 user input 의 처음에 다음 형식으로 추가됩니다:
+
+# Multi-time Retrieval Baselines
+기존의 passive multi-time retrieval augmented LM 들 역시 FLARE framework 를 사용하여 formulate 될 수 있다. 이 연구에서는 세 가지 baseline category 를 introduce 한다. 이 baseline 은 이전 작업들이 다양한 디자인 선택을 가져가기 때문에, 직접적인 비교가 불가능하기 때문에 공식적인 reproduction 결과는 아니다. 저자들은 관련 없는 디자인을 제외하고 동일한 설정을 사용하여 구현되도록 하고, 유일한 차이점은 **when and what to retrieve**이다.
+
+**Previous-window** 는 모든 직전의 $l$ 개의 token 을 query 로 사용한다. RETRO 와 IC-RALM, 그리고 KNN-LM 이 여기에 속한다. (KNN-LM 의 경우 모든 token 에 대해 retrieval 진행)
+
+**Previous-sentence** 는 모든 sentnece 에서 retrieval 을 진행한다. IRCoT 가 여기에 속한다.
+
+**Question decomposition** 은 LM 으로 하여금 sub-question 으로 decompose 하여 question 을 여러 query 로 나눠서 retireval 하게 한다. Self-ask 가 이러한 category 에 속하며, 아래의 prompt 를 통해 이뤄진다:
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/b37a34d8-0000-448e-9706-cd419530bffc)
+
+위에서 언급한 세 가지 method 들은 모두 generation process 에서 additional information 을 검색할 수 있다. 그러나 그들은 notable drawback 을 가지고 있다: (1) Fixed interval approach 는 이전에 생성된 token 을 query 로 사용하며, 이는 LM 이 미래에 생성하려는 내용을 반영하지 못할 수 있다. (2) Fixed interval 에서 정보를 검색하는 것은 부적절한 시점에서 발생할 수 있기 때문에 비효율적일 수 있다. (3) Query decomposition 방법은 task-specific prompt engineering 이 필요하며, 이는 새로운 task 에서의 generalization 이 제한된다. 
+
+# Experimental setup
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/48a84861-3ae9-4765-8fbd-ed3314a6dbb9)
+
+FLARE 의 효과를 검증하기 위해 저자들은 few-shot in-context learning (ICL) 을 사용하여 4 가지 task 에 적용한다. Fair comparison 을 위하여, FLARE 의 결과를 동일한 setting, 즉 동일한 context exemplar, prompt format, retriever, 그리고 document corpus 에서 비교한다. Cost 문제로, 각 데이터셋에서 최대 500 개의 예시를 하위 샘플링하는 [IRCoT](https://arxiv.org/abs/2212.10509) 방법을 따른다. FLARE 의 hyper-parameter 는 dev set 을 통해 선택되며 아래 표와 같다. 특별히 명시되지 않는한, FLARE 는 $FLARE_{direct}$를 나타낸다. Previous-window approach 의 경우, [Ram et al.2023](https://arxiv.org/abs/2302.00083) 을 따라 $l=16$ 의 window size 를 사용한다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/89556ea2-455e-4a6a-bb87-502bbbadbb6a)
+
+[Dataset 설명은 생략]
+
+# Experimental Results
+<span style='color:green;font-weight:bold'> Comparison with Baselines </span><br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/881759bf-069a-4739-8dd9-09c3ac1e4af3)
+
+여러 task 와 datset 중 multihopQA 에서 눈에 띄는 향상이 보인다. 이는 주로 task의 명확한 정의와 final answer 을 2 단계 추론 과정을 통해 생성해야하는 구체적인 목표 때문에, LM이 주제에 관련된 결과물을 생성하기가 더 쉬워지기 때문이다. 이와 대조적으로, ASQA와 WikiAsp는 덜 명확하게 정의되어 있으며 더 개방적(open-ended)이며, 이는 생성과 평가의 어려움을 증가시킨다. ASQA-hint의 개선은 ASQA보다 큰데, 모호한 측면을 식별하는 것은 많은 경우에 인간에게도 어려운 일이며, 일반적인 힌트를 제공하면 LM이 주제를 유지하는 데 도움이 된다. 
+
+<span style='color:green;font-weight:bold'> Thorough comparisons with baselines </span><br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/19cdfc25-ab86-425d-af50-98d483bb4f04)
+
+2WikiMultihopQA에 대한 모든 baseline 성능은 Table 1에서 볼 수 있다. FLARE은 모든 베이스라인 대비 큰 차이로 우수한 성능을 보이며, 이는 미래를 내다보는 액티브 검색이 매우 효과적임을 확인한다. 대부분의 Multi-time retrieval-augmented 방식이 single-time 보다 우수한 결과를 보이지만 그 간격은 다르다. Previous-sentence 을 사용하여 검색하는 개선은 비교적 작은데, 이는 2WikiMultihopQA의 다음 문장과 다른 entity 나 관계를 자주 설명하기 때문이라고 추측한다. 반면, Previous-window 접근 방식은 두 번째 절반을 생성하는 데 도움이 될 수 있는 정보를 검색하기 위해 문장의 첫 절반 부분을 쿼리로 사용할 수 있습니다. 모든 베이스라인 중에서 Query Decompoistion 인 Self-ask 가 가장 우수한 성능을 달성한다. 이는 in-context exexmplar 가 분해된 하위 질문(Prompt 4.1)으로 manually annotation 이 달려 있어 LM 이 미래 생성의 주제/의도와 일치하는 적절한 하위 질문을 생성하도록 안내되기 때문이다. FLARE은 이 베이스라인을 능가하며, manual exemplar annotation 이 미래를 고려한 효과적인 검색에 필요하지 않음을 나타낸다. $FLARE_{instruct}$와 Query decomposition 간의 차이는 크며, task-generic retreival instruction 과 exemplar 를 사용하여 LM 에게 검색 쿼리를 생성하는 방법을 가르치는 것이 어려움을 나타낸다.
+
+다른 데이터셋에 대한 모든 metric 들은  Table 2에 있다. 다시 한 번, FLARE은 모든 지표에 대해 베이스라인을 능가합니다. Previous-window 을 사용한 검색은 ASQA 에서 single-time retrieval 보다 성능이 낮습니다. 이는 previous-window 가 사용자의 미래 의도를 정확하게 반영하지 못하기 때문이라고 가설을 세우고 있다. 저자들은 생성의 Factuality 를 평가하는 데 중점을 둠으로써 EM, Disambig-F1, UniEval과 같이 사실적인 콘텐츠를 강조하는 지표가 모든 토큰을 기반으로 계산된 지표(ROUGE-L 등)보다 더 신뢰성이 있다고 여긴다.
+
+# Ablation study
+<span style='color:green;font-weight:bold'> Importance of forward-looking retrieval</span><br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/19918d41-05a5-42b9-bdbe-61c885b7e9fc)
+
+저자는 forward-looking 검색이 past-context-based retrieval 보다 실제로 강력한지 여부를 먼저 확인한다. 2WikiMultihopQA 및 ASQA-hint 데이터셋에서 ablation study 를 수행하여 previous 문장 대신 next 문장을 사용한 검색을 비교한다. 이때 두 가지 방법은 검색에 사용되는 쿼리를 제외하고 동일하다. 구체적으로, 두 가지 방법은 각 문장을 검색하고 검색에 전체 문장을 직접 사용한다. (마스킹 또는 질문 생성 없이). 위의 Table 3 에서 볼 수 있듯이, 두 데이터셋 모두에서 다음 문장을 사용한 검색이 이전 문장을 사용한 것보다 훨씬 더 나은 결과를 나타낸다.
+
+<span style='color:green;font-weight:bold'> Importance of active retrieval</span><br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/7903808d-40fc-4f31-a794-2297d68068f0)
+
+Threshold θ 와 performance 의 관계를 조사한다. 아무 것도 검색하지 않는 것(θ=0)에서 모든 문장을 검색하는 것(θ=1)으로 FLARE 방법을 변경하기 위해 검색을 트리거할 때 사용되는 θ를 0에서 1로 조정했다. 모든 thershold 에 대해 검색이 trigger 되는 단계/문장의 percentage 을 계산하고 검색의 percentage 을 기반으로 성능을 표시한다. Figure 5에서 볼 수 있듯이, 2WikiMultihopQA에서는 검색 비율이 60%를 넘어가면 성능이 안정화되며, LM d이 확신을 가질 때 검색이 필요하지 않음을 나타낸다. StrategyQA에서는 검색 비율이 50%를 넘어가면 성능이 하락하며, 고신뢰 문장을 검색에 사용하면 noise 가 끼고 원래 생성 프로세스를 방해할 수 있음을 시사한다. Task/Dataset에 따라 평균적으로 문장의 40%-60%에 대한 검색 트리거가 성능을 향상시키는데 일반적으로 좋은 결과를 나타낸다.
+
+<span style='color:green;font-weight:bold'> Effectiveness of different query formulation methods</span><br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/10b1ab0f-33a9-4d9d-9823-7242e23ea06b)
+
+마지막으로, Masking 을 통한 implicit query formulation 과 question generation 을 통한 explicit query formulation 에 대해 연구한다. Table 4에서 다른 threshold β로 FLARE의 성능을 비교한다. 완전한 문장을 직접 검색하는 것(β = 0)은 낮은 확률로 마스킹된 토큰보다 성능이 나쁘며, 낮은 신뢰도의 error token 이 retriver 를 distraction 할 수 있다는 것을 검증한다. 또한 implicit 및 explicit query formulation 방법을 Table 5 에서 비교한다. 두 방법의 성능은 유사하며, 두 방법 모두 정보 요구를 효과적으로 반영할 수 있다는 것을 나타낸다.
+
+# Conclusion
+To aid long-form generation with retrieval augmentation, we propose an active retrieval augmented generation framework that decides when and what to retrieve during generation. We implement this framework with forward-looking active retrieval that iteratively uses the upcoming sentence to retrieve relevant information if it contains lowconfidence tokens and regenerates the next sentence. Experimental results on 4 tasks/datasets demonstrate the effectiveness of our methods. Future directions include better alternatives for active retrieval and developing LM architectures for efficient active retrieval augmentation.
