@@ -1,4 +1,4 @@
----
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/d69eaa15-24ae-4412-ac4f-1a7b80ff81bb)---
 layout: post
 title:  "Active Retrieval Augmented Generation"
 date:   2023-09-18 16:44:00 +0900
@@ -97,6 +97,24 @@ GPT-3.5 model 에 few-shot prompting 을 통해 이 행동을 elicit 한다.
 
 <span style='color:green;font-weight:bold'> Direct FlARE </span> <br>
 <br>
+$FLARE_{instruct}$ 는 LM 에만 의존하는 방법이므로, black-box LM 을 fine-tune 하지 못한다면, retrieval instruction 을 통해 생성된 query 에 대한 reliablity 를 가질 수 없다. 따라서 저자들은, 직접적으로 retreival 하는 방법론도 제안한다.
+
+<span style='color:green;font-weight:bold'>  Confidence-based Active Retrieval </span> : Figure 1 과 같이, step $t$ 에서, retrieval 과정 없이 temporary next sentence $\hat{s_t} = LM([x,y_{<t}])$ 를 생성한다.
+이후 $\hat{s_t}$ 를 통해, retrieval 을 trigger 할지 안할지를 결정한다.
+만약 LM 이 $\hat{s_t}$ 에 retrieval 을 통한 additional information 없이도 충분히 confident 하다면, 그대로 문장을 완성한다.
+그렇지 않다면, $\hat{s_t}$ 를 통해 $s_t$ 를 재생성(regenerate)한다.
+이를 결정하는 것은 threshold $\theta$ 이다.
+정리하면 실제 output sentence $y_t$ 는 아래와 같이 생성된다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/b9ea7845-282f-4a85-a96b-c1b560e8f94c)
+
+<span style='color:green;font-weight:bold'>  Confidence-based Query Formulation </span> : 정보 검색을 수행하는 한 가지 방법은 직접 다음 문장 $\hat{s_t}$을 검색 쿼리 $q_t$ 로 사용하는 것이다. 이것은 생성된 hypothetical 제목 또는 단락을 사용하는 기존 방법([[8]](https://arxiv.org/abs/2212.10496),[[9]](https://arxiv.org/abs/2210.01296))과 유사한 접근 방식을 공유한다. 이러한 방법은 원래 입력 질문 대신 언어 모델의 생성물을 검색 쿼리로 사용하는 것이다 ([8], [[10]](https://aclanthology.org/2021.acl-long.316.pdf)). 우리는 이러한 기술을 활용하여 long-form generation 에 적용한다.
+
+Empiricially, next sentence을 사용한 검색이 previous context 을 사용한 검색보다 훨씬 우수한 결과를 얻는 것으로 나타났다(이러한 결과는 6.2 절에서 자세히 설명할 예정이다). 그러나 이것은 그 안에 포함된 <span style='color:green;font-weight:bold'> 오류를 계속 전파할 위험 </span>이 있다. 예를 들어, 언어 모델이 "조 바이든은 펜실베니아 대학에 다녔다"라는 정확하지 않은 정보를 생성하면 올바른 사실인 그가 델라웨어 대학에 다녔다는 대신에 이 오류 포함 문장을 쿼리로 사용하면 검색기가 관련 없는 정보를 검색하게 할 수 있으며, 이는 future generation 을 잘못 이끌 수 있다. 이 문제를 극복하기 위한 두 가지 간단한 방법을 Figure 3 에서 설명하고 있다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/d6196366-c6e0-4fb8-b79f-a60357da5078)
+
+<span style='color:green;font-weight:bold'> Masked sentences as implicit querie </span> :
 
 
 
