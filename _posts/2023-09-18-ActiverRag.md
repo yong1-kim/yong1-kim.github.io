@@ -54,6 +54,10 @@ next sentence until reaches the end. </span>
 FLARE 는 어떠한 LM 에도 적용가능하지만, GPT-3.5 (text-davinci-003)를 활용하여 variety of task 에 적용하였을 때, 매우 좋은 성능을 보여준다 :multihop QA (2WikiMultihopQA), commonsense reasoning (StrategyQA), long-form QA (ASQA) 그리고 open-domain summarization (WikiAsp)
 
 # Retrieval-Augmented Generation
+<span style='color:green;font-weight:bold'> Notations and Definitions </span> <br>
+<br>
+Given user input $x$, document corpus $D$ 에 대하여, retrieval-LM 의 goal 은 $y=[s_1, s_2, ..., s_m] = [w_1, w_2, ..., w_n]$ 을 추출 하는 것이다. ($m$ 개의 문장 혹은 $n$ 개의 token)
+
 
 
 
