@@ -137,8 +137,9 @@ Method 검증을 위해, GPT-3.5 LM 인 text-davinci-003 을 이용하여 API �
 이 연구에서는 retrieval과 generation의 통합에 중점을 두고 있기 때문에, 입력으로 query를 받고 relevant document list 를 반환하는 off-the-shelf retriever를 사용한다. Wikipedia에서 지식을 주로 활용하는 데이터셋의 경우, [Karpukhin et al. (2020)](https://aclanthology.org/2020.emnlp-main.550/)의 Wikipedia 덤프를 사용하여 문서 코퍼스로 사용하며, 문서는 100-토큰 단위로 분할되고 BM25 ([Robertson and Zaragoza, 2009](https://www.nowpublishers.com/article/Details/INR-019))를 retriever로 사용한다. Open-web 에서 지식을 활용하는 데이터셋의 경우, Bing 검색 엔진을 retriever 로 사용한다.
 
 **Retrieved document formatting**
+Multiple retrieved document 는 그들의 순위에 따라 linearized 되어 user input 의 시작부분에 다음 형식으로 추가된다:
+
  ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/76c592e9-7b98-4210-b001-cce44ee4e792)
-Multiple retrieved document 는 그들의 순위에 따라 linearized 되어 user input 의 처음에 다음 형식으로 추가됩니다:
 
 # Multi-time Retrieval Baselines
 기존의 passive multi-time retrieval augmented LM 들 역시 FLARE framework 를 사용하여 formulate 될 수 있다. 이 연구에서는 세 가지 baseline category 를 introduce 한다. 이 baseline 은 이전 작업들이 다양한 디자인 선택을 가져가기 때문에, 직접적인 비교가 불가능하기 때문에 공식적인 reproduction 결과는 아니다. 저자들은 관련 없는 디자인을 제외하고 동일한 설정을 사용하여 구현되도록 하고, 유일한 차이점은 **when and what to retrieve**이다.
