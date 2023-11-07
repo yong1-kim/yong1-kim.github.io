@@ -44,10 +44,10 @@ LM 이 training 과정에서 엄청난 양의 world knowledge 를 학습하지�
 
 저자들은 follwing question 에 대해서 대답한다 : <span style='background-color: #dcffe4'> can we create a simple and generic retireval-augmented LM that actively decides when and what to retrieve throughout the generation process </span>.
 저자들은 <span style='color:green;font-weight:bold'> when to retrieve </span> 를 알아내는 것이 unneccsary or inappropriate knowledge retreival 을 줄이는 과정이라고 설명한다. 
-LLM 이 lack of knowledge 에서 low probabilityconfidnce 를 보이고 well-calibrate 를 하려는 시도를 한다는 발견([[6]](https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00407/107277/How-Can-We-Know-When-Language-Models-Know-On-the),[[7]](https://arxiv.org/abs/2207.05221))에서, 저자들은 <span style='background-color: #dcffe4'> low-probability token 을 LM 이 generate 하려 할 때 retrieval 을 해오는 strategy  </span> 를 택한다.
+LLM 이 lack of knowledge 에서 low probability confidnce 를 보이고 well-calibrate 를 하려는 시도를 한다는 발견([[6]](https://direct.mit.edu/tacl/article/doi/10.1162/tacl_a_00407/107277/How-Can-We-Know-When-Language-Models-Know-On-the),[[7]](https://arxiv.org/abs/2207.05221))에서, 저자들은 <span style='background-color: #dcffe4'> low-probability token 을 LM 이 generate 하려 할 때 retrieval 을 해오는 strategy  </span> 를 택한다.
 
-*What to retrieve* 를 결정할 때는, LM 이 미래에 generate를 하려는 것을 고려하는 것이 매우 중요하기 때무넹, future generation 에 benefit 을 주는 것이 acitve retrieval 의 goal 이다. 
-따라서, 저자들은 temporary next sentence 를 생성한 이후에, 이 것을 query 로 하여 relevant document 를 retrieval 해오고, 이후 이 retrieved document 를 활용하여 regenerating 하여 sentence 를 만든다.
+*What to retrieve* 를 결정할 때는, LM 이 미래에 generate를 하려는 것을 고려하는 것이 매우 중요하기 때문에, future generation 에 benefit 을 주는 것이 acitve retrieval 의 goal 이다. 
+따라서, 저자들은 temporary next sentence 를 생성한 이후에, 이것을 query 로 하여 relevant document 를 retrieval 해오고, 이후 이 retrieved document 를 활용하여 regenerating 하여 sentence 를 만든다.
 이 두 가지 면 (*when and what to retrieve*) 를 반영하여 저자들은 **F**orward-**L**ooking **A**ctive **Re**trieval augmented generation (**FLARE**) 라는 방법론을 제안한다.
 <span style='color:green;font-weight:bold'> FLARE iteratively generates a temporary next sentence, use it as the query to retrieve relevant documents if it contains low-probability tokens and regenerate the
 next sentence until reaches the end. </span>
@@ -67,7 +67,7 @@ Single-time retrieval-augmented LM 모델은 user input $x$ 를 query $q$ 로 �
 <span style='color:green;font-weight:bold'> Activer Retrieval Augmented Generation </span> <br>
 <br>
 Active RAG 의 formulation 은 다음과 같다.
-Step $t$ 에 대하여, retrieval query $q_t$ 는 input $x$ 와 그 전까지 생성된 generated output $y_{<t} = [y_0, ...,. y_{t-1}]$ 에 의존한다. 따라서 query $q_t = qry(x,y_{<t}) 가 된다(where *qry* is the query formulation function).
+Step $t$ 에 대하여, retrieval query $q_t$ 는 input $x$ 와 그 전까지 생성된 generated output $y_{<t} = [y_0, ...,. y_{t-1}]$ 에 의존한다. 따라서 query $q_t = qry(x,y_{<t})$  가 된다(where *qry* is the query formulation function).
 처음 시작 때는 query 가 input 이다 ($q_1 = x$).
 따라서, 최종적으로 output 은 $y_t = LM([D_{q_t}, x , y_{<t}])$ 가 된다.
 
@@ -85,14 +85,14 @@ GPT-3.5 model 에 few-shot prompting 을 통해 이 행동을 elicit 한다.
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/08814565-0e68-47af-86b3-c208bf60f0e9)
 
-아래의 그림과 같이, LM 이 "[Search(query)]" 를 생성하면, generation 을 멈추고, query term 을 통해 relevant document 를 retreival 해온다. 미래의 user input 전체 prepend 되기 때문에 future generation 에 도움이 된다. 
+아래의 그림과 같이, LM 이 "[Search(query)]" 를 생성하면, generation 을 멈추고, query term 을 통해 relevant document 를 retreival 해온다. 미래의 user input 전체에 prepend 되기 때문에 future generation 에 도움이 된다. 
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/bc049ca7-c57c-4bf8-8383-b2d9cdb40574)
 
 저자들은 LM 이 이 두 가지 skill 을 효과적으로 combine 하여 meaningful 하게 search query 를 생성하고 task 를 수행하는 것을 확인한다.
-그러나, 여기에는 두 가지 issue 가 있다: <span style='background-color: #ffdce0'> (1) LM 은 필요한 것보다 적게 search query 를 생성하고, (2) 지나친 (excessive) search query 를 생성하는 것은 answer generation 을 방해하여 perforamnce 에 부정적인 영향을 미친다는 것이다.</span>
+그러나, 여기에는 두 가지 issue 가 있다: <span style='background-color: #ffdce0'> (1) LM 은 필요한 것보다 적게 search query 를 생성하기도 하고, (2) 지나친 (excessive) search query 를 생성하는 것은 answer generation 을 방해하여 perforamnce 에 부정적인 영향을 미친다는 것이다.</span>
 
-각 문제를 해결하기 위해 저자들은 두 가지 방법을 각각 적용했는데, 첫 번째로는 "[" token 의 logit 을 2.0 으로 만들어, "[Search(query)]" 가 최대한 많이 나오게끔 한다.
+각 문제를 해결하기 위해 저자들은 두 가지 방법을 각각 적용했는데, 첫 번째로는 **"["** token 의 logit 을 2.0 으로 만들어, "[Search(query)]" 가 최대한 많이 나오게끔 한다.
 두 번째로, 한 번 "[Search(query)]" 를 통해 search 가 이뤄진 이후에는 next few token 안에 다시 "[Search(query)]" 가 나오지 않게끔 "[" 에 large negative logit 을 부여한다.
 
 
@@ -120,7 +120,7 @@ Empiricially, next sentence을 사용한 검색이 previous context 을 사용�
 <span style='color:green;font-weight:bold'> Generated questions as explicit queries </span>: 다른 방법은 $\hat{s_t}$ 의 확신이 낮은 span 을 대상으로 명확한 질문을 생성하는 것이다. 예를 들어, 만약 LM 이 '펜실베니아 대학교'에 대해 확신하지 못한다면, '조 바이든은 어떤 대학을 다녀왔나요?'와 같은 질문은 관련 정보를 검색하는 데 도움이 될 수 있다. Self-ask ([Press et al., 2022](https://arxiv.org/abs/2210.03350)) 는 이를 수행하기 위해 프롬프트 4.1 (뒤에 등장)에서 나중에 나오는 downstream task exemplar 에 직접 follow-up 질문을 수동으로 삽입하는 방식으로 이루어져 있으며 이는 작업 additional annotaion 을 필요로 한다. Specifically, 저자는 추가적인 어노테이션 없이 낮은 확신 스팬에 대한 질문을 생성하는 범용적인 방법을 개발했다. 구체적으로, $\hat{s_t}$에서 β 아래의 확률로 모든 span을 추출한 다음 각 추출된 span $z$에 대해 답할 수 있는 질문 $q_{t,z}$를 생성하도록 GPT-3.5-turbo에 프롬프트를 지시한다. 프롬프트는 아래와 같다.
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/b2a803f2-3a5c-47aa-8374-22bfccccfc7f)
 
-이후 저자들은 generated question 과returend document 를 통해 answer 를 생성한다. 정리하면 $\hat{s_t}$ 를 위한 $q_t$ 는 아래와 같다.
+이후 저자들은 generated question 과 returned document 를 통해 answer 를 생성한다. 정리하면 $\hat{s_t}$ 를 위한 $q_t$ 는 아래와 같다.
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/7b755c8c-6c62-4c63-825b-73ef4c82f6a1)
 
 # Implementation Details
