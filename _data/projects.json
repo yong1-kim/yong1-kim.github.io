@@ -1,10 +1,10 @@
 [
 	{
-		"slug": "COLING2022",
-		"name": "COLING2022",
+		"slug": "NeurIPS2022",
+		"name": "NeurIPS2022",
 		"image": "placeholder.jpg",
 		"url": "#",
-		"date": "Oct 2022",
+		"date": "Dec 2022",
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
