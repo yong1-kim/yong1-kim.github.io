@@ -4,4 +4,4 @@ title: Projects
 permalink: /projects/
 ---
 
-My Projects & Selected Paperwork Projects
+Accepted paperworks and Projects
