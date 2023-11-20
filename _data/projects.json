@@ -8,7 +8,7 @@
 		"tags": ["Dialog System"]
 	},
 	{
-		"slug": "EMNLP2023",
+		"slug": "EMNLP2023-Findings",
 		"name": "EMNLP2023-Findings",
 		"image": "placeholder.jpg",
 		"url": "#",
@@ -16,8 +16,8 @@
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
-		"slug": "ACL2023",
-		"name": "ACL2023-Findgins",
+		"slug": "ACL2023-Findings",
+		"name": "ACL2023-Findings",
 		"image": "CBA.jpg",
 		"url": "#",
 		"date": "Jul 2023",
