@@ -1,6 +1,6 @@
 ---
 layout: project_single
-title:  "Project NIA"
-slug: "Project NIA"
+title:  "Project_NIA"
+slug: "Project_NIA"
 ---
 Project NIA
