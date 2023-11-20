@@ -24,27 +24,11 @@
 		"tags": ["Dialog System"]
 	},
 	{
-		"slug": "KCC2023",
-		"name": "KCC2023",
-		"image": "placeholder.jpg",
-		"url": "#",
-		"date": "Jun 2023",
-		"tags": ["Vision-and-Language Learning"]
-	},
-	{
 		"slug": "NeurIPS2022",
 		"name": "NeurIPS2022",
 		"image": "placeholder.jpg",
 		"url": "#",
 		"date": "Dec 2022",
-		"tags": ["Vision-and-Language Learning"]
-	},
-	{
-		"slug": "KCC2022",
-		"name": "KCC2022",
-		"image": "placeholder.jpg",
-		"url": "#", 
-		"date": "Jun 2022",
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
@@ -62,14 +46,6 @@
 		"url": "#",
 		"date": "Dec 2021",
 		"tags": ["Project"]
-	},
-	{
-		"slug": "KCC2021",
-		"name": "(Best Paper Awards) KCC2021",
-		"image": "placeholder.jpg",
-		"url": "#", 
-		"date": "Jun 2021",
-		"tags": ["Vision-and-Language Learning"]
 	},
 	{
 		"slug": "IEEEAccess2021",
