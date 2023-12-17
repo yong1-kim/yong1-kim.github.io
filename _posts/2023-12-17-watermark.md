@@ -24,6 +24,7 @@ family 에 대해 실험을 검증하였다.
 
 # Introduction
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/832d0665-cfea-433e-9c86-4151f415c64c)
+
 Large Language Model (LLM) 의 성능이 폭발적으로 증가함에 따라, fake-news 나 fake web contents 등의 생성을 통한 정치 공작, AI system 을 활용한 academic writing 에서의 cheating 문제 등의 사회 문제로 자리잡고 있다.
 게다가, LLM 을 통한 synthetic web data 의 증가(proliferation)하고 있는데, 이들은 human-annotated data 에 비해 품질이 매우 저조하기 때문에 model training 직전에 detected 되고 제거되어야 한다.
 <span style='background-color: #dcffe4'> 이러한 이유로, machine-generated text 에 대한 detection 과 audit 은 필수적이다. </span>
@@ -63,13 +64,15 @@ Large Language Model (LLM) 의 성능이 폭발적으로 증가함에 따라, fa
 워터마크가 있는 텍스트를 생성하는 데는 언어 모델에 대한 액세스가 필요하지만, 워터마크를 감지하는 데는 그러한 액세스가 필요하지 않는다. 해시 함수와 난수 생성기에 대한 지식을 가진 제3자 (third party) 는 각 토큰에 대한 빨간색 목록을 다시 생성하고 빨간색 목록 규칙이 얼마나 자주 위배되는지 계산할 수 있다. 
 
 다시 말해 아래의 *null hypothesis* (귀무가설) 에 대한 test 로 watermark 를 detect 할 수 있다.
+
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/f40ae537-5935-4b6c-be3a-29b5b444ed7a)
 
 왜냐하면, red list 가 매번 무작위로 선택되기 때문에 natural writer 는 자연스럽게 자신의 토큰 중 절반 정도에 대해 red list 를 위반할 것으로 예상되며, 반면 워터마크가 있는 모델은 위반을 생성하지 않을 것으로 예상되기 때문이다. 
 Red list 규칙을 위반하지 않고 $T$ 개의 토큰을 생성하는 확률은 $1/2^T$ 이다.
 이는 심지어 몇 마디로 이루어진 짧은 텍스트 조각에 대해서도 거의 없는 확률을 의미한다.
 
-<span style='background-color: #dcffe4'> 귀무가설을 검증하기 위한 더 견고한(Robust) 감지 방법은 one proportion z-test를 사용하는 것이다. </span> 만약, 귀무가설이 참이라면, green list token 의 수 $|s|_{G}$ 는 $T/2$ 의 value 와 variance $T/4$ 일 것이다. 따라서 z-statistics 는 아래와 같다.
+<span style='background-color: #dcffe4'> 귀무가설을 검증하기 위한 더 견고한(Robust) 감지 방법은 one proportion z-test를 사용하는 것이다. </span> 
+만약, 귀무가설이 참이라면, green list token 의 수 $ s_{G} $ 는 $T/2$ 의 value 와 variance $T/4$ 일 것이다. 따라서 z-statistics 는 아래와 같다.
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/6d40dec7-4f83-46f1-9ff2-c43344b3bc11)
 
@@ -100,3 +103,24 @@ $z$ 가 특정 threshold 이상이면 이 귀무가설을 reject 하고 watermar
 더 나아가, Beam search decoder 와 워터마크를 결합할 수 있다. "Irons-in" 하는 빔 서치 디코더를 사용하면 가능성 있는 토큰 시퀀스의 가설 공간을 검색하여 녹색 목록 토큰이 높은 밀도로 나타나는 후보 시퀀스를 찾을 수 있으며, 이는 최소한의 혼란 비용으로 높은 강도의 워터마크를 생성한다.
 
 # A more sophisticated watermark
+이제 "Soft" Watermark 대해 알아보자. 
+**짧게 정리하면 Red list 에 있으면 절대 뽑히지 않는 "Hard" Red list rule 과 다르게, Red list 에 속해 있더라도 뽑힐 수 있는 확률을 갖는다.**
+이는 많은 좋은 선택지가 있는 고 엔트로피 토큰에 대해 green list 의 사용을 촉진하면서 거의 결정적인(deterministic 한) 낮은 엔트로피 토큰의 선택에는 거의 영향을 미치지 않는다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/ac2734dd-d517-4d0f-9cb0-442e2eae117d)
+
+LLM 은 위와 같이 마지막 layer 의 logit 값의 softmax 를 통해 vocab 의 확률 벡터 p 를 결정한다. "Soft" watermark 는 여기에 hardness parameter $\delta$ 를 추가한다. 그리고 0.5 의 확률 대신 green list size $\gamma$ 를 도입한다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/58dfacd7-dcd6-4564-875e-abeb7a60dfd2)
+
+"Soft" red list rule 은 워터마크가 품질에 거의 영향을 미치지 않을 상황에서 워터마크를 강제하면서, 엔트로피가 낮은 경우에는 거의 워터마크 규칙을 무시한다.
+다시 말해, $p(t)k ≈ 1$을 가진 highly-likely word 는 다른 후보보다 훨씬 큰 로짓을 갖고 있으며, 이는 **Red list 에 포함되어 있더라도 가장 큰 값을 유지한다.**
+그러나 엔트로피가 높은 경우에는 선택할 수 있는 많은 유사한 logit 들이 있으며, 이 때 δ 규칙은 샘플링 분포에 큰 영향을 미치며 결과를 녹색 목록 쪽으로 강하게 편향시킨다.
+
+<span style='color:green;font-weight:bold'> Detecting the soft watermark. </span><br>
+"Soft" Watermark 를 감지하는 과정은 기존 "Hard" Watermark 탐지와 동일하다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/196c4f19-e90b-464b-87bc-1571778a58ad)
+
+임의의 $\gamma$ 에 대해서 $z$ value 는 위와 같다. 
+$z>4$ 인 경우를 다시 한 번 생각하면, 여전히 False-positive 는 3x$10^{-5}$이다.
