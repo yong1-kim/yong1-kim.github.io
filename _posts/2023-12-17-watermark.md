@@ -42,6 +42,7 @@ Large Language Model (LLM) 의 성능이 폭발적으로 증가함에 따라, fa
 <span style='color:green;font-weight:bold'> A caveat: The difficulty of watermarking low-entropy sequences </span>
 <br>
 아래의 두 문장을 보자.
+<br>
 <span style='color:red'> The quick brown </span>  fox jumps over the lazy dog.
 
 <span style='color:red'>for(i= </span> 0;i<n;i++) sum+=array[i]
