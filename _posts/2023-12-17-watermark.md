@@ -124,3 +124,16 @@ LLM 은 위와 같이 마지막 layer 의 logit 값의 softmax 를 통해 vocab 
 
 임의의 $\gamma$ 에 대해서 $z$ value 는 위와 같다. 
 $z>4$ 인 경우를 다시 한 번 생각하면, 여전히 False-positive 는 $3 × 10^{(-5)}$이다.
+"Hard" watermark의 경우, 텍스트의 특성과 관계없이 16개 이상의 토큰으로 이루어진 어떠한 워터마크가 있는 시퀀스라도 감지할 수 있었지만, "soft" watermark의 경우, watermark 텍스트를 감지하는 능력은 시퀀스의 엔트로피에 따라 달라진다.
+높은 엔트로피 시퀀스는 상대적으로 적은 토큰으로 감지되지만, 낮은 엔트로피 시퀀스는 감지를 위해 더 많은 토큰이 필요하다. 
+
+# Analysis of the soft watermark
+이 섹션에서는 'soft' watermark 에 대한 보다 면밀한 분석을 진행한다.
+실제 sampling method 와 다르게, red list 는 uniform 하게 sample 된다고 가정한다. 실제로는 previous token 을 seed 로 하여 random number generator 에 의해 sample 된다.
+
+분석을 위해 "Spike" 라고 하는 새로운 entropy 개념을 정의한다. discrete probability mass $p$ 와 scalar $z$ 에 대해 'spike' 는 아래와 같다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/f1ac1975-60b8-480f-82f6-c8f4d29af7cb)
+
+이 것은 기존의 Shannon entropy 와 유사하게, single location 에 mass $p$ 가 몰려있을 때 가장 적은 $1/{1+z}$ 값을 가지며, uniformly distritubted 되었을 때, 가장 큰 값인 $N/{N+z}$ 를 가진다.
+
