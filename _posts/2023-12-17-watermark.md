@@ -221,3 +221,30 @@ Observed $z$-score 를 기반으로 한 resulting hypothesis 의 sensitivity 을
 다음 섹션에서는 두 번째로 작은 언어 모델을 사용하여 대표적인 공격의 예를 실제로 구현하고 평가한다.
 
 <span style='color:green;font-weight:bold'> . Degradation Under Attack: Span Replacement Using a LM  </span><br>
+다른 언어 모델을 사용하여 원본 출력 텍스트에서 일부 구간을 교체함으로써, 워터마크의 존재를 제거하려는 현실적인 블랙박스 공격을 연구한다.
+워터마크 알고리즘을 API 뒤에 은폐된 것처럼 취급하여 이를 비공개로 간주한다. 
+공격자는 Green list token 의 위치에 액세스할 수 없으며 대신 특정 단어 교체 예산 ε 에 도달할 때까지 무작위 인덱스에서의 토큰 교체를 시도한다. 
+**예산 제약은 원본 워터마크 텍스트와 공격된 텍스트 간의 수준의 의미 유사성을 유지**하며, 그렇지 않으면 원본 텍스트가 의도한 작업을 수행하기 위한 효용성(utility) 가 손실될 수 있다.
+또한 공격에서 각 구간 교체는 multi-million parameters 를 가진 언어 모델의 inference 를 통해 수행된다. 
+이는 대상 모델의 대략 1/3 크기 정도이지만, 공격이 실제에서 모델 호출에 대한 기본적인 효율성 수준을 유지하는 것이 바람직하다는 것을 의미한다. 
+실험에서는 대체 모델로 **T5-Large** 를 채택하고, 공격자가 예산에 도달하거나 더 이상 적절한 교체 후보가 반환되지 않을 때까지 토큰을 반복적으로 선택하여 교체한다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/8844e936-4c7a-417e-bae9-fc274f4b7c1d)
+
+T5 토크나이저를 사용하여 워터마크가 지정된 텍스트를 토큰화한다. 
+그 다음, εT번 미만의 성공적인 교체가 수행되었거나 최대 반복 횟수에 도달할 때까지 다음을 반복한다.
+
+(1) 토큰화된 단어 중 하나를 <mask>로 무작위로 교체된다.
+
+(2) <mask> 토큰 주변의 텍스트 영역을 T5에 전달하여 50-way beam search 를 통해 likelihood 에 대응하는 점수가 있는 k = 20개의 후보 교체 토큰 시퀀스 목록을 얻는다.
+
+(3) 각 후보는 문자열로 디코딩된다. 모델이 반환한 k개의 candidate 중 하나가 마스킹된 영역에 해당하는 원래 문자열과 같지 않으면 공격이 성공하고 해당 영역이 새 텍스트로 교체된다.
+
+이 방법으로 길이 T = 200±5 토큰 시퀀스의 세트를 500개 공격한 후에, 업데이트된 $z$-score를 계산하고 error rate 을 정리한 ROC 플롯이 Figure 5 이다.
+이 공격은 텍스트 내의 Red list token 수를 증가시키는 데 효과적이지만, Figure 에 나타난 대로 ε = 0.1일 때 워터마크 강도의 감소만을 측정한다. 
+ε = 0.3의 큰 예산에서 워터마크 제거는 더 성공적이지만, 공격된 시퀀스의 평균 perplexity 는 3배로 증가하며 더 많은 모델 call 이 필요하다.
+
+# Conclusion
+```
+The proposed method's z-statistic for detection relies solely on the green list size parameter γ and the hash function, independent of δ or other factors related to green list enforcement, allowing flexible deployment of watermarks with context-specific rules and the ability to change the sampling algorithm without altering the detector; however, open questions persist, such as optimal testing in streaming or mixed-context scenarios, leaving room for future research on the practicality of watermarks in countering malicious uses of generative models.
+```
