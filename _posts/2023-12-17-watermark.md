@@ -51,9 +51,52 @@ Large Language Model (LLM) 의 성능이 폭발적으로 증가함에 따라, fa
 따라서 인위적으로 watermark 를 이러한 low entropy 문장에 집어넣는 것은 오히려 perplexity 를 크게 높이는 결과를 가져와 quality 를 떨어뜨린다.
 
 # A simple proof of concept
-![Uploading image.png…]()
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/9982ebac-7f87-4710-9b49-1a2e947ebf9e)
 
+첫 번째로는 <span style='background-color: #dcffe4'> simple "hard" red list wateramrk </span> 를 통한 기법이다. 이는 분석하기 쉽고 찾아내기도 쉬우며 remove 하기는 어렵다. 
+그러나 이 방식은 low entropy 문장에 대해서 poor generation quality 를 초래하는 cost 를 수반한다.
 
+이 방식은 위의 알고리즘에 볼 수 있다. 이 방식은 t-token $s^t$ 에서 등장할 수 없게 하는 토큰들의 집합 pseudo-random red list 를 생성한다. 이 red list 는 $s^{(t-1)}$ 에서 seeded 되기 때문에 entire sequence 에 대한 접근 없이 reproduce 가능하다.
 
+<span style='color:green;font-weight:bold'> Detecting the watermark. </span><br>
 
+워터마크가 있는 텍스트를 생성하는 데는 언어 모델에 대한 액세스가 필요하지만, 워터마크를 감지하는 데는 그러한 액세스가 필요하지 않는다. 해시 함수와 난수 생성기에 대한 지식을 가진 제3자 (third party) 는 각 토큰에 대한 빨간색 목록을 다시 생성하고 빨간색 목록 규칙이 얼마나 자주 위배되는지 계산할 수 있다. 
 
+다시 말해 아래의 *null hypothesis* (귀무가설) 에 대한 test 로 watermark 를 detect 할 수 있다.
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/f40ae537-5935-4b6c-be3a-29b5b444ed7a)
+
+왜냐하면, red list 가 매번 무작위로 선택되기 때문에 natural writer 는 자연스럽게 자신의 토큰 중 절반 정도에 대해 red list 를 위반할 것으로 예상되며, 반면 워터마크가 있는 모델은 위반을 생성하지 않을 것으로 예상되기 때문이다. 
+Red list 규칙을 위반하지 않고 $T$ 개의 토큰을 생성하는 확률은 $1/2^T$ 이다.
+이는 심지어 몇 마디로 이루어진 짧은 텍스트 조각에 대해서도 거의 없는 확률을 의미한다.
+
+<span style='background-color: #dcffe4'> 귀무가설을 검증하기 위한 더 견고한(Robust) 감지 방법은 one proportion z-test를 사용하는 것이다. </span> 만약, 귀무가설이 참이라면, green list token 의 수 $|s|_{G}$ 는 $T/2$ 의 value 와 variance $T/4$ 일 것이다. 따라서 z-statistics 는 아래와 같다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/6d40dec7-4f83-46f1-9ff2-c43344b3bc11)
+
+$z$ 가 특정 threshold 이상이면 이 귀무가설을 reject 하고 watermark 가 존재한다고 주장할 수 있다. 만약 $z$ > 4일 경우 귀무가설을 기각하기로 선택한다고 가정하면, 이 경우 false positive 의 확률은 $3 × 10^{(-5)}$ 이다. 이는 $z$ > 4에 해당하는 one-sided p-값이다. 동시에 $T$ 값이 16 이상인 경우 ($|s|_G=T$에서 $z$ = 4를 만드는 최소값) 어떠한 워터마크가 있는 시퀀스도 감지할 것이다.
+
+<span style='color:green;font-weight:bold'> How hard is it to remove the watermark?  </span><br>
+**One proportion $z$-test 를 사용하면 워터마크를 제거하기가 어려워진다.** 
+길이가 1000 인 워터마크가 있는 시퀀스에 대해, 만일 적대적인 사용자 (Adverary) 가 시퀀스에서 200 개의 토큰을 수정하여 Red list 단어를 추가하고 워터마크를 지우려고 한다면, 위치 t의 수정된 토큰은 위치 t에서 Red list 규칙을 위반할 것이다.
+게다가 $s^t$의 값은 토큰 $s^{t+1}$ 에 대한 Red list 를 결정하기 때문에, $s^t$ 를 최대한 적대적으로 선택하면 $s^{t+1}$ 이 Red list 규칙을 위반하게 만들 수 있다. 따라서 200 개의 토큰 뒤집기로 인해 최대 400번의 빨간색 목록 규칙 위반이 발생할 수 있다.
+
+공격자에게는 불행하게도, 이 최대한 적대적인 시퀀스에서조차 600개의 남은 녹색 목록 토큰은 여전히 z-통계량 2(600 - 1000/2)/√1000 로 계산되며 이는 약 6.3이며, p-값은 약 10^(-10) 정도이다. 
+이는 워터마크를 극도로 높은 신뢰도로 쉽게 감지할 수 있게 해준다. 일반적으로 긴 시퀀스의 워터마크를 제거하려면 대략 토큰의 1/4 이상을 수정해야 한다.
+
+위의 분석은 공격자가 워터마크에 대한 완전한 지식을 가지고 있으며 각 선택된 토큰이 최대한 적대적인 경우를 가정한다 (이는 품질에 부정적인 영향을 미칠 가능성이 높다).
+실제로, 워터마크 알고리즘을 알지 못하는 경우, 각 뒤집힌 토큰이 빨간색 목록에 속할 확률은 50% 뿐이며, 인접한 토큰도 동일합니다. 
+이 경우 공격자는 200개의 토큰을 수정하여 (기대값 상으로) 200개의 빨간색 목록 단어를 생성한다. 
+
+정리하면, 인간이 직접 생성한 문장은 약 50% 정도가 red list 에 속하는 단어들일 것이다. 
+공격자가 워터마크를 제거하기 위해, Red list 를 알고 있다고 가정해도, 문장의 20% 정도를 뒤집는 것으로는 워터마크를 제거하기 힘들며, 최소한 25% (1/4) 정도 token 을 뒤집어야만 귀무가설을 reject 하고 인간이 생성한 문장이라고 주장할 수 있을 것이다. 그만큼 'hard red list' 규칙으로 생성된 watermark (green 의 연속)은 제거하기가 힘들다.  
+
+<span style='color:green;font-weight:bold'> Drawbacks of the hard red list rule.  </span><br>
+
+하지만, "Hard red list rule"은 낮은 엔트로피 시퀀스를 너무나도 간단한 방법으로 처리하여 문제가 된다. 이 규칙은 언어 모델이 low entropy 시퀀스를 생성하는 것을 방지하기 때문에 문제가 발생한다. 
+예를 들어, "Barack" 토큰은 많은 텍스트 데이터셋에서 거의 결정적으로 "Obama"가 뒤를 따를 것이지만, "Obama"가 빨간색 목록에 포함되어 있을 수 있다.
+
+<span style='background-color: #dcffe4'> 따라서, "Soft" watermarking 규칙을 사용하는 것이 더 나은 behavior 이다. </span> 이 규칙은 감지하기 어려운 high-entropy 텍스트에서만 활성화된다. 
+충분히 높은 total entropy 속에 low entropy sequence 가 쌓여 있는 상황에서도, 해당 구문은 여전히 워터마크 감지기를 쉽게 작동시킬 수 있어서 1.2절에서 설명한 문제를 해결할 수 있다. 
+더 나아가, Beam search decoder 와 워터마크를 결합할 수 있다. "Irons-in" 하는 빔 서치 디코더를 사용하면 가능성 있는 토큰 시퀀스의 가설 공간을 검색하여 녹색 목록 토큰이 높은 밀도로 나타나는 후보 시퀀스를 찾을 수 있으며, 이는 최소한의 혼란 비용으로 높은 강도의 워터마크를 생성한다.
+
+# A more sophisticated watermark
