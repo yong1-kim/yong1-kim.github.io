@@ -184,3 +184,40 @@ OPT-1.3B 모델([Zhang et al., 2022](https://arxiv.org/abs/2205.01068))을 사�
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/0cfd8584-c362-4c45-8b2c-576554ddeea0)
 
+<span style='color:green;font-weight:bold'> Watermark Strength vs Text Quality </span><br>
+
+짧은 시퀀스에 대해 매우 강력한 워터마크를 얻으려면, 작은 Green list size $\gamma$ 와 큰 green list bias $\delta$ 를 선택해야 한다.
+그러나 더 강력한 워터마크를 만들면 생성된 텍스트가 왜곡될 수 있다.
+위의 Figure 2 (Left)은 다양한 워터마킹 매개변수 조합에 대한 워터마크 강도($z$-score)와 text quality (perplexity) 사이의 trade-off 를 보여준다. 
+각 매개변수 선택에 대해, 길이 T = 200 ± 5 토큰의 500 ± 10개 시퀀스를 사용하여 결과를 계산한다. 흥미로운 점은 작은 green list size $\gamma$ = 0.1이 pareto-optimal 이다.
+
+이러한 quantitative result 에 추가로, 위의 Table 1에서 실제 프롬프트와 워터마크된 결과의 예시를 보여줌으로써 다양한 종류의 프롬프트에 대한 테스트 통계 및 품질 측정의 행동에 대한 질적인 감각을 제공한다.
+
+<span style='color:green;font-weight:bold'> Ironing in the Watermark with Beam Search.  </span><br>
+Figure 2 (Right) 은 beam search 를 사용할 때 워터마크 strength 와 accuracy 간의 trade-off 를 보여준다. Beam search 는 soft watermark 규칙과 synergistic inetraction 을 보인다. 특히 8개의 beam 을 사용할 때, figure 점들은 거의 수직선을 형성하며, 강력한 워터마킹을 달성하는 데 거의 perplexity cost 가 없음을 보여준다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/c1f5578d-37e8-4ab9-811c-35bd514b5301)
+
+<span style='color:green;font-weight:bold'> Watermark Strength vs Number of Tokens.  </span><br>
+
+Theory 는 시퀀스 길이 T 가 증가함에 따라 워터마크의 type-I and type-II error rate 이 감소해야 할 것을 예측한다.
+위의 Figure 3 은 시퀀스 길이 T가 2에서 200까지 변할 때 측정된 평균 $z$-score를 사용하여 워터마크의 strength 를 보여준다. 다양한 $\delta$  및 $\gamma$ 값에 대한 curve 에 대하여, 왼쪽 두 그래프는 multinominal 샘플링을 사용하며, 오른쪽 차트는 8-way beam search 를 사용하며 $\gamma$ = 0.25 다. 
+다시 한번, 8-way beam search 가 높은 green list rate 를 달성하는 데 얼마나 강력한지를 확인할 수 있다. 
+Moderate bias $\delta$ = 2의 경우에도 35 토큰에서 5 이상의 평균 $z$-score 를 달성한다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/fcf0f612-0455-49cc-a601-9076ceed6c4d)
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/42443c85-a429-4a45-950a-e4a448dbaf0b)
+
+<span style='color:green;font-weight:bold'> Performance and Sensitivity for Multinomial Sampling.  </span><br>
+
+Observed $z$-score 를 기반으로 한 resulting hypothesis 의 sensitivity 을 보여주기 위해 Table 2에 다양한 워터마킹 매개변수에 대한 error rate 를 report 한다.
+또한 Figure 4의 ROC 차트에서 여러 임계값 범위를 볼 수 있다. 
+
+# Attacking the watermark
+워터마크 및 워터마크 detector 를 구현할 때는 보안이 유지되도록 주의를 기울여야 한다. 
+그렇지 않으면 적대적인 사용자가 텍스트를 수정하여 Red list token 을 추가하여 detection을 피할 수 있다. 
+많은 경우에는 텍스트를 해시가 계산되기 전에 적절하게 정규화함으로써 간단한 공격을 피할 수 있다. 
+다음 섹션에서는 두 번째로 작은 언어 모델을 사용하여 대표적인 공격의 예를 실제로 구현하고 평가한다.
+
+<span style='color:green;font-weight:bold'> . Degradation Under Attack: Span Replacement Using a LM  </span><br>
