@@ -153,5 +153,34 @@ $z>4$ 인 경우를 다시 한 번 생각하면, 여전히 False-positive 는 $3
 엔트로피가 평균값인 (S = 0.807) 경우, Green list token 의 표준 편차가 6.41 토큰 이하이며, 표준 가우스 근사를 사용하여 98.6%의 감도 (1.4%의 Type-II Error rate)를 얻을 수 있다. 이는 특정 엔트로피에 대한 감도의 하한값이다. 
 이론적인 한계가 아닌 실제 평균값 159.5를 사용하면 $5.3 × 10^(-7)$의 Type-II error rate을 얻을 수 있다. 이는 현실적인 근사치이지만 엄격한 하한값은 아니다.
 
-**Empirical sensitivity.**
- 
+**Empirical sensitivity.** Empericially, multinominal sampling 기법을 사용할 때 98.4%의 generation 이 $z$ = 4 (128 토큰) threshold 에서 감지된다. 4-way Beam search over greedy search 의 경우 99.6%의 empirical sensitivitiy 를 보인다.
+이론적인 한계와 달리 이들은 모든 generation 에 대해 계산되며, 이들은 길이는 동일하지만 개별 엔트로피는 다른 것들이다. 
+여기서 Type-II error 의 주요 원인은 낮은 엔트로피 시퀀스이며, 위의 계산에서 엔트로피가 평균값 근처에 있을 때 매우 낮은 오류율을 예상한다는 점을 보여준다.
+이를 검증하기 위해 spike 엔트로피가 25번째 백분위수를 초과하는 375/500 하위 집합을 검토하면, 이 중 100%의 generation 이 $z$ = 4 임계값에서 감지된다.
+
+**What do failure cases look like?**
+Low entropy(undetectable) 시퀀스는 주로 data memorization 을 포함한다. 즉, 모델이 인간이 쓴 텍스트의 copy(또는 nearly-copy) 를 그대로 토해내기 때문에 이는 기계로 작성된 것으로 감지되지 않는다.
+
+ ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/0219b39a-72b8-4d6d-bda6-640be40302c8)
+
+<span style='color:green;font-weight:bold'> Impact on quality of generated text
+ </span><br>
+언어 모델이 생성하는 분포가 균일할 때 (최대 엔트로피), Green list의 randomness 로 인해 토큰이 균일하게 샘플링되며, perplexity 는 영향을 받지 않는다. 반면에 최소 엔트로피의 경우, 모든 확률 질량이 단일 토큰에 집중되기 때문에 soft watermark 는 효과가 없으며 역시 perplexity 에 영향을 미치지 않는다. 
+그러나 워터마크 규칙은 중간 엔트로피의 토큰에 대해 perplexity 에 영향을 미친다.
+
+# Private Watermarking
+위의 워터마크 알고리즘은 Public 하게 설계되었다. 워터마크는 private 모드에서 운영될 수 있으며, 이 경우 알고리즘은 비밀로 유지되는 무작위 키를 사용하고 안전한 API 뒤에서 호스팅된다. 
+공격자가 Red list 를 생성하는 데 사용된 키에 대한 지식이 없으면 공격자가 워터마크를 제거하는 것이 더 어려워진다.
+그러나 이제 워터마크의 존재 여부를 테스트하려면 동일한 안전한 API를 사용해야 하며, 이 API가 공개적이면 동일한 시퀀스의 소소한 변형을 사용하여 공격자가 너무 많은 쿼리를 하지 못하도록 액세스를 모니터링해야 한다.
+
+# Experiments
+OPT-1.3B 모델([Zhang et al., 2022](https://arxiv.org/abs/2205.01068))을 사용하여 워터마크의 동작을 검증한다. 워터마크 강도를 측정할 때 Type-I error (Human text 가 watermarked 로 표시) 및 Type-II error(Watermarked text 가 감지되지 않음)의 비율을 사용한다.
+
+<span style='color:green;font-weight:bold'> Datasets and Prompts.
+ </span><br>
+다양한 현실적인 언어 모델링 시나리오를 시뮬레이션하기 위해 C4 데이터셋의 뉴스와 유사한 subset에서 무작위로 선택한 텍스트를 적절하게 가공한다. 
+각 무작위 문자열에 대해 일정 길이의 토큰을 끝에서 잘라내어 "baseline" completion으로 취급한다. Remaining 토큰은 프롬프트로 사용된다.
+더 큰 오라클 언어 모델 (OPT-2.7B) 은 generated completion 및 human baseline 의 perplexity(PPL)를 계산하는 데 사용된다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/0cfd8584-c362-4c45-8b2c-576554ddeea0)
+
