@@ -144,3 +144,14 @@ $z>4$ 인 경우를 다시 한 번 생각하면, 여전히 False-positive 는 $3
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/13bc1f62-fc1b-47a3-977f-882e2e10b232)
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/395a53d4-1844-4d5a-a820-727ce46dded1)
 
+<span style='color:green;font-weight:bold'> Sensitivity of the watermark test
+ </span><br>
+"Soft" watermark의 sensitivity는 standard type-II error analysis 을 사용하여 계산할 수 있다. 
+설명을 위해, $\gamma$ = 0.5 및 $\delta$ = 2로 설정된 soft watermark 의 Type-II (False negative) error rate 을 추정한다. OPT-1.3B 를 사용하여 C4 데이터셋의 RealNewsLike 하위집합에서 나온 프롬프트를 사용하여 200개의 토큰이 생성되었다고 가정한다. 또한 $z$ = 4인 detection thershold 을 가정하며 (이는 약 128.2/100 토큰에서 발생), 이로 인해 Type-I error (False positive) rate 은 $3 × 10^(-5)$ 이다.
+
+**Theoritical bound.** Generation은 약 500회에 걸쳐 샘플 당 평균 spike 엔트로피인 S = 0.807을 가지고 있다. Theorem 4.2에 따르면, 한 generation 당 기대되는 Green list token 수는 최소 142.2 이다. 사실, 경험적 평균은 159.5 이다. 
+엔트로피가 평균값인 (S = 0.807) 경우, Green list token 의 표준 편차가 6.41 토큰 이하이며, 표준 가우스 근사를 사용하여 98.6%의 감도 (1.4%의 Type-II Error rate)를 얻을 수 있다. 이는 특정 엔트로피에 대한 감도의 하한값이다. 
+이론적인 한계가 아닌 실제 평균값 159.5를 사용하면 $5.3 × 10^(-7)$의 Type-II error rate을 얻을 수 있다. 이는 현실적인 근사치이지만 엄격한 하한값은 아니다.
+
+**Empirical sensitivity.**
+ 
