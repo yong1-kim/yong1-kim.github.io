@@ -76,7 +76,7 @@ Red list 규칙을 위반하지 않고 $T$ 개의 토큰을 생성하는 확률�
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/6d40dec7-4f83-46f1-9ff2-c43344b3bc11)
 
-$z$ 가 특정 threshold 이상이면 이 귀무가설을 reject 하고 watermark 가 존재한다고 주장할 수 있다. 만약 $z$ > 4일 경우 귀무가설을 기각하기로 선택한다고 가정하면, 이 경우 false positive 의 확률은 $3 × 10^{(-5)}$ 이다. 이는 $z$ > 4에 해당하는 one-sided p-값이다. 동시에 $T$ 값이 16 이상인 경우 ($|s|_G=T$에서 $z$ = 4를 만드는 최소값) 어떠한 워터마크가 있는 시퀀스도 감지할 것이다.
+$z$ 가 특정 threshold 이상이면 이 귀무가설을 reject 하고 watermark 가 존재한다고 주장할 수 있다. 만약 $z$ > 4일 경우 귀무가설을 기각하기로 선택한다고 가정하면, 이 경우 false positive 의 확률은 $3 × 10^{(-5)}$ 이다. 이는 $z$ > 4에 해당하는 one-sided p-값이다. 동시에 $T$ 값이 16 이상인 경우 ($s_G=T$에서 $z$ = 4를 만드는 최소값) 어떠한 워터마크가 있는 시퀀스도 감지할 것이다.
 
 <span style='color:green;font-weight:bold'> How hard is it to remove the watermark?  </span><br>
 **One proportion $z$-test 를 사용하면 워터마크를 제거하기가 어려워진다.** 
