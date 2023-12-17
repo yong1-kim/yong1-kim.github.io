@@ -72,7 +72,7 @@ Red list 규칙을 위반하지 않고 $T$ 개의 토큰을 생성하는 확률�
 이는 심지어 몇 마디로 이루어진 짧은 텍스트 조각에 대해서도 거의 없는 확률을 의미한다.
 
 <span style='background-color: #dcffe4'> 귀무가설을 검증하기 위한 더 견고한(Robust) 감지 방법은 one proportion z-test를 사용하는 것이다. </span> 
-만약, 귀무가설이 참이라면, green list token 의 수 $ s_{G} $ 는 $T/2$ 의 value 와 variance $T/4$ 일 것이다. 따라서 z-statistics 는 아래와 같다.
+만약, 귀무가설이 참이라면, green list token 의 수 $s_{G}$ 는 $T/2$ 의 value 와 variance $T/4$ 일 것이다. 따라서 z-statistics 는 아래와 같다.
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/6d40dec7-4f83-46f1-9ff2-c43344b3bc11)
 
@@ -123,4 +123,4 @@ LLM 은 위와 같이 마지막 layer 의 logit 값의 softmax 를 통해 vocab 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/196c4f19-e90b-464b-87bc-1571778a58ad)
 
 임의의 $\gamma$ 에 대해서 $z$ value 는 위와 같다. 
-$z>4$ 인 경우를 다시 한 번 생각하면, 여전히 False-positive 는 3x$10^{-5}$이다.
+$z>4$ 인 경우를 다시 한 번 생각하면, 여전히 False-positive 는 $3 × 10^{(-5)}$이다.
