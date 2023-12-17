@@ -136,4 +136,11 @@ $z>4$ 인 경우를 다시 한 번 생각하면, 여전히 False-positive 는 $3
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/f1ac1975-60b8-480f-82f6-c8f4d29af7cb)
 
 이 것은 기존의 Shannon entropy 와 유사하게, single location 에 mass $p$ 가 몰려있을 때 가장 적은 $1/{1+z}$ 값을 가지며, uniformly distritubted 되었을 때, 가장 큰 값인 $N/{N+z}$ 를 가진다.
+큰 $z$ 값에 대하여, $p_z > 1/z$ 인 경우, 개별 spike 값은 $1/z$ 에 가깝게 되고, $p_z < 1/z$ 의 경우, 개별 spike 값은 0 에 가까워진다.
+따라서, spike entropy 해석하면 $1/z$ 보다 큰 확률 $p$를 갖는 entry 의 softened measure 라고 해석할 수 있다.
+
+이를 이용하여 watermakr 속의 green list 의 수를 예측하는 theorem 은 아래와 같다. 
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/13bc1f62-fc1b-47a3-977f-882e2e10b232)
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/395a53d4-1844-4d5a-a820-727ce46dded1)
 
