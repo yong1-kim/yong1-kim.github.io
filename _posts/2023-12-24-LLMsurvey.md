@@ -7,10 +7,11 @@ categories: [Transformer, PLM, LLM]
 ---
 
 [[pdf]](https://arxiv.org/pdf/2303.18223.pdf)
+[[github]](https://github.com/RUCAIBox/LLMSurvey)
 
 **Wayne Xin Zhao, Kun Zhou, Junyi Li, Tianyi Tang, Xiaolei Wang, Yupeng Hou, Yingqian Min, Beichen Zhang, Junjie Zhang, Zican Dong, Yifan Du, Chen Yang, Yushuo Chen, Zhipeng Chen, Jinhao Jiang, Ruiyang Ren, Yifan Li, Xinyu Tang, Zikang Liu, Peiyu Liu, Jian-Yun Nie and Ji-Rong Wen**
 
-<span style='background-color: #dcffe4'> ㅁ 이 글은 Large Language Model (LLM) 의 survey 논문으로 cited paper 의 link 는 생략한다. </span>
+<span style='background-color: #dcffe4'> 이 글은 Large Language Model (LLM) 의 survey 논문으로 cited paper 의 link 는 생략한다. </span>
 
 
 # Abstract
@@ -37,6 +38,27 @@ LM 의 연구분야는 시대에 따라 크게 네 가지로 나뉜다.
 특히나, 위의 그림에서 보는 것처럼 <span style='color:green;font-weight:bold'> chatGPT </span> 의 등장 이후 LLM 연구가 매우 활발하다.
 LLM 연구는 기존의 text data 를 model 하고 generate 하는 연구와 다르게, <span style='background-color: #dcffe4'>  complext task solving 을 하는데 치중되어 있다. (From langauge modeling to task sloving) </span>
 
+<span style='color:green;font-weight:bold'> Differences between LLM and PLM </span>
+<br>
+LLM 은 PLM 과 비교하여 크게 아래 세 가지의 차이점을 보인다.
+- LLM 은 PLM 에 비교하여 전례없는 powerful 한 성능을 보인다. (특히 complex task 에서)
+- GPT-4 API 처럼 prompting interface 를 통해 인간이 AI 시스템을 사용하는데 혁명을 불러왔다.
+- 압도적인 크기로 인해, research 와 engineering 의 영역을 무너뜨렸다.
+
+<span style='color:green;font-weight:bold'> LLM 의 단점 </span>
+<br>
+그러나 이러한 LLM 의 underlying principle 은 여전히 explored 되지 않았다. LLM 이 PLM 보다 압도적인 성능을 언제부터, 그리고 어떻게 내어놓는지에 대한 연구가 더 필요하다. 그리고, LLM 은 압도적인 크기로 인해 몇몇 industry 에서만 활용 가능하며, data collection and cleaning 등의 중요한 training detail 은 공개되지 않는다. 그리고 마지막으로 <span style='background-color: #dcffe4'> LLM 은 toxic, fictitious, harmful content 를 생성한다.  </span>
+
+<span style='color:green;font-weight:bold'> LLM 연구의 필요성 </span>
+<br>
+따라서 이러한 문제를 극복하기 위하여 LLM 에 대한 더욱 깊은 연구가 필요하다.
+이 survey 에서는 네 가지 관점에서 연구들을 정리한다.
+- pre-training (how to pretrain a capable LLM)
+- adaptation (how to effectively adapt pre-trained LLMs for better use)
+- utilization (how to use LLMs for solving various downstream tasks)
+- capability evaluation (how to evaluate the abilities of LLMs and existing empirical findings)
+
+이후 추가적으로, **some useful prompt design**, **LLM application in specific-domain** 등을 다룬다.
 
 
 <span style='background-color: #dcffe4'> 초록 배경색 </span>
