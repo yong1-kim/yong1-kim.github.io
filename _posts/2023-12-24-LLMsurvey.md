@@ -65,7 +65,21 @@ LLM 은 PLM 과 비교하여 크게 아래 세 가지의 차이점을 보인다.
 # Background for LLMs
 <span style='background-color: #dcffe4'> Scaling Laws for LLMs </span>
 <br>
+LLM 은 기본적으로 Transformer 를 기반으로 하지만, model size, data size, total computation cost 등에서 매우 압도적으로 크다. 여러 연구에서 scaling 이 model 의 capacity 를 키운다는 것을 발견했다. 여기서는 두 가지 scaling law 를 소개한다.
+- KM scaling law
 
+2020 년 OpenAI 팀의 Kaplan et al. 은 model size (N), dataset size (D), amount of training compute (C) 에 대해, 다음 세 가지 scaling law 를 보였다.
+  ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/5d3d75ab-fd4a-492b-8a49-4411f17b05b8)
+
+이들은, model performance 가 세 가지 factor 에 strong dependence 를 갖는 것을 보였다. 이후, follow-up 연구에서 OpenAI 팀은 LM loss 를 두 가지로 구분하였는데, 하나는 *irreducible loss*(the entropy of the trud data distribution) 이고, 다른 하나는 *reducible loss*(an estimate of the KL divergence between the true and model distributions) 이다.
+
+- Chinchilla scaling law
+
+Google DeepMind team 의 Hoffmann et al. 은 다른 형태의 scaling law 를 제안하였다. 여러 모델 사이즈와 여러 데이터 사이즈를 통해 아래의 식을 경험적으로 찾아낸다. 
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/1f2a99d0-5a8a-4334-ace1-2bdda103d089)
+
+Compute budget 이 커질 떄, KM scaling law 는 모델 사이즈를 키우는 것을 더 favor 하는 반면, Chinchilla scaling law 는 모델 사이즈와 데이터셋 사이즈 모두 equal scale 로 올려야 한다고 주장한다.
 
 <span style='background-color: #dcffe4'> 초록 배경색 </span>
 <span style='color:green;font-weight:bold'> 초록 볼드체 </span>
