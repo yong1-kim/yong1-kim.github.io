@@ -47,7 +47,7 @@ LLM 은 PLM 과 비교하여 크게 아래 세 가지의 차이점을 보인다.
 
 <span style='color:green;font-weight:bold'> LLM 의 단점 </span>
 <br>
-그러나 이러한 LLM 의 underlying principle 은 여전히 explored 되지 않았다. LLM 이 PLM 보다 압도적인 성능을 언제부터, 그리고 어떻게 내어놓는지에 대한 연구가 더 필요하다. 그리고, LLM 은 압도적인 크기로 인해 몇몇 industry 에서만 활용 가능하며, data collection and cleaning 등의 중요한 training detail 은 공개되지 않는다. 그리고 마지막으로 <span style='background-color: #dcffe4'> LLM 은 toxic, fictitious, harmful content 를 생성한다.  </span>
+그러나 이러한 LLM 의 underlying principle 은 여전히 explored 되지 않았다. LLM 이 PLM 보다 압도적인 성능을 언제부터, 어떻게 내어놓는지에 대한 연구가 더 필요하다. 그리고, LLM 은 압도적인 크기로 인해 몇몇 industry 에서만 활용 가능하며, data collection and cleaning 등의 중요한 training detail 은 공개되지 않는다. 마지막으로 <span style='background-color: #dcffe4'> LLM 은 toxic, fictitious, harmful content 를 생성한다.  </span>
 
 <span style='color:green;font-weight:bold'> LLM 연구의 필요성 </span>
 <br>
@@ -59,6 +59,10 @@ LLM 은 PLM 과 비교하여 크게 아래 세 가지의 차이점을 보인다.
 - capability evaluation (how to evaluate the abilities of LLMs and existing empirical findings)
 
 이후 추가적으로, **some useful prompt design**, **LLM application in specific-domain** 등을 다룬다.
+
+# Overview
+
+## Background for LLMs
 
 
 <span style='background-color: #dcffe4'> 초록 배경색 </span>
