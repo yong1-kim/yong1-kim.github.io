@@ -102,6 +102,38 @@ GPT-4 는 coding ability 를 포함한 몇몇 capability 의 경우, scaling law
 
 <span style='color:green;font-weight:bold'>  (3) Emergent Abilities of LLMs </span>
 <br>
+"Emergent ability" 는 smaller model 에는 나타나지 않지만, large model 에 갑자기 나타난 능력을 의미한다.
+특히 이러한 능력은 copmlex task 에서 나타난다. 
+- In-context learning.
+
+In-context learning (ICL) 은 GPT-3 에서 처음 제안된 개념으로, 추가적인 training 이나 gradient update 없이 주어진 instruction 에 따라 문장을 완성하는 능력을 말한다. ICL 은 task 에 따라 천차만별이며, arithmetic task 의 경우, 13B 정도의 GPT-3 에서도 잘하지만, Persian QA task 는 175-B 도 잘하지 못한다.
+
+- Instruction Following (Instruction Tuning).
+
+흔히 **Instruction Tuning** 이라고 부르는, 자연어 decription 을 통한 multi-task fine-tuning 을 통해, LLM 은 instruction form 을 이용하여 explicit example 없이도 unseen task 를 잘 풀어낸다. 대표적인 예시로, LaMDA-PT 는 68B 에서 unseen task 를 잘 해결하며, PaLM 의 경우 62B 부터 MMLU, BBH, TyDiQA, MGSM 같은 eval benchmark 에서 좋은 성능을 보인다. 
+
+- step-by-step reasoning (Chain-of-Thought|CoT).
+
+CoT prompting 을 이용한 grounding 능력은 100B 이상은 되어야 효과적이다. 
+
+<span style='color:green;font-weight:bold'>  (4) How Emergent Abilities Relate to Scaling Laws </span>
+<br>
+Scaling Law 와 Emergent ability 는 전혀 상반된 결과이다. 하나는 continous improvement 에 대한 내용이며, 하나는 sharp performance leap 에 관한 내용이다. 이에 대한 연구는 더욱 필요하지만, 이는 인간이 언어를 배우는 것과 유사하다고 한다. 인간은 몇몇 단어만 말하다가 '갑자기 어느순간' discontinuous 하게 문장을 구사하게 되는데, 이러한 것이 LLM 이 emergent ability 능력을 가지는 것과 유사하다고 본다.
+
+<span style='color:green;font-weight:bold'>  (5) Key Techniques for LLMs </span>
+<br>
+LLM 이 *general and capable* learner 가 되게 하는 성공요소는 아래와 같다.
+- Scaling.
+
+앞서 언급했듯이, LLM 은 Transformer 모델을 scaling 한 것이다. GPT-3 가 175B 까지, PaLM 이 540B 에서 scaling limit 을 경험했듯이, compute budget 이 정해진 상황에서는 scaling limit 이 있다. 이런 상황에서 **Scaling Law 는 compute-efficent allocation 을 수행하기 위해 더 고려되어야 한다**. Chinchilla 는 Gopher 보다 같은 compute budget 에서 모델 사이즈 대신 더 많은 training token 을 써서, 더 좋은 성능을 보인다. 추가적으로, data scaling 은 careful cleaning process 가 필요한데, pre-training data 의 quality 는 모델에 매우 큰 영향을 미친다.
+
+- Training.
+
+LLM 은 크기가 매우 크기 때문에 distributed training 알고리즘을 요한다. 이렇나 병렬적인 학습을 위해 여러 **optimization framework** 들이 등장했는데, DeepSpeed 나 Megatron-LM 등이 그 예시이다. 또한, training loss spike 극복을 위한 restarting 기법이나, mixed precision training 같은 기법들도 고려되어야 한다. GPT-4 는 독자적인 infrastructure 와 optimization method 를 제안하여, 작은 모델로 큰 모델의 성능을 예측할 수 있는 방법을 제안하였다.
+
+- Ability eliciting.
+
+
 
 
 <span style='background-color: #dcffe4'> 초록 배경색 </span>
