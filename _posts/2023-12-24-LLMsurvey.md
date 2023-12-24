@@ -14,12 +14,12 @@ categories: [Transformer, PLM, LLM]
 <span style='background-color: #dcffe4'> 이 글은 Large Language Model (LLM) 의 survey 논문으로 cited paper 의 link 는 생략한다. </span>
 
 
-# Abstract
+## Abstract
   
 - LLM:Large Langauge Model 은 tens or hundreds of billions of params 를 가지는 언어모델로, in-context learning 등의 몇몇 special ability 를 보인다는 측면에서 PLM:Pre-trained Langauge Model 과 차이를 보인다.
 - 이 연구에서는 최신 LLM 연구를 **pre-training, adaptation tuning, utilization, capacity evaluation** 네 가지 측면에서 조사한 survey 논문이다.
  
-# Introduction
+## Introduction
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/e11e045f-e2b7-4622-bbba-23326484827c)
 
@@ -60,9 +60,11 @@ LLM 은 PLM 과 비교하여 크게 아래 세 가지의 차이점을 보인다.
 
 이후 추가적으로, **some useful prompt design**, **LLM application in specific-domain** 등을 다룬다.
 
-# Overview
+## Overview
 
-## Background for LLMs
+# Background for LLMs
+<span style='background-color: #dcffe4'> Scaling Laws for LLMs </span>
+<br>
 
 
 <span style='background-color: #dcffe4'> 초록 배경색 </span>
