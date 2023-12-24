@@ -63,7 +63,7 @@ LLM 은 PLM 과 비교하여 크게 아래 세 가지의 차이점을 보인다.
 ## Overview
 
 # Background for LLMs
-<span style='background-color: #dcffe4'> Scaling Laws for LLMs </span>
+<span style='color:green;font-weight:bold'> (1) Scaling Laws for LLMs </span>
 <br>
 LLM 은 기본적으로 Transformer 를 기반으로 하지만, model size, data size, total computation cost 등에서 매우 압도적으로 크다. 여러 연구에서 scaling 이 model 의 capacity 를 키운다는 것을 발견했다. 여기서는 두 가지 scaling law 를 소개한다.
 - KM scaling law
@@ -80,6 +80,29 @@ Google DeepMind team 의 Hoffmann et al. 은 다른 형태의 scaling law 를 �
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/1f2a99d0-5a8a-4334-ace1-2bdda103d089)
 
 Compute budget 이 커질 떄, KM scaling law 는 모델 사이즈를 키우는 것을 더 favor 하는 반면, Chinchilla scaling law 는 모델 사이즈와 데이터셋 사이즈 모두 equal scale 로 올려야 한다고 주장한다.
+
+<span style='color:green;font-weight:bold'>  (2) Discussion on Scaling Laws </span>
+<br>
+Scaling law 를 두 가지 측면에서 분석할 수 있다.
+- Predictable Scaling.
+
+<span style='background-color: #dcffe4'> Scaling law 를 기반으로 smaller model 을 기반으로 larget model 의 performance 를 estimate 하는 것이 feasible 하다고 볼 수 있다. </span>
+너무 큰 모델은 그 성능을 측정하는 것조차 버거울 수 있는데, small model 로 부터 얻은 경험이 적용이 될 수 있다는 점은 매우 큰 장점이 된다.
+그리고, LLM 을 학습시킬 때, training spike 같은 abnormal performance 가 있을 수 있는데, scaling law 는 가 LLM 의 training status 를 monitor 하는데 employ 될 수 있다는 장점이 된다.
+또한, 모델의 크기가 커짐에 따라, LLM 학습을 위한 public dataset 이 "exhausted" 될 수 있으며, data scarcity 해결을 위한 data augmentation 기법이 매우 필요함을 의미하기도 한다.
+
+- Task-level Predictability.
+
+LLM 의 scaling law 는 LM loss 에 치중되어 있다.
+그러나 실제로 LM loss 의 감소가 모델의 performance 증가와 같은 말을 의미한다고 볼 수는 없다. 
+GPT-4 는 coding ability 를 포함한 몇몇 capability 의 경우, scaling law 에 따라 정확하게 예측할 수 있다고 한다.
+그러나 많은 경우 *inverse scaling* 이라 불리는 현상이 있으며, 이는 LM loss 가 감소함에도 task performacne 는 오히려 나빠지는 경우이다. 
+그리고 in-context learning 같이, scaling law 로는 예측할 수 없는 능력도 있다.
+
+
+<span style='color:green;font-weight:bold'>  (3) Emergent Abilities of LLMs </span>
+<br>
+
 
 <span style='background-color: #dcffe4'> 초록 배경색 </span>
 <span style='color:green;font-weight:bold'> 초록 볼드체 </span>
