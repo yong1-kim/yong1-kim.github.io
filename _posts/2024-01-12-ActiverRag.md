@@ -192,4 +192,6 @@ Threshold θ 와 performance 의 관계를 조사한다. 아무 것도 검색하
 마지막으로, Masking 을 통한 implicit query formulation 과 question generation 을 통한 explicit query formulation 에 대해 연구한다. Table 4에서 다른 threshold β로 FLARE의 성능을 비교한다. 완전한 문장을 직접 검색하는 것(β = 0)은 낮은 확률로 마스킹된 토큰보다 성능이 나쁘며, 낮은 신뢰도의 error token 이 retriver 를 distraction 할 수 있다는 것을 검증한다. 또한 implicit 및 explicit query formulation 방법을 Table 5 에서 비교한다. 두 방법의 성능은 유사하며, 두 방법 모두 정보 요구를 효과적으로 반영할 수 있다는 것을 나타낸다.
 
 # Conclusion
+```
 To aid long-form generation with retrieval augmentation, we propose an active retrieval augmented generation framework that decides when and what to retrieve during generation. We implement this framework with forward-looking active retrieval that iteratively uses the upcoming sentence to retrieve relevant information if it contains lowconfidence tokens and regenerates the next sentence. Experimental results on 4 tasks/datasets demonstrate the effectiveness of our methods. Future directions include better alternatives for active retrieval and developing LM architectures for efficient active retrieval augmentation.
+```
