@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Active Retrieval Augmented Generation"
-date:   2023-09-18 16:44:00 +0900
+date:   2024-01-12 17:00:00 +0900
 use_math: true
 categories: [Retrieval, LLM, PLM]
 ---
