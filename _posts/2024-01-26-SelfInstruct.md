@@ -160,10 +160,28 @@ Instruction following task 인 SUPERNI benchmark 에 대한 실험결과이다. 
 
 # Experiment 2 : Generalization to User-oriented Insutrctions on Novel Tasks
 
+Practical usage 에 대한 검증을 위하여, User-oriented Instruction set 을 curate 하여 bnechmark 로 활용한다.
+우선, email writing, social media, entertainment, programming 등 LLM 이 자주 쓰일만한 분야를 선정한 후, instruction-instance를 
+ craft 한다.
+이렇게 252 개의 instruction (각 1개의 instance) 를 생성하였다.
+아래 그림에서 small portion 을 볼 수 있다.
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/aa3e8123-442f-445f-975e-03b36cdc481f)
 
+실험 결과는 아래와 같다.
 
-<span style='color:green;font-weight:bold'> 초록색볼드체 </span>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/70dad7d9-b70a-46bf-a6da-55cbe805ad7a)
 
-<span style='background-color: #dcffe4'> 초록색배경 </span>
-<span style='background-color: #ffdce0'> 빨간색배경 </span>
+A,B,C,D 로 나누어 평가를 한 결과 (A rank 일 수록 좋은 평가) text-davinci-001 정도까지는 유사한 결과를 얻을 수 있었다
+
+# Effect of Data Size and Quality
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/984a2805-c56d-4ddd-adb5-961c61579922)
+
+위의 그림의 파란 선에서, data size 가 커질 수록 consistent 하게 성능이 증가하는 것을 볼 수 있다.
+그리고, 주황색 점에서, output 을 text-davinci-003 이 생성하게 하여 높은 quality 의 데이터를 생성하게 하였을 때 훨씬 좋은 성능을 얻는다. 이를 통해, 생성되는 data 의 quality 가 좋아질 수록 성능이 좋아질 수 있으므로, 아직 발전의 여지(room)가 이 충분하다고 본다.
+
+##  Conclusion
+```
+We introduce SELF-INSTRUCT, a method to improve the instruction-following ability of LMs via their own generation of instruction data. On experimenting with vanilla GPT3, we automatically construct a large-scale dataset of 52K instructions for diverse tasks, and finetuning GPT3 on this data leads to a 33% absolute improvement on SUPERNI over the original GPT3. Furthermore, we curate a set of expert-written instructions for novel tasks. Human evaluation on this set shows that tuning GPT3 with SELF-INSTRUCT outperforms using existing public instruction datasets by a large margin and performs closely to InstructGPT001. We hope SELF-INSTRUCT can serve as the first step to align pretrained LMs to follow human instructions, and future work can build on top of this data to improve instruction-following models.
+```
