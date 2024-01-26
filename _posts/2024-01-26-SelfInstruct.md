@@ -51,6 +51,86 @@ categories: [LLM, PLM]
 위의 그림과 같이 다양한 범위의 creative 한 task 들을 생성하는 것을 볼 수 있다. (typcial NLP task 과구분되는)
 SELF-INSTRUCT 가 적용된 GPT-3 는 SUPERNI 등의 typical NLP 뿐 아니라, 새로운 instruction task 에 대해서도 InstructGPT001 을 이기는 정도의 성능을 보여준다.
 
+## Method
+# Defining Instruction Data
+Instruction $I_t$ 는 $t$-th task 에 대해, input-output instance $(X_{t,i}, Y_{t,i})$ 를 갖는다.
+모델 $M$ 은 $M(I_t, X_{t,i})=Y_{t,i}$ 를 생성한다.
+Instruction 과 Input 사이의 boundary 는 엄격하게 두지 않았다. 
+예를 들어, "write an essay about school safety" 자체가 instruction 일 수도 있고, "write an essay about the following topic" 이 instruction 이고 "school safety"가 input 으로 주어질 수도 있다.
+따라서 Input $X$가 empty 로 주어지는 경우도 나올 수 있다.
+
+# Automatic Instruction Data Generation
+첫 번째 Figure 에서 볼 수 있듯이, SELF-INSTRUCT 는 네 가지 pipeline 을 가진다.
+- 1) generating task instructions
+- 2) determining if the instruction represents a classification task
+- 3) instance generation with either an input-first or output-first appraoch
+- 4) filtering low-quality data
+ 
+<span style='color:green;font-weight:bold'> (1) Instruction Generation </span>
+<br>
+우선, 작은 크기의 seed set 으로 시작한다. 저자들은 175개 task 에 대해, 하나의 instruction 과 하나의 instance 로 시작한다.
+각 step 마다 8 개의 task instruction 을 in-context example 로 하여 prompt 를 구성한다.
+prompt 는 아래와 같다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/ca8b9be4-0ac8-428c-8922-a2ec899e3e6c)
+
+<span style='color:green;font-weight:bold'> (2) Classification Task Identification </span>
+<br>
+Classification setting 이냐 아니냐가 중요한 요소이므로, 두 번째 step 으로는 생성된 instruction 이 classification task 인지 아닌지를 구분한다.
+아래 그림의 prompt 를 이용하여 few-shot ICL 로 모델을 이용한다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/5ae87ac6-2ed5-4c70-a0da-e2c053ca883f)
+
+<span style='color:green;font-weight:bold'> (3) Instance Generation </span>
+<br>
+주어진 instruction 를 바탕으로 instance 를 생성하는 단계다.
+이 과정이 가장 challenging 한데, 그 이유는 <span style='background-color: #dcffe4'> (1) target task 에 대한 이해가 필요하고, (2) input field 에대한 이해와 생성을 해야하며, (3) output 을 완성시켜 생성할 수 있어야하기 때문이다. </span>
+즉, 세 가지 단계를 한 번에 해낼 줄 알아야하는 step 이다.
+
+저자들은 우선, instruction-input-output 형태로 주어지는 in-context example 을 통해 LM 이 이 능력을 갖추고 있음을 확인하였다.
+이 방법을 저자들은 **INPUT-First Approach** 로 명명하여 사용한다.
+
+그러나 저자들은 이후, 이 방법이 (classification task 에서 특히) 하나의 label 로 bias 된 output 을 생성한다는 것을 발견한다.
+이에 저자들은 **OUTPUT-First Approach** 를 제안하는데, possible class label 을 먼저 generate 한 후, 이것과 instruction 을 활용해 input 을 생성하게 하는 것이다. Output-first approach 의 prompt 의 일부는 아래의 그림과 같다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/5cb80608-e2f1-4c43-9ecc-eb61b7a49dd4)
+
+저자들은 <span style='background-color: #dcffe4'> classification setting 일 경우 OUTPUT-First approach 를, non-classification setting 일 경우 INPUT-First Approach 를 적용하였다. </span>
+
+<span style='color:green;font-weight:bold'> (4) Filtering and Postprocessing </span>
+<br>
+이렇게 생성된 새로운 instruction-instance 를 task pool 에 추가하기 전 filtering 과정을 거친다.
+우선, 너무 유사한 task 를 방지하기 위해, ROUGE-L similarity 가 0.7 이상이면 거르도록 하였다.
+또 exact same Input, Ouput 이 발견된 경우도 거른다.
+물론 heuristic 하게, instruction 이 너무 짧거나 너무 길거나 하는 등의 invalid generation 도 filter out 된다.
+
+# Finetuning the LM to Follow Instructions
+
+이렇게 생성된 diverse large-scale instruction data 를 학습시킨다.
+다양한 task 에 대해 robust 하게 만들기 위하여, 다양한 template 의 prompt 를 사용한다.
+
+## SELF-INSTRUCT Data from GPT-3
+GPT-3 를 활용하여 SELF-INSTRUCT 를 구현해 생성한 dataset 의 통계이다.
+
+# Statistics
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/f71e67bd-3058-4c7c-8068-a0d70ce5802e)
+
+52K instruction 과 82K 정도의 instance 가 생성되었따.
+
+# Diversity
+Berkeley Neural Parser 를 활용해 verb-noun structure 를 구성한 뒤, 분석 한 결과, 아래 그림과 같이 다양한 종류의 instruction 이 생성됨을 볼 수 있다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/06937d6d-1bf7-44b5-8142-9383d364b9a0)
+
+또한 시작 point 의 175개 seed task 와 얼마나 겹치게 생성되었는지를 확인하기 위해, 아래의 ROUGE-L overlap 을 보면, overlap 이 크지 않은 창의적인 task 들이 많이 생성된 것을 볼 수 있다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/c0202ec2-e614-4b95-83da-8bd7e5898af1)
+
+마지막으로, instruction, non-empty input, output 의 길이에 대한 분석은 아래의 그림에서 볼 수 있다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/0d88b501-07b2-4a4f-879c-4761ae798908)
+
 
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
