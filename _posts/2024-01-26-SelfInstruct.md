@@ -131,6 +131,36 @@ Berkeley Neural Parser 를 활용해 verb-noun structure 를 구성한 뒤, 분�
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/0d88b501-07b2-4a4f-879c-4761ae798908)
 
+# Quality 
+
+Quality 를 평가하기 위해, 200개의 instruction (각 1개의 instance)를 추출하여 annotator 에게 평가를 시킨 결과, "most of the generated instructions are meaningful" 의 결과를 얻었다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/e3bf9e58-52fd-472a-aa65-aa8a37365916)
+
+## Experiemental Results
+
+SELF-INSTRUCT 로 생성한 data 를 학습한 모델을 $GPT-3_{SELF-INSTRUCT}$ 라고 명하고 아래의 baseline 들과 비교한다.
+
+- Off-the-shelf LMs
+T5-LM, GPT-3
+
+ - Publicly available instruction-tuned models
+[T0](https://arxiv.org/abs/2110.08207), [T$k$-INSTRUCT](https://aclanthology.org/2020.findings-emnlp.90/) 
+
+- Instruction-tuned GPT3 models
+INSTRUCTGPT (text-davinci-001)
+
+# Experiment 1 : Zero-Shot Generalization on SUPERNI Benchmark
+Instruction following task 인 SUPERNI benchmark 에 대한 실험결과이다. 이 실험은 대체로 <span style='background-color: #dcffe4'> zero-shot setting  </span> 으로 실험하였다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/80d77626-ea5c-4528-ab04-2f6ffc51d1d9)
+
+- SELF-INSTRUCT 는 GPT-3 의 instruction-following 을 크게 boost 시킬 수 있다.
+- InstructGPT001 과 거의 유사한 성능을 보인다.
+
+# Experiment 2 : Generalization to User-oriented Insutrctions on Novel Tasks
+
+
 
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
