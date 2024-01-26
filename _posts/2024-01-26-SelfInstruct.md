@@ -42,10 +42,14 @@ categories: [LLM, PLM]
 - (3) 마지막으로, vlow-quality 와 repeated instruction 을 제거하기 위한 다양한 heuristic 을 통해 filtering 을 진행한다.
 - (4) 이 과정은 task 의 수가 원하는 정도로 많아질 때 까지 반복된다.
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/8ea2833e-91f7-4bb7-8a82-f0a1a6f2d93c)
+
 <span style='color:green;font-weight:bold'> Experiments </span>
 <br>
 저자들은 SELF-INSTRUCT 방법을 Vanilla GPT-3 에 적용하였다.
 이 방법을 통해 52K instruction 과 82K input-output pair 를 생성하였다.
+위의 그림과 같이 다양한 범위의 creative 한 task 들을 생성하는 것을 볼 수 있다. (typcial NLP task 과구분되는)
+SELF-INSTRUCT 가 적용된 GPT-3 는 SUPERNI 등의 typical NLP 뿐 아니라, 새로운 instruction task 에 대해서도 InstructGPT001 을 이기는 정도의 성능을 보여준다.
 
 
 
