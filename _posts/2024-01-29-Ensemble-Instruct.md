@@ -70,8 +70,17 @@ Type-A 를 위해서 18 개의 ICL exempler 를, Type-B 를 위해서 15 개의 
 위의 Figure 2 에서 Type-A 와 type-B 예시를 볼 수 있다.
 
 # 2.4. Output Ensembling
+**지금까지 setting 은 categorization 을 진행한 것 외에는, 사실상 SELF-INSTRUCT 와 크게 다를 것이 없다.**
+하지만 smaller model 을 사용한 만큼 그 결과가 부정확할 확률이 매우 높다.
+<span style='background-color: #dcffe4'> 따라서, additional set of LM 들의 output 을 앙상블하는 방법론 </span> 을 사용한다.
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/a54a8f32-05a3-41e6-b926-5a466d4ba249)
 
+위의 알고리즘과 같이, ensemble 을 진행하는데, 우선 all three pair 를 ROUGE-L score 로 유사도를 측정한다.
+만약, 모든 ROUGE-L score 가 threshold 를 넘는다면 (가장 낮은 score 가 thershold 를 넘는다면), **가장 높은 ROUGE-L pair 의 첫 번째 element 를 return** 한다.
+저자들은 이 것이 Minimum Bayesian Risk decoding 의 greedy version 이라고 한다.
+
+## 3. Analysis of Instruction Tuning Dataset
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
 
