@@ -110,7 +110,7 @@ Table 1 에서 볼 수 있듯이, Instruction/Instance 를 생성하는 LM 과 a
 
 SO 는 without 앙상블, EO 는 앙상블 적용 모델이며, {UL2, NEOX} 에서도, FALCON 에서도 모두 SELF-INSTRUCT 알고리즘을 압도적으로 이기는 모습을 보인다. 눈 여겨볼 점은, EO- ILM(ICL 적용하여 Ensemble 한 것)이 앙상블을 하지 않은 SO- 모델들 보다 훨씬 좋았으며, ICL 을 적용하지 않고 앙상블한 EO-LM 은 오히려 SO- 보다 낮은 것을 볼 수 있다. (32.9 vs 34.4)
 
-#3.3. Qualitative Analysis
+# 3.3. Qualitative Analysis
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/d70f2491-6969-486a-a775-5e32032c702a)
 
