@@ -6,8 +6,8 @@ use_math: true
 categories: [LLM, PLM]
 ---
 
-[[pdf]](https://aclanthology.org/2023.findings-emnlp.836.pdf) &emsp;[
-[github]](https://github.com/IBM/ensemble-instruct)
+[[pdf]](https://aclanthology.org/2023.findings-emnlp.836.pdf) &emsp;
+[[github]](https://github.com/IBM/ensemble-instruct)
 
 **Young-Suk Lee, Md Arafat Sultan, Yousef El-Kurdi, Tahira Naseem, Asim Munawar, Radu Florian, Salim Roukos, Ramón Fernandez Astudill**
 <br>IBM Rsearch AI &emsp;
