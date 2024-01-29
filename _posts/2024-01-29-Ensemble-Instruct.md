@@ -49,6 +49,28 @@ SELF-INSTRUCT 와 유사하게 SUPERNI 에 test 해 본 결과, 좋은 성능을
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/fbee7404-8cc0-429a-b8c7-7ecd1fa48830)
 
+Ensemble-Instruct 의 overview는 위의 figure 와 같다.
+이는 세 가지 main component 로 이뤄져있다: (1) Categorization of tasks and their prompts, (2) Generation of instructions followed by instances (where an instance comprises an input and an output, (3) Ensemble of outputs from multiple LMs.
+
+# 2.1. Categorization of Tasks and Prompts
+저자들은 input 이 필요한 instruction (type-A) 과 input 이 필요하지 않은 instruction (type-B) 로 type 을 나눈다.
+아래의 figure 에서 그 예시들을 볼 수 있다. 
+SELF-INSTRUCT 의 시작 175 seed set 을 구분하면, type-A 가 125개, type-B가 50개이다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/b2e52f2d-a13c-465b-a9d9-bcd237c58f36)
+
+# 2.2. Instruction Generation
+Type-A 를 위해서는 24개의 ICL exempler (demonstration) 을 사용하고, 이 때 20개는 125 개 시작 seed task 에서 추출하고, 4개는 앞서 생성된 instruction 에서 randomly sample 한다. 
+Type-B 를 위해서는 10개의 ICL exempler 를 사용하고, 8개는 125 개 시작 seed task 에서, 2개는 이전에 생성된 instruction 에서 생성한다.
+
+역시, SELF-INSTRUCT 를 따라서, ROUGE-L score 가 0.7 이하로 겹치는 것만 남기고 filtering out 한다.
+
+# 2.3. Instacne Generation
+Type-A 를 위해서 18 개의 ICL exempler 를, Type-B 를 위해서 15 개의 exempler 를 사용한다. 
+위의 Figure 2 에서 Type-A 와 type-B 예시를 볼 수 있다.
+
+# 2.4. Output Ensembling
+
 
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
