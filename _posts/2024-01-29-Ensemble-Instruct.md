@@ -150,8 +150,3 @@ We present a novel technique to generate instruction-tuning data through ICL, fo
 Due to time and resource constraints, some parts of the experimental setup are not ideal. All model outputs were collected from an internal API serving models from HuggingFace11. Due to limitations of this API, different number of samples were collected for each model which may have introduced noise in the performance estimates. We report the exact number of samples used for training along with the results. Note that for cases using ensembling one has to take into account that there is an additional filtering process that removes samples.
 We provide approximate rates for ensembling filtering in Table 3. For the small user-oriented test set containing 252 tasks, automatic evaluation is arguably not ideal. Proper human evaluation would provide a clearer signal but this requires of significant time investment and resources. The method employs a set of various LMs, and therefore the generated synthetic data can be susceptible to the limitations of such LMs, particularly the biases inherent in the training data which may be harmful leading to synthetic data with hate, abuse and social stereotypes
 ```
-
-<span style='color:green;font-weight:bold'> 초록색볼드체 </span>
-
-<span style='background-color: #dcffe4'> 초록색배경 </span>
-<span style='background-color: #ffdce0'> 빨간색배경 </span>
