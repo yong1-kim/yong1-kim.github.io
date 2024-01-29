@@ -23,8 +23,29 @@ categories: [LLM, PLM]
 - (**Experiment**) SELF-INSTRUCT 와 같은 세팅을 ㅗ실험한 결과, SELF-INSTRUCT 보다 더 좋은 퀄리티의 instruction 을 생성하고, 이를 통한 instruction tuning 으로 성능을 더 끌어올렸다.
 
 ## 1. Introduction
+<span style='color:green;font-weight:bold'> ▶너무 큰 LLM 에 의존하는 기존 Instruction dataset generation via ICL </span>
+<br>
+Instruction-tuned LLM 은 정말 많은 일을 수행할 수 있다.
+이를 위하여 Large-scale instruction-tuning data를 automatic 하게 synthesis 하는 연구가 활발히 진행되고 있다.
+예를 들어, SELF-INSTRUCT 는 작은 크기의 expert-seed example 을 ICL(In-Context Learning) 을 통해 bootstrapping 하여 instruction-tuing dataset 을 생성한다.
+이 방법은 매우 강력하며, 이를 통해 LLAMA 를 학습한 Stanford Alpaca 등의 follow-up 연구도 많지만, 이러한 것들은 여전히 175B 크기의 LLM 에 의존한다는 단점이 있다.
 
+<span style='color:green;font-weight:bold'> ▶Ensemble-Instruct </span>
+<br>
+<span style='background-color: #dcffe4'> 이 논문에서는 fully accessible 한 40B 정도의 smaller LM 을 통한 high-quality instruction tuning data generation 을 할 수 있는 Ensemble-Instruct 라는 방법론을 제안한다. </span>
+우선, 저자들은 이 정도 크기의 작은 모델에는 SELF-INSTRUCT 방법이 성능이 좋지 못함을 보이고, (1) Categorizating and simplifying the ICL propmt 와 (2) Ensembling over multiple LM output 의 두 가지 방법을 main idea 로 하는 Ensemble-Instruct 방법론을 제안한다.
 
+조금 더 자세하게는, SELF-INSTRUCT 방법이 *instruction* 을 생성한 후, *input first* 와 *output first* 을 통해 instance 를 생성하는 반면, Ensemble-Instruct 는 *without input* 과 *with input* 으로 categorizing 하고 이를 위한 prompt 르f simplifying 한다. 이후, heterogenous collection 들을 모은 뒤, majority voting 을 통한 ensemble 방법을 적용한다.
+
+<span style='color:green;font-weight:bold'> ▶Experiment </span>
+<br>
+작은 모델로 사용되는 모델들은 T5 UL2-20B, FALCON-40B, FLAN-T5-11B, FLAN-UL2-20B, GPT-NeoxX-20B(chat-tuned) 등이다.
+추후, instruction tuning 을 진행하는 base model 은 Pythia-1.4B 와 MPT-7B (decoder only LM similar to LLaMA), GPT-JT-6B (instructed version of GPT-J) 등이다. 
+언급된 모든 모델들은 open-source 이며, permissive license (Apache-2)를 갖고 있다.
+
+SELF-INSTRUCT 와 유사하게 SUPERNI 에 test 해 본 결과, 좋은 성능을 보였으며, 생성한 synthetic instruction-tuning dataset 을 release 하였다.
+
+## 2. Ensemble-Instruct
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
 
