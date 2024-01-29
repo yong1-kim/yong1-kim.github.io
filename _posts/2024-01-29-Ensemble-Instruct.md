@@ -47,6 +47,10 @@ SELF-INSTRUCT 와 유사하게 SUPERNI 에 test 해 본 결과, 좋은 성능을
 
 ## 2. Ensemble-Instruct
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/fbee7404-8cc0-429a-b8c7-7ecd1fa48830)
+
+
+
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
 
 <span style='background-color: #dcffe4'> 초록색배경 </span>
