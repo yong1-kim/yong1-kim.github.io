@@ -123,19 +123,33 @@ Evaluation Dataset 의 정보는 아래와 같다.
 <br>
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/da847446-7462-438c-8463-36bd900e508b)
 
-<span style='color:green;font-weight:bold'> ▶ Results of GPTJT-6B fine-tuned on synthetic data. </span>
+MPT-7B 에 적용하였을 때, 30K 정도의 적은 sample 학습을 하였을 때도, 80K sample 을 배운 큰 모델들보다 더 좋은 성능을 보인다.
+
+<span style='color:green;font-weight:bold'> ▶ (SuperNI) Results of GPTJT-6B fine-tuned on synthetic data. </span>
 <br>
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/eeee8170-9570-4587-8d40-12c5e0534a23)
 
-<span style='color:green;font-weight:bold'> ▶ Results on the 252 user-oriented test set. </span>
+앞선 실험 결과와 비슷한 성향을 보인다.
+
+<span style='color:green;font-weight:bold'> ▶ (user-oriented) Results on the 252 user-oriented test set. </span>
 <br>
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/24d32b1e-f6ce-4c92-bb62-528804dab8ab)
 
-<span style='color:green;font-weight:bold'> ▶ Fine-tuning results on large models demonstrating the scalability of the Ensemble-Instruct technique to any black-box models. </span>
+<span style='color:green;font-weight:bold'> ▶ Experimental results with other much larger models to illustrate the scalability of the proposed Ensemble-Instruct to any black-box models. </span>
 <br>
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/1239c571-d25a-444a-93cf-6da159953dea)
 
+## Conclusion
+```
+We present a novel technique to generate instruction-tuning data through ICL, following the recent Self-Instruct work (Wang et al., 2023). Unlike Self-Instruct, we propose techniques that explicitly avoid the use of proprietary language models like GTP-3, ChatGPT or GPT-4. We show that when using smaller models, Self-Instruct becomes less performant. To overcome this, we draw on two main ideas: (a) Categorization and simplification of ICL templates to make prompt learning easier, and (b) Ensembling over multiple LM outputs to select high-quality examples. These ideas allow us to outperform training with Self-Instruct while utilizing the same seed tasks. The resulting synthetic data enables base models like MPT-7B to outperform GPT-3, a far larger model with 175B parameters. The results of this work also encourage the departure from closed-access models for advancing instruction generation algorithms.
+```
+
+## Limitations
+```
+Due to time and resource constraints, some parts of the experimental setup are not ideal. All model outputs were collected from an internal API serving models from HuggingFace11. Due to limitations of this API, different number of samples were collected for each model which may have introduced noise in the performance estimates. We report the exact number of samples used for training along with the results. Note that for cases using ensembling one has to take into account that there is an additional filtering process that removes samples.
+We provide approximate rates for ensembling filtering in Table 3. For the small user-oriented test set containing 252 tasks, automatic evaluation is arguably not ideal. Proper human evaluation would provide a clearer signal but this requires of significant time investment and resources. The method employs a set of various LMs, and therefore the generated synthetic data can be susceptible to the limitations of such LMs, particularly the biases inherent in the training data which may be harmful leading to synthetic data with hate, abuse and social stereotypes
+```
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
 
