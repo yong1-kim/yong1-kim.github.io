@@ -103,6 +103,38 @@ Table 1 에서 볼 수 있듯이, Instruction/Instance 를 생성하는 LM 과 a
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/e2ce4f30-a958-423b-873e-e0612d74c125)
 
+# 3.2. Small LM Dataset Comparison
+저자들은 Pythia-1.4B-deduped 모델을 instruction-tune 한 뒤, SUPERNI 119 test task 에 적용하여 eval 해보았다.
+위의 Table 4 에서 그 결과를 볼 수 있다.
+여기서 M-SELF-INST 는 {UL2, NEOX} 에 SELF-INSTRUCT instruction dataset 을 tuning 한 것을, F-SELF-INST 는 FALCON 에 SELF-INSRUCT instruction dataset 을 tuning 한 것을 의미하며, ALPACA 와 SELF-INST 는 SELF-INSRUCT 알고리즘을 더욱 큰 모델 (LLaMA 와 GPT-3) 에 적용한 모델들이다.
+
+SO 는 without 앙상블, EO 는 앙상블 적용 모델이며, {UL2, NEOX} 에서도, FALCON 에서도 모두 SELF-INSTRUCT 알고리즘을 압도적으로 이기는 모습을 보인다. 눈 여겨볼 점은, EO- ILM(ICL 적용하여 Ensemble 한 것)이 앙상블을 하지 않은 SO- 모델들 보다 훨씬 좋았으며, ICL 을 적용하지 않고 앙상블한 EO-LM 은 오히려 SO- 보다 낮은 것을 볼 수 있다. (32.9 vs 34.4)
+
+#3.3. Qualitative Analysis
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/d70f2491-6969-486a-a775-5e32032c702a)
+
+## 4. Experimental Results
+Evaluation Dataset 의 정보는 아래와 같다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/fd66ddd1-317c-4b86-af6e-117c34609961)
+
+<span style='color:green;font-weight:bold'> ▶ Evaluation results on the SuperNI test set. </span>
+<br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/da847446-7462-438c-8463-36bd900e508b)
+
+<span style='color:green;font-weight:bold'> ▶ Results of GPTJT-6B fine-tuned on synthetic data. </span>
+<br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/eeee8170-9570-4587-8d40-12c5e0534a23)
+
+<span style='color:green;font-weight:bold'> ▶ Results on the 252 user-oriented test set. </span>
+<br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/24d32b1e-f6ce-4c92-bb62-528804dab8ab)
+
+<span style='color:green;font-weight:bold'> ▶ Fine-tuning results on large models demonstrating the scalability of the Ensemble-Instruct technique to any black-box models. </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/1239c571-d25a-444a-93cf-6da159953dea)
 
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
