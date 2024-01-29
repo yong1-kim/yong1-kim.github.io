@@ -82,6 +82,29 @@ Type-A 를 위해서 18 개의 ICL exempler 를, Type-B 를 위해서 15 개의 
 
 ## 3. Analysis of Instruction Tuning Dataset
 
+생성된 Instruction tuning dataset 의 label(name) 과 그에 사용된 LM 은 Table 1 에서 볼 수 있다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/91695b5c-3632-4853-b1a4-3eb2ffa96813)
+
+아래 Table 에서는 generation 에 사용된 LM 모델의 간단한 정보를 요약한다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/339fb4d7-1b86-42e8-a75f-a3c37c3ea70b)
+
+# 3.1. Instacne vs. Output Generation
+Table 1 에서 볼 수 있듯이, Instruction/Instance 를 생성하는 LM 과 additional Output 을 생성하는 LM 이 다른 것을 볼 수 있다.
+그 이유 첫번째는, <span style='background-color: #dcffe4'> 20B 정도의 large decoder-only model 민아 input-output instance (type A) 를 생성할 수 있었 </span> 기 때문이다.
+따라서 FALCON, GPT-NEOXT-CHAT 이 instance generation 에 사용되었다.
+아래의 Table 3 에서 instructed model 인 FLAN-UL2 는 아예 instance 를 생성하지 못한 것을 볼 수 있다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/7318294d-4d9f-4783-8dfb-46645c39d266)
+
+두 번째로, <span style='background-color: #dcffe4'> Instruction-tuned model (FLAN-UL2, FLAN-T5-XXL, GPT-NEOXT-CHAT) 이 high-quality tzero-shot output 을 잘 생성해내기 때문에 </span>, 이 모델들이 additional output generation 에 사용된다.
+아래에서 UL2, FALCON 같은 vanilla LM 들은 instructed model 보다 성능이 뒤쳐지는 것을 볼 수 있다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/e2ce4f30-a958-423b-873e-e0612d74c125)
+
+
+
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
 
 <span style='background-color: #dcffe4'> 초록색배경 </span>
