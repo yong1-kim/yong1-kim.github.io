@@ -97,6 +97,45 @@ Stopping crieteria breadth B 와 depth K 를 만족할 때 까지 반복하여 t
 instruction 의 다양성을 확보하기  위하여, diversity filter 도 적용하였다. 
 SELF-INSTRUCT 에서 활용한 ROUGE-L overlap 을 filter 로 활용한다.
 
+# 3. Data-Centric Analaysis 
+우선 EXPLORE-INSTRUCT 의 효용성을 검증하기 위해 생성되는 data 를 분석해본다.
+Baseline 으로는 **(1) Domain-Specific Human_curated** : SUPER-NATURALINSTURCTION , **(2) Domain-Aware Self-Instruct** : Depth K=0 으로 한 EXPLORE-INSTRUCT 방법이다.
+
+# 3.1 Data Statistics
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/20d91e94-e339-4987-8292-05f76d0f2a9d)
+
+위의 표에서 Human-Curation, Domain-Aware Self-Instruct, EXPLORE-INSTRUCT 에 대한 statistics 를 볼 수 있다. 
+EXPLORE-INSTRUCT 의 verb-noun pair 의 수가 더 많으면서도, 표준편차는 작은 것을 볼 수 있다.
+이러한 현상은 rewriting 과 math domain 에서 두드러지는 반면, brainstroming 에서는 그렇지 못하다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/7877f54c-fb55-42cb-9530-2f1400433931)
+
+비쥬얼라이제이션을 위하여 10 개의 root task 를 정하여 generated instruction 을 비교했을 때, 아래의 EXPLORE-INSTRUCT 가 훨씬 더 다양하게 생성한 것을 볼 수 있다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/9b582aff-9b24-49a9-b830-19c956f6938e)
+
+또한, SELF-INSTRUCT 부터 활용 중인 ROUGE-L overlap 에 관한 figure 는 위에서 볼 수 있다.
+역시 핑크색으로 표현된 EXPLORE-INSTRUCt 가 더 넓은 다양성을 보인다.
+
+## 4. Experiment
+# 4.1. Benchmarks
+EXPLORE-INSTRUCT 가 생성한 세 개의 domain 을 testbed 로 활용한다
+- **rewriting** : BELLE test set 으로 부터 생성한 testbed
+- **brainstroming** : BELLE test set 으로 부터 생성한 testbed
+- **math** : MATH test set 으로 부터 생성한 testbed
+
+# 4.2. Expore-LM and Baseline Models
+<span style='color:green;font-weight:bold'> Explore-LM </span>
+<br>
+EXPLORE-INSTRUCT 가 생성한 instruction-tuning data 를 fine-tuning 한 모델이다. : Ours model
+
+<span style='color:green;font-weight:bold'> Baseline Models </span>
+<br>
+- **Domain-Curated-LM** : 앞서 언급한 Human-curated data 를 학습한 모델
+- **Domain-Insturct-LM** : 앞서 언급한 Domain-aware self-instruct data 를 학습한 모델
+- ChatGPT
+
+# 4.3. Resluts and Anlaysis
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
 
