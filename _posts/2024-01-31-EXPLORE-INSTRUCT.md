@@ -85,7 +85,17 @@ Backtracking 은 breadth 를 넓히기 위한 것이다.
 prompt 는 위의 lookahead 와 비슷하다.
 
 # 2.3. EXPLORE-INSTRUCT Implementation
-EXPLORE-INSTRUCT 는 두 개의 process 로 narrow down 할 수 있다.
+EXPLORE-INSTRUCT 는 두 개의 process 로 이뤄진다.
+<span style='color:green;font-weight:bold'> (1) Domain Exploration Strategy </span>
+<br>
+위의 lookahead 와 backtracking 을 통해 하나의 root task 의 breadth 와 depth 를 확장하는 것이다.
+Stopping crieteria breadth B 와 depth K 를 만족할 때 까지 반복하여 tree 를 확장시킨다.
+
+<span style='color:green;font-weight:bold'> (2) Instruction-Tuning data generation </span>
+<br>
+이렇게 확장된 domain space tree 를 LLM 을 활용하여 N 개의 instruction 과 corresponding reponse 를 생성한다.
+instruction 의 다양성을 확보하기  위하여, diversity filter 도 적용하였다. 
+SELF-INSTRUCT 에서 활용한 ROUGE-L overlap 을 filter 로 활용한다.
 
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
