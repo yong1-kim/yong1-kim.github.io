@@ -53,8 +53,39 @@ EXPLORE-INSTRUCT 를 적용하였을 때, 각가의 domain 에서 엄청난 수�
 <span style='background-color: #dcffe4'> 이 과정에서 LLM 이 넓은 범위의 domain 을 탐색할 수 있을 뿐 아니라, 각각의 task 를 깊게 이해하여 fine-grained sub-task 로 decompose 할 수 있음을 보인다. </span>
 이렇게 생성된 instruction-tuning data 를 fine-tuning 하였을 때, baseline 을 뛰어넘는 성능을 보인 것을 확인한다.
 
+## 2. Method
+# 2.1. Domain Space Representation
+저자들은 domain-specific instruction 의 coverage 에 대한 개념을 다음 두 가지로 정리한다.
+- **breadth** : domain 속의 different task category 를 의미
+- **depth** : fine-grained task decomposition 을 의미
+
+ Breadth 를 이해한다는 것은 domain 속의 여러 catgeory 를 이해하는 능력을 가진 것이고, depth 를 이해한 다는 것은 task decomposition 을 통해 precise problem solving 을 할 수 있다는 것이다.
+
+따라서 저자들은 tree structrue $T$ 는 task nodes $V$ 와 sub-task 와의 edge $E$ 로 이뤄진다고 가정한다.
 
 
+# 2.2. Active Exploration Strategy
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/950ca60f-caaa-4457-bf7d-bcbb8e5653d9)
+
+실제 EXPLORE-INSTRUCT 알고리즘은 두 가지 (1)lookahead, (2)backtracking exploration 으로 이뤄진다.
+
+<span style='color:green;font-weight:bold'> (1) Lookahead Exploration </span>
+<br>
+Lookahead는 depth 를 파고드는 exploration 으로 다시 말해, fine-grained sub-task 를 mapping out 하는 것이다.
+즉 task $V$ 에 대해서, lookahead exploration 은 LLM 을 활용하여 M 개의 sub-task 를 만드는 과정이다.
+lookahead prompt 는 아래와 같다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/866bdb36-1483-4612-bcce-c07d5aa6d953)
+
+<span style='color:green;font-weight:bold'> (2) Backtracking Exploration  </span>
+<br>
+Backtracking 은 breadth 를 넓히기 위한 것이다.
+따라서, given task node $V$ 에 대해서 backtracking 은 부모 노드 $PV$를 찾은 뒤, 그 것에서 LLM 을 활용하여 M 개의 새로운 sub-task 를 찾아내는 것이다.
+prompt 는 위의 lookahead 와 비슷하다.
+
+# 2.3. EXPLORE-INSTRUCT Implementation
+EXPLORE-INSTRUCT 는 두 개의 process 로 narrow down 할 수 있다.
 
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
