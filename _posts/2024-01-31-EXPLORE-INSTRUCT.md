@@ -128,6 +128,7 @@ EXPLORE-INSTRUCT 가 생성한 세 개의 domain 을 testbed 로 활용한다
 <span style='color:green;font-weight:bold'> Explore-LM </span>
 <br>
 EXPLORE-INSTRUCT 가 생성한 instruction-tuning data 를 fine-tuning 한 모델이다. : Ours model
+Explore-LM-Ext 는 sampled instance 를 확장하여 fine-tuning 한 extension 모델이다.
 
 <span style='color:green;font-weight:bold'> Baseline Models </span>
 <br>
@@ -135,9 +136,36 @@ EXPLORE-INSTRUCT 가 생성한 instruction-tuning data 를 fine-tuning 한 모�
 - **Domain-Insturct-LM** : 앞서 언급한 Domain-aware self-instruct data 를 학습한 모델
 - ChatGPT
 
+위의 언급되는 모델은 ChatGPT 를 제외하고 모두 LLaMA 7B 를 backbone 으로 하여 fine-tuning 한다.
+
 # 4.3. Resluts and Anlaysis
+<span style='color:green;font-weight:bold'> (1) Automatic evaluation results in the brainstorming and rewriting domains. </span>
+<br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/98c0b965-dfd5-4ffa-945d-e57c0699c40a)
 
-<span style='color:green;font-weight:bold'> 초록색볼드체 </span>
+<span style='background-color: #dcffe4'> brainstorming and rewriting 의 domain 에서는 ChatGPT 를 제외한 모델들에 대해 압도적인 성능을 자랑한다. </span>
 
-<span style='background-color: #dcffe4'> 초록색배경 </span>
-<span style='background-color: #ffdce0'> 빨간색배경 </span>
+<span style='color:green;font-weight:bold'> (2) Automatic evaluation results in the math domains. </span>
+<br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/6c4fbf1a-a835-4b95-a3e1-81e4ee907885)
+
+<span style='background-color: #dcffe4'> ChatGPT 에는 크게 미치지 못하지만, 작은 차이로 baseline model 대비 성능 향상을 이룬다. </span>
+
+<span style='color:green;font-weight:bold'> (3) Human Evaluation. </span>
+<br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/74e2e6ce-be6f-4f3e-acdb-6ea17b19c38a)
+
+<span style='background-color: #dcffe4'> ChatGPT 에는 지지만 다른 baseline model 대비 우세를 보인다. </span>
+
+<span style='color:green;font-weight:bold'> (4) Data Structure Analysis and Quantity Analsysis </span>
+<br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/d99279f0-3964-42e5-b8dd-b0d6d4e8a3eb)
+
+<span style='color:green;font-weight:bold'> (5) Data Quantity Analysis </span>
+<br>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/edee1082-e108-4d35-9e5b-f4024efe11bb)
+
+## Conclusion
+```
+In this work, we introduce EXPLORE-INSTRUCT, a novel approach to enhancing domain-specific instruction coverage. Drawing inspiration from classical search algorithms, EXPLORE-INSTRUCT leverages the power of LLMs to actively explore the domain space and obtain diverse and domain-focused instruction-tuning data. Our experimental results demonstrate the efficacy of EXPLORE-INSTRUCT through data-centric analyses and model performance evaluations in the rewriting, brainstorming, and math domains, highlighting significant enhancements in instruction coverage and superior model performance compared to multiple baseline methods as demonstrated by both automatic and human evaluations.
+```
