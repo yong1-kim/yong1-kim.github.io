@@ -88,6 +88,38 @@ HyperNetwork 는 위의 figure (b) 에서 보듯이, down-projection 을 포함�
 이는 Lyaer-Aware Task embedding 을 입력으로 받아, GLobal HyperNetwork 를 통해, 각 Layer 별 Hypernetwork 를 생성한다.
 
 ## 3. Experiments
+# 3.1. Experimental Setup
+- Dataset : GLUE, SUPERGLUE
+- Transformers : T5-Base to T5-XXL
+- Baselines : vanilla T5, vanilla Adapter, HyperFormer++ (adapter-based MTL model), Prompt-Tuning
+
+# 3.2. Key Results
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/d6793f96-8e2e-4274-af5e-722666718a6e)
+
+<span style='background-color: #dcffe4'> (1) Prompt-tuning 은 11B 모델에서만 잘 작동된다. </span>
+
+<span style='background-color: #dcffe4'> (2) HyperPrompt 가 모든 모델 사이즈 전반에 걸쳐 좋은 성능을 보인다. </span>
+
+# 3.3. Tuning all vs Task-Conditioned Params
+
+
+기존의 연구에서, LM 을 전부 tuning 하는 것보다 prompt 만 tuning 하는 것이 더 좋다는 연구 결과가 있었지만, 그 연구는 GLUE benchmark 에 대해서 작은 모델인 T5 base, T5 small model 에 대해서만 측정했다고 한다.
+
+이 실험에서는, full model 과 task-conditioned param 만 학습하는 것을 비교실험한다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/8e63ea46-5a50-4e40-91cb-26a81a7e1e54)
+
+이 실험에서 보듯이 HyperPrompt 를 활용하는 경우 Full Model 을 tuning 하는 것이 훨씬 좋은 성능을 보인다. 
+
+# 3.4. Computational Efficiency
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/6578a602-d511-41dd-acf1-1af051e11089)
+
+<span style='background-color: #dcffe4'> HyperPrompt 는 FFN 을 사용하지 않고, self-attention 에 버무려지기 떄문에, 더 적은 #Ops 를 가진다. </span>
+또 추가적으로, Training Time 역시 효과적이다.
+
+
 
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
