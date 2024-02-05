@@ -35,7 +35,60 @@ Pretrained model 은 frozen 한 채 빠르고 가볍게 학습할 수 있다는 
 보통 기존의 multi-task learning 방법들은 task 수에 linear 하게 param 이 증가하기 마련인데, <span style='background-color: #dcffe4'> HyperNetwork 를 활용하면 아주 적은 양의 추가적인 param 만으로 기존의 방법들과 competitive 한 성능을 보일 수 있어 효율적이다. </span>
 그리고 이들은 **prompt generator 의 개념은 HyperNetwork 가 처음**이라고 주장한다.
 
-이들은 기존의 prompt 학습 방식이나 adapter 와 같은 개념과 다르게 network 전체를 학습시키는 것이 중요하다고 한다. 그 이유로는 (1) 기존의 prompt-tuning 은 11B 이상의 LLM 에 대해서만 잘 적용이 되며, (2) adaptive param 만 학습한다고 해서 inference 에서 딱히 이득이 없다고 한다. 따라서, Network 를 전체 학습하여 성능을 높이는 것이 더 낫다고 판단한다.
+
+<span style='color:green;font-weight:bold'> ▶Training whole network including LM </span>
+<br>
+
+이들은 기존의 prompt 학습 방식이나 adapter 와 같은 개념과 다르게 LM 을 포함한 network 전체를 학습시키는 것이 중요하다고 한다. 그 이유로는 (1) 기존의 prompt-tuning 은 11B 이상의 LLM 에 대해서만 잘 적용이 되며, (2) adaptive param 만 학습한다고 해서 inference 에서 딱히 이득이 없다고 한다. 따라서, Network 를 전체 학습하여 성능을 높이는 것이 더 낫다고 판단한다.
+
+## 2. Methods
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/6610e51c-79c5-4dc0-9917-3a760e8f882e)
+
+
+HyperPrompt 에는 세 개의 변형 : **HyperPrompt-Share, HyperPrompt-Sep** 그리고 **HyperPrompt-Global**  이 있다.
+
+가장 중요한 기본 개념은 <span style='background-color: #dcffe4'> (1) task-condtioning 을 self-attention 이 넣는 것, 그리고 (2)Prompt generation 을 위해 HyperNetwork 를 활용하는 것</span>이다.
+
+# 2.1. Prompt-based Task-Conditioned Transformer
+
+기존의 adtaper-based 방법들은 adapter(dense-relu-dense network) 를 Transformer block 의 FFN 직후에 집어넣는 방법들이었다.
+<span style='background-color: #dcffe4'> Hyperprompt 에서는 대신 각각의 layer 에 task-conditioned trainable vector 를 key 와 value 앞에 prepend 한다. </span>
+Netowrk 앞에 learnable prompt 를 prepend 하는 것은 이미 여러 연구가 존재하지만, multi-task learning 을 위하여 이 아이디어를 적용하는 것은 처음이라고 주장한다.
+
+이를 위해 저자들은 <span style='color:green;font-weight:bold'> HyperPrompt </span> 방법을 제안한다.
+위의 그림의 (a) 에서 보듯이 Key 와 Value 앞에 HyperPrompt 를 prepend 한다.
+이후 기존 Transformer 방식처럼 Self-Attention 을 진행한다.
+이는 장점이 있는데, Hyperprompt 가 attention feature map 형성에 관여한다는 점이 task-speific memory 로써 역할을 할 수 있다.
+
+# 2.2. HyperPrompt
+m-th layer 의 hyperprompt 를 어떻게 생성할 것인가에 대하여, 나이브하게 layer 마다 T(# of task)를 만든 다음 random init 하면 되지만, 이 경우 O(T X M) (M: # of layer) 로 비효율적이라고 한다.
+
+이들은 우선, task 별로 global prompt 를 만든 다음, 이 global prompt 를 각 layer block 으로 projection 하여 M 개를 얻는 방법을 택한다.
+
+<span style='color:green;font-weight:bold'> (1) Global Prompts </span>
+<br>
+첫 번째로, Task 개수 T 만큼의 global prompt 를 init 한다.
+
+<span style='color:green;font-weight:bold'> (2) Local HyperNetworks </span>
+<br>
+각각의 Transfomer layer block 에서, 두 local HyperNetwork 가 global prompt 를 입력으로 받아, key local prompt 와 value local prompt 를 생성한다.
+HyperNetwork 는 위의 figure (b) 에서 보듯이, down-projection 을 포함한 bottleneck architecture 를 활용한다.
+
+<span style='color:green;font-weight:bold'> (3-1) HyperPrompt-Share </span>
+<br>
+앞서 말한 key, value local prompt 생성을 위한 hypernetwork 를 Task 마다 다르게 하지 않고, 모두 share 하는 setting 이다. 이 경우, parameter 는 많이 saving (1/T 로) 할 수 있겠지만, 실험 결과 모델 capacity 가 줄어든다고 한다.
+
+<span style='color:green;font-weight:bold'> (3-2) HyperPrompt-Sep </span>
+<br>
+따라서 그 반대로, 각각의 task 마다 own local HyperNetwork 를 갖게하는 HyperPrompt-Sep 방법의 성능이 더 좋다고 한다. 
+
+# 2.3. HyperPrompt-Global
+그리고 다시 이 task-specific and layer-specific HyperNetwork 를 효율적으로 생성하기 위하여, Figure (c) 와 같이, global HyperNetwork 인 HyperPromt-Global 을 도입한다.
+이는 Lyaer-Aware Task embedding 을 입력으로 받아, GLobal HyperNetwork 를 통해, 각 Layer 별 Hypernetwork 를 생성한다.
+
+## 3. Experiments
+
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
 
