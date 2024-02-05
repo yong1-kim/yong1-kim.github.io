@@ -9,10 +9,15 @@ categories: [LLM, PLM]
 [[pdf]](https://proceedings.mlr.press/v162/he22f/he22f.pdf)
 
 
-**Yun He <sup>1*</sup>, Huaixiu Steven Zheng <sup>1*</sup>, Luyu Gao <sup>1*</sup>, Zhiqing Sun <sup>1*</sup>,  Qian Liu <sup>2</sup>, Jane Dwivedi-Yu <sup>3</sup>, Yiming Yang <sup>1</sup>, Jamie Callan<sup>1</sup>, Graham Neubig<sup>1</sup>**
-<br><sup>1</sup> Language Technologies Institute, Carnegie Mellon University <sup>2</sup> Sea AI Lab <sup>3</sup> Meta AI Research &emsp;
+**Yun He <sup>1*</sup>, Huaixiu Steven Zheng <sup>1*</sup>, Yi Tay <sup>2</sup>, Jai Gupta<sup>2</sup>,  Yu Du <sup>2</sup>, Vamsi Aribandi <sup>2</sup>, Zhe Zhao <sup>2</sup>, YaGuang Li<sup>2</sup>, Zhao Chen<sup>3</sup>, Donald Metzler<sup>2</sup>, Heng-Tze Cheng<sup>2</sup>, Ed H. Chi<sup>2</sup>**
+<br><sup>1</sup> Texas A&M University <sup>2</sup> Google Research <sup>3</sup> Waymo LLC. &emsp;
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/096235d2-fe66-4059-b1c8-91e6726c03e1)
 
 # Abstract
 - 
+
+<span style='color:green;font-weight:bold'> 초록색볼드체 </span>
+
+<span style='background-color: #dcffe4'> 초록색배경 </span>
+<span style='background-color: #ffdce0'> 빨간색배경 </span>
