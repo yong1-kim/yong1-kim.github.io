@@ -15,7 +15,9 @@ categories: [LLM, PLM]
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/096235d2-fe66-4059-b1c8-91e6726c03e1)
 
 # Abstract
-- 
+- (<span style='color:green;font-weight:bold'> Hyperprompt </span>) 이 논문에서는 Transformers 속의 self-attention 에 prompt-based task-conditioning architecture 인 **Hyperprompt** 를 제안한다.
+- (**Global memory**) HyperNetwork 를 활용하는 hyperprompt 는 task 간의 정보 교환을 해주는 역할에 더불어, task 의 global memory 의 역할을 한다는 것을 보인다.
+- (**Efficiency**) 단지 0.14% 의 추가적인 param 만으로 T5 등의 multi-task learning baseline 과 비교하여 competetive 한 성능을 보인다.
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
 
