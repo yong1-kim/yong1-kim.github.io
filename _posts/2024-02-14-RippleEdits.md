@@ -21,7 +21,7 @@ categories: [Retrieval, LLM, PLM]
 - (<span style='color:green;font-weight:bold'> Ripple Effect </span>) 이 논문에서는, 하나의 fact에 대한 injection 이 다른 fact 에 대한 update 를 가져 온다는 **"ripple effect"** 를 정의하고 다룬다.
 - (**RippleEdits**) 그리고 그 ripple effect 에 대한 criteria 를 정의한 후, 그에 걸맞는 5k factual edit 에 관한 benchmark 인 RippleEdits 를 구성한다. 실험 결과, 여러 모델에서 이러한 ripple effect 를 잘 처리하지 못하는 것을 확인하였고, simple in-context editing baseline 이 좋은 editing 성능을 보임을 확인한다.
 
-## Introduction
+## 1. Introduction
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/e82a3a9d-e50f-46cd-be0f-b08794582a9b)
 
@@ -51,7 +51,7 @@ Existing KE 방법들은 보통, entity-relation-object $(e,r,o)$ triplet 을 �
 
 마지막으로, casual attnetion mechanism 을 기반으로한 <span style='background-color: #dcffe4'> simple in-context editing  </span> 기법을 통해 기존의 parametric KE 방법을 outperform 하는 새로운 방법론을 제안한다.
 
-## Problem Setting
+## 2. Problem Setting
 
 Factual Knowledge | $(e,r,o)$ triple 에 대하여 두 가지 edit type 을 정한다.
 _(1) modification_ 은 이미 모델이 가지고 있는 outdated 된 지식 $(e,r,o)$ 를 $(e,r,o*)$ 로 고치는 것이고, _(2) injection_은 새로운 지식 $(e,r,o*)$ 를 주입하는 것이다.
@@ -59,8 +59,50 @@ _(1) modification_ 은 이미 모델이 가지고 있는 outdated 된 지식 $(e
 일대일 대응이 되는 (e.g. Date of Birth) injection 의 경우, $(e,r,∅)$ 에서 $(e,r,o*)$ 로 empty objet 를 editing 하는 case 로 볼 수 있다.
 반면, Sibling 이나 Occupation 과 같은 one-to-may relation 의 경우, injection edit 이  (e, r, {o1, .., on}) → (e, r, {o1, .., on, o∗}) 로 바꾸는 augment 가 된다.
 
+## 3. Ripple Effects of Factual Edits
 
+전체 knowledge-graph $K$ 에 대하여, edit δ : $(e,r,o) -> (e,r,o`)$ 가 K 속에서 가져오는 변화인 ripple effect 를 $R(δ)$ 로 정의할 수 있다. 그리고 그 크기 $|R(δ)|$ 는 하나의 edit 이 전체 knowledge graph 에 미치는 ripple effect 의 크기로 볼 수 있으며 이를 *severity* 로 정의한다.
 
+# 3.1. Evaluation Criteria
+2-hop 내의 ripple effect 를 다음의 6가지로 분류하여 crieteria 를 선정한다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/74c13d38-648f-46c9-a9da-bdfe1eacee1e)
+
+- 각 criteria 에 대한 내용은 논문 참조
+
+## 4. The RIPPLEEDITS Benchmark
+
+# 4.1. Data Generation Pipeline
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/2f15a2ba-68c7-4a39-b82f-6cb73ec8f27c)
+
+<span style='color:green;font-weight:bold'> Step 1: Factual triplets collection </span>
+<br>
+첫 번째 step 은 fact 를 collection 하는 것이다. 아래의 세 가지 type 을 WIKIDATA 에서 추출한다.
+- **RECENT** : 2022 년 7월 이후에 생성된 최신 지식들을 통해 injection editing fact 를 추출
+
+- **RANDOM** : 추후 modification edit 이 될 수 있게 random 하게 fact 를 추출.
+
+- **POPULAR** : Severity 가 큰 경우를 위해 인기있는 triplet 을 추출
+
+<span style='color:green;font-weight:bold'> Step 2: Edits generation </span>
+<br>
+
+위의 RECENT 를 기반으로 RANDOM/POPULAR 등의 오래된 지식들을 edit 하는 edit generation 을 진행한다.
+
+<span style='color:green;font-weight:bold'> Step 3: Evaluation tests generation </span>
+<br>
+
+새로운 query 에 대해서 이 과정을 반복하여 test set 을 generation 한다.
+
+<span style='color:green;font-weight:bold'> Step 4: Phrasing in natural language </span>
+<br>
+
+이후 이 knowledge graph 를 자연어 문장으로 phrasing 한다.
+
+# 4.2. Data Statistics
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/a42e14ea-4dd1-4f87-8daf-c8cc236e1a16)
 
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
