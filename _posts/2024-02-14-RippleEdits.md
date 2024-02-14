@@ -23,6 +23,33 @@ categories: [Retrieval, LLM, PLM]
 
 ## Introduction
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/e82a3a9d-e50f-46cd-be0f-b08794582a9b)
+
+<span style='color:green;font-weight:bold'> ▶ Existing Knowledge Editing (KE) method </span>
+<br>
+
+현재 LM 들이 Factual Knowledge 를 잘 capture 하지만, knowledge 가 outdated 될 경우, incorrect factual generation 을 하게 된다.
+이를 위해, 여러 연구에서 knowledge editing (KE) 기법을 통해, 이러한 factual error 를 고치려는 시도가 많이 있었따.
+Existing KE 방법들은 보통, entity-relation-object $(e,r,o)$ triplet 을 덮어쓰는 (override) 방식으로 (보통, $e$ 와 $r$ 을 덮어쓴다) knowledge editing 을 한다.
+
+이러한 KE 방법들에서 가장 중요한 key point 는 editing success 를 체크하는 "sanity-check" 이다.
+보통 $(e,r,?)$ 의 질문을 통해 outdated 된 $o$를 가져오는지 updated 된 $o$를 가져오는지로 평가할 수 있다.
+이에 추가적으로 다른 fact 들에 대한 왜곡(distortion)이 있지 않아야 하기 때문에, 그에 대한 평가들도 수반된다.([[1]](https://openreview.net/forum?id=0DcZxeWfOPt),[[2]](https://openreview.net/pdf?id=-h6WAS6eE4),[[3]](https://openreview.net/forum?id=MkbcAHIYgyS)))
+
+<span style='color:green;font-weight:bold'> ▶ Ripple Effects </span>
+<br>
+이 논문에서는 knowledge editing 이 일어날 때, 어떠한 동반되는 fact 는 같이 변해야하며 (위의 예시에서 messi 가 이적했을 떄, Team 이 가지고 있던 선수 정보에 messi 가 추가되어야 한다), 또 어떠한 사실은 변하지 않아야 한다(메시가 팀을 변경해도 여전히 국적은 아르헨티나이다). 이렇게 하나의 fact 변동이 다른 fact 들에 대해 연동의 결과를 미칠 수 있는 것을 저자들은 <span style='background-color: #dcffe4'> Ripple Effect  </span> 로 정의한다. 이 Ripple Effect 를 제대로 정의하기 위해, 저자들은 여섯 가지 concrete evaluation crieteria 를 제시한다.
+
+<span style='color:green;font-weight:bold'> ▶ RippleEdits Benchmark </span>
+<br>
+이후, 위의 criteria 들을 기반으로 RippleEdits 라는 benchmark 를 구성한다. 
+이는 5k entry 로 이뤄져 있으며, ripple effect 를 고려하여 edit 이 성공적으로 이뤄지는지를 평가한다.
+이 benchmark 속에는 timestamp 를 meta data 로 지닌다.
+
+저자들은 이 RippleEdits benchmark 를 활용하여, 5개의 LM 에 3개의 Knowledge Editing 기법을 적용하였을 때, 대부분의 evaluation criteria 에서 poor performance 를 보임을 확인한다.
+추가적으로, <span style='background-color: #ffdce0'> (1) larger model 일 수록 ripple effect 를 처리하기 쉬우며, (2) frequent entity 를 edit 하는 것이 logical reasoning error 를 더 많이 발생시킨다 </span> 는 현상을 확인한다.
+
+마지막으로, casual attnetion mechanism 을 기반으로한 <span style='background-color: #dcffe4'> simple in-context editing  </span> 기법을 통해 기존의 parametric KE 방법을 outperform 하는 새로운 방법론을 제안한다.
 
 
 
