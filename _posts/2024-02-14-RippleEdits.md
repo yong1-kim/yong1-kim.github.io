@@ -102,10 +102,57 @@ _(1) modification_ 은 이미 모델이 가지고 있는 outdated 된 지식 $(e
 
 # 4.2. Data Statistics
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/2f5c08a4-9c5e-4965-8cb3-5da849a4a269)
+
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/a42e14ea-4dd1-4f87-8daf-c8cc236e1a16)
 
+## 5. Experiments
 
-<span style='color:green;font-weight:bold'> 초록색볼드체 </span>
+# 5.1. Evaluation Setting
 
-<span style='background-color: #dcffe4'> 초록색배경 </span>
-<span style='background-color: #ffdce0'> 빨간색배경 </span>
+- **Editing Method** : MEND, ROME, MEMIT
+
+- **Baseline** : In-context Editing (ICE)
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/50c473ad-4c72-47e7-b4b7-7070e2b8bc89)
+
+- **Models** : GPT-2 XL, GPT-J, LLaMA, GPT-NeoX, GPT-3
+
+# 5.2. Results
+
+<span style='background-color: #dcffe4'> 결과는 거의 Baseline 실험 제시이다. </span>
+
+<span style='color:green;font-weight:bold'> (1) RECENT </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/a1f31c7b-6094-43b3-98bb-b669d4b25c11)
+
+
+<span style='color:green;font-weight:bold'> (2) RANDOM </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/e5468948-7471-4bd7-907c-1b76c423ffb7)
+
+
+<span style='color:green;font-weight:bold'> (3) POPULAR </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/9c2f3522-9883-4cfb-b678-3f3abc540593)
+
+
+<span style='color:green;font-weight:bold'> (4) Avg. of ROME </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/1f25fb3d-d607-4828-b962-79ffc3840ba9)
+
+
+<span style='color:green;font-weight:bold'> (5) Accuracy of MEND, ROME, MEMET </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/2bc5b080-c395-4529-a2c9-1caceb4949ee)
+
+## Conclusion and Disccusion
+```
+We introduce the notion of ripple effects in knowledge editing, suggesting that editing a particular fact implies further updates of related facts. We additionally propose evaluation criteria for ripple effects and create RIPPLEEDITS, a diagnostic benchmark designed to evaluate how well KE methods handle the ripple effects of various edits. We evaluate prominent KE methods and show that they often fail to introduce consistent edits that capture the ripple effects of an edit, suggesting that future development of KE methods should consider those effects more carefully. Last, we show that a simple in-context editing method achieves the best results on RIPPLEEDITS, highlighting the potential of such editing approaches.
+
+Notably, our benchmark covers a small fraction of all possible ripple-edits. For example, one could consider ripple effects that involve more than two hops, and explore the graph structure of different edits. In addition, while we focus on ripple effects of single edits, future work can consider the effect of editing multiple facts in a single batch. Finally, it would be interesting to consider cases where models succeed in capturing ripple-edits, and analyze how these are implemented mechanistically in the transformer architecture.
+```
