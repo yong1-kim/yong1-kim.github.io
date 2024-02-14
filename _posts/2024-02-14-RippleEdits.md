@@ -51,6 +51,14 @@ Existing KE 방법들은 보통, entity-relation-object $(e,r,o)$ triplet 을 �
 
 마지막으로, casual attnetion mechanism 을 기반으로한 <span style='background-color: #dcffe4'> simple in-context editing  </span> 기법을 통해 기존의 parametric KE 방법을 outperform 하는 새로운 방법론을 제안한다.
 
+## Problem Setting
+
+Factual Knowledge | $(e,r,o)$ triple 에 대하여 두 가지 edit type 을 정한다.
+_(1) modification_ 은 이미 모델이 가지고 있는 outdated 된 지식 $(e,r,o)$ 를 $(e,r,o*)$ 로 고치는 것이고, _(2) injection_은 새로운 지식 $(e,r,o*)$ 를 주입하는 것이다.
+
+일대일 대응이 되는 (e.g. Date of Birth) injection 의 경우, $(e,r,∅)$ 에서 $(e,r,o*)$ 로 empty objet 를 editing 하는 case 로 볼 수 있다.
+반면, Sibling 이나 Occupation 과 같은 one-to-may relation 의 경우, injection edit 이  (e, r, {o1, .., on}) → (e, r, {o1, .., on, o∗}) 로 바꾸는 augment 가 된다.
+
 
 
 
