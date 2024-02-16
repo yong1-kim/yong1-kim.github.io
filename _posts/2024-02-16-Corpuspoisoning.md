@@ -71,16 +71,50 @@ Model 을 mislead 하기 위해, 아래의 수식을 통해 sequence of token $a
 각각의 step 마다 token $t_i$ 가 다른 token $t_i`$ 로 바뀔 때의 model output 의 approximation 을 계산한다.
 이 approximation 계산을 HotFlip 과 같이, gradient 를 사용하고 , 그 수식은 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/ba90ec95-4a93-40fc-818c-b950d79ec4d4) 이다.
 
+따라서, given query set $Q$ 에 대하여, best replacement candidate token 을 찾아내는 것이 목표고, 아래와 같다.
 
-vec2text 와 연계하면 하나의 연구가 뚝딱일 수도?
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/1af2b336-459f-4af4-baf2-9ae9bcfa12a2)
+
+여기서 $V$ 는 vocab 이다.
+
+# 2.4. Generating multiple adversarial passages
+
+위의 방법대로 하나의 adversarial passage 를 얻는 방법에 대하여, multiple passage 를 얻는 방법으로의 확장을 살펴보자.
+query 의 embedding $E_q (q_i)$ 에 대해, 이 것을 k-means clustering 을 통해 여러 개를 묶은 후, 각각의 query 에 대해 하나의 adversarial passage 를 얻는 것을 반복하여, 여러 개의 passage 로 확장시킨다.
 
 
+## 3. Experimetns
+# 3.1. Setup
+- **Retrieval datasets** : Natrual Question (NQ), MS MARCO
+- **Eval sets** : BEIR unseend datasets (e.g., Quora, scientific, financial documents)
+- **Dense Retriever** : Contreiver, Contriever-ms, DPR-nq, DPR-mul, ANCE, ColBERT
+- **Evaluation Metrics** : top-k attack success rate
+
+# 3.2. Attacks on In-domain Queries
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/2b2c0deb-2b16-461c-877b-0fdb9877d12a)
+
+- <span style='background-color: #dcffe4'> Contriever 가 매우 공격에 취약한데, 단 하나의 추가적인 adversarial passage 가 75% 의 query 를 속인다. </span>
+
+- <span style='background-color: #dcffe4'> 그에 반해 supervised method 인 DPR, ANCE 는 robust 하다. </span>
+
+- <span style='background-color: #dcffe4'> 그래도, 오른쪽 그래프를 보듯이 500 passage 정도로 DPR, ANCE 역시 50% 의 query 를 공격할 수 있다. </span>
 
 
+# 3.3. Attacks Transfer Out-of-Domain
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/17369c1a-2671-43da-9071-01eeddb37364)
 
 
+- <span style='background-color: #dcffe4'> NQ, MS MARCO 두 개의 학습으로 거의 대부분의 target domain 에서 높은 query 공격 성능을 보인다. </span>
 
-<span style='color:green;font-weight:bold'> 초록색볼드체 </span>
+# 3.4. Attacks on Multi-Vector Retriever
 
-<span style='background-color: #dcffe4'> 초록색배경 </span>
-<span style='background-color: #ffdce0'> 빨간색배경 </span>
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/d43d1c53-451e-46be-9b00-6d0f7364af83)
+
+- <span style='background-color: #dcffe4'>  single-token change 에 sensitive 하지 않은 multi-vector retriever 인 ColBERT 등에도 효과가 좋다. </span>
+
+## Conclusion
+```
+We proposed a new attack for dense retrievers, in which adversarial passages are inserted into the corpus to mislead their retrieval outputs. We show that even a small number of adversarial passages can successfully attack state-of-the-art dense retrievers and generalize to queries from unseen domains. These findings have important implications for the future deployment of robust retrieval systems in real-world applications.
+```
