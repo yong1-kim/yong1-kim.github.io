@@ -65,7 +65,8 @@ QA 벤치마크 생성에는 여러 desired criteria 가 존재할 수 있다. A
 - **(2) Feasible(Answerable)** : Question 은 corpus 속의 paragraph 로부터 answerable 해야 한다. 
 - <span style='color:green;font-weight:bold'> (3) Implicit </span> : Key property 이며, questino 의 자연어 (natural language) 그대로 쉽게 정보를 추출하기 힘들어야 한다.
 - **(4) Definite** : 명확한 대답을 할 수 있어야 한다. 예를 들어, "나무에 전기가 통하는가?" 라는 질문에 대해 어떠한 나무는 잘 통할 수 있지만 (환경에 따라) 정답은 generally "no" 인 것처럼 명확한 대답을 할 수 있어야 하고, "햄버거를 샌드위치라 볼 수 있는가?" 같은 답변이 갈릴 수 있는 질문은 하지 않는다.
-
+- **(5) Boolean**: 모든 대답은 yes or no 이다.
+- 
 <span style='background-color: #dcffe4'> 논문에서 말하는 Implicity 의 정의 : </span>
 ```
 a precise definition of implicit questions based on lexical overlap is elusive, but a good rule-of-thumb is the following:
@@ -73,6 +74,22 @@ If the question decomposition can be written with a vocabulary limited to words 
 ```
 
 #2.2. Decomposing Strategy Questions
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/12ea1eff-b297-47d1-87a0-52a645c2d235)
+
+저자들은 위의 desiderata 에 따라 모든 question 이 decomposition 할 수 있게 annotate 한다.
+<span style='background-color: #ffdce0'> 기존의 방법들은 대부분 rationale 혹은 supporting fact 라고 불리는 작은 text snippet 으로 decomposition 이 구성되었지만, 저자들은 진정한 reasoning 은 context 속에 explicit 하게 등장하지 않는다고 주장한다.
+ </span>
+ 이에 저자들은 모든 question-answer pair 에 **strategy question decomposition** 을 적용한다.
+모든 question $q$ 는 $n$ 개의 step $<s_1, s_2, ..., s_n>$ 으로 구성되고, 각각의 step $s_i$ 는 single-step question 이며 각각 spcial reference 를 포함한다.
+이 special reference 는 직전 step 의 결과를 refer 하는 placeholder 이다.
+마지막 decomposition 인 $s_n$ 은 final answer 를 return 하는 step 이다.
+
+위의 Table3 에서 decomposition step 을 볼 수 있다.
+첫번째 row의 explicit question ([[QDMR]](https://aclanthology.org/2020.tacl-1.13.pdf)) 은 decomposition 이 small vocab 으로 제한된다.
+그러나 나머지 세 row 의 implicit decomposition 을 vocab 에 제한 없이 어떠한 token 도 등장할 수 있으며 각각은 implicit reasoning 을 구성하기만 하면 된다.
+각각의 decomposition step 은 retrieval step 과 operation step 으로 나뉘는데, 맨 처음 figure 나 위의 두 번째 row 처럼 일단 정보를 추출해오는게 retrieval step 이고, 추출된 정보에서 logical inference 를 하는 것이 operation step 이다.
+
 
 ## 3. Data Collection Pipeline
 # 3.1. Creative Question Writing (CQW)
