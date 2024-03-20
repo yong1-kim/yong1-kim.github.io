@@ -15,7 +15,9 @@ categories: [Retrieval, LLM, PLM]
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/cb198cb6-b314-412b-9770-4585a63fb1fb)
 
 # Abstract
-- 
+- (**Explicit Multihop reasoning**) 현재 Multihop reasoning 의 큰 단한계점은 question 이 explicit 하다는 것이다.
+- (<span style='color:green;font-weight:bold'> StrategyQA </span>) 이 논문에서는 question 속의 reasoning step 이 implicit 하게 내재되어 있는 StrategyQA 라는 QA benchmark 를 제시한다. 저자들은 term-based priming 기법을 통해 annotator 들로 하여금 창의적인 질문을 생성하게 하였고, adversarial filtering 과정을 거쳐 벤치마크를 생성하였다. 
+- (**Statistics and Analysis**) 2,780 example 에 각각 decomposition 과 evidence paragrah 를 포함한다. StrategyQA 는 short, topic-diverse 하면서 넓은 범위의 strategy 를 cover 하고, 87% 점수의 human score 와 66% score 의 baseline score 를 report 한다.
 
 ## 1. Introduction
 
