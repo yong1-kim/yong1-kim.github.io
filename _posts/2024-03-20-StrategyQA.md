@@ -21,6 +21,37 @@ categories: [Retrieval, LLM, PLM]
 
 ## 1. Introduction
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/67d0c7ef-12ed-4d58-9206-ec9da2be94bb)
+
+<span style='color:green;font-weight:bold'> ▶ Multi-hop Reasoning </span>
+<br>
+최근 input 을 해결하기 위한 여러 단계의 추론이 필요한 Multi-hop reasoning 에 대한 연구가 활발해지며, 모델과 벤치마크가 많이 제안되었다.
+<span style='background-color: #ffdce0'> 하지만 기존의 벤치마크들의 question(query)은 보통 explicit 하게 주어진다.  </span>
+예를 들어, 위의 그림에서처럼 기존의 데이터셋들은 _"Was Aristotle alive when the laptop was invented?"_ 와 같이 정보를 추출하기 위해 직접적으로 언급이 되게끔 질문이 구성된다.
+그러나 real-life question 은 _"Did Aristotle use a laptop?"_과 같이 같은 step 으로 해결하지만, question 속에 정보가 implicit 하게 내재되어있는 경우가 많다.
+
+<span style='color:green;font-weight:bold'> ▶ Challenge in Implicit Question </span>
+<br>
+**IMPLICIT** question 에 답변을 하는 것은 challenging 하다.
+우선, question 과 context (evidence) 사이의 overlap 이 적기 때문에 정보를 retrieve 하기 어렵다.
+게다가 question 의 길이가 보통 짧기 때문에, 이러한 측면에서 implicit question 은 lexcial overlap 등의 shortcut 을 찾을 확률이 적어진다.
+
+<span style='color:green;font-weight:bold'> ▶ StrategyQA </span>
+<br>
+<span style='background-color: #dcffe4'> 
+이에 저자들은 *strategy question* 으로 구성된 implicit multi-hop reasoning 을 위한 Boolean QA bnechmark 인 StratgyQA 를 제시한다.
+ </span>
+여기서 말하는 *strategy* 는 question 으로부터 atomic sub-question 을 추출할 수 있는 능력을 말한다. (=decomposition ability)
+
+Strategy question 을 구성하기 위해 crowdsourcing 을 활용하는 것은 쉬운 일이 아니다.
+Annotator 에게 창의성(creativity)를 요구해야 하는 과정이므로, 기존 벤치마크에서 entire context 를 보여주고 multi-hop question 을 생성시키는 것을 넘어서야 한다.
+이에 저자들은 다음의 과정들로 dataset construction pipeline을 구성한다.
+(a) Annotator 로 하여금 imagination 과 creativity 향상을 위해 최소한의 context 를 부여하고, (b) diversity 를 위해 최대한 많은 annotator 를 고용하였으며 (c) adversarial model 학습을 통해, data collection 과정에서 recurring pattern 을 방지하고 난도를 증가시키는 과정을 거친다.
+
+<span style='background-color: #dcffe4'> StrategyQA 는 question decomposition 과 evidence paragraph 를 포함한다. </span>
+위의 Figure 에서 "D" 처럼 question 을 sub-question 으로 나누는 decomposition 정보와 그 것에 해당하는 Evidence ("E") 로 구성되어있다.
+벤치마크 분석에서 StrategyQA 는 physics, geography 등 다양한 knowledge domain 에 걸쳐있으며, retrieval 과 QA 모두에서 challenging 함을 드러낸다.
+
 ## 2. Strategy Qeustions
 #2.1. Desiderata
 #2.2. Decomposing Strategy Questions
