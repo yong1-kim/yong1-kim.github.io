@@ -7,7 +7,7 @@ categories: [Retrieval, LLM, PLM]
 ---
 
 [[pdf]](https://aclanthology.org/2021.tacl-1.21.pdf)  &emsp;
-[[code&dataset]](https://allenai.org/data/strategyqa)
+[[code and dataset]](https://allenai.org/data/strategyqa)
 
 **Mor Geva<sup>1,2</sup>, Daniel Khashabi<sup>2</sup>, Elad Segal<sup>1</sup>, Tushar Khot<sup>2</sup>, Dan Roth<sup>3</sup>, Jonathan Berant<sup>1,2</sup>**
 <br><sup>1</sup> Tel Aviv University <sup>2</sup> Allen Institute for AI <sup>3</sup> University of Pennsylvania &emsp;
