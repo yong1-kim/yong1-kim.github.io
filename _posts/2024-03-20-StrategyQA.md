@@ -53,7 +53,25 @@ Annotator 에게 창의성(creativity)를 요구해야 하는 과정이므로, �
 벤치마크 분석에서 StrategyQA 는 physics, geography 등 다양한 knowledge domain 에 걸쳐있으며, retrieval 과 QA 모두에서 challenging 함을 드러낸다.
 
 ## 2. Strategy Qeustions
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/332fe333-dd97-4034-8b82-fa38c76387e5)
+
 #2.1. Desiderata
+QA 벤치마크 생성에는 여러 desired criteria 가 존재할 수 있다. Answerable 에 대한 연구도 많이 진행되고 있고, Hallucination 에 대한 연구도 많이 진행되고 있기 때문에 이러한 needs 에 따라 데이터셋이 존재할 수 있다. StrategyQA 에서는 이러한 측면보다는 implicit query 구성에 desiderata 를 맞춘다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/eddf9cc6-db70-49b3-90fe-131a425f5acc)
+
+- **(1) Multi-Step** : 첫 번째 figure 처럼 여러 개의 질문으로 구성되어 있으며, 각 질문의 답변을 통해 logical operation 까지 할 수 있어야 한다.
+- **(2) Feasible(Answerable)** : Question 은 corpus 속의 paragraph 로부터 answerable 해야 한다. 
+- <span style='color:green;font-weight:bold'> (3) Implicit </span> : Key property 이며, questino 의 자연어 (natural language) 그대로 쉽게 정보를 추출하기 힘들어야 한다.
+- **(4) Definite** : 명확한 대답을 할 수 있어야 한다. 예를 들어, "나무에 전기가 통하는가?" 라는 질문에 대해 어떠한 나무는 잘 통할 수 있지만 (환경에 따라) 정답은 generally "no" 인 것처럼 명확한 대답을 할 수 있어야 하고, "햄버거를 샌드위치라 볼 수 있는가?" 같은 답변이 갈릴 수 있는 질문은 하지 않는다.
+
+<span style='background-color: #dcffe4'> 논문에서 말하는 Implicity 의 정의 : </span>
+```
+a precise definition of implicit questions based on lexical overlap is elusive, but a good rule-of-thumb is the following:
+If the question decomposition can be written with a vocabulary limited to words from the questions, their inflections, and function words, then it is an explicit question.
+```
+
 #2.2. Decomposing Strategy Questions
 
 ## 3. Data Collection Pipeline
