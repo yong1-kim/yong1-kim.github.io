@@ -127,7 +127,26 @@ Expert 는 decomposition 이 잘되었는지, 그리고 그것들이 explicit or
 각각의 decomposed question 들이 evidence 와 matching 되는지 세 worker 가 매겼을 떄, 88.3% 의 대부분의 question 이 fully coverd 되었고, 86.9% question 이 최소한 하나의 worker 에게 evidence 와 match 된다고 한다.
 
 # 4.3. Data Diversity
+
+<span style='color:green;font-weight:bold'> (1) Reasoning Skills </span>
+<br>
+
+- Strategy Diversity
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/e7599889-9075-487c-810f-5aab05d97479)
+
+- Domain-related and logical reasoning skill diversity
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/ee80d991-a45a-4ea6-924e-a27f7a00e775)
+
+
+<span style='color:green;font-weight:bold'> (2) Question Topics </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/1262b529-0762-4cc2-889e-4e88f798052f)
+
 # 4.4. Human Performance
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/ada62c86-c082-417a-a102-1dcbcffb39aa)
 
 
 ## 5. Experimental Evaluation
