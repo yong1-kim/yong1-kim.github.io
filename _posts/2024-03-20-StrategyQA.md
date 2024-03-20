@@ -95,8 +95,37 @@ If the question decomposition can be written with a vocabulary limited to words 
 ※ 논문참고
 
 ## 4. The STRATEGYQA Dataset
+Dataset 구성을 위해 29 question writers, 19 decomposers, 54 evidence matchers 를 고용하였다.
+2,835 개의 question 을 collect 했으며, 그 중 55개는 filter 되어 2,780 개의 question 으로 구성된다.
+
 # 4.1. Dataset Statistics
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/5915fac9-518d-4cce-b2de-30f56a4adb83)
+
 # 4.2. Data Quality
+<span style='color:green;font-weight:bold'> Do questions in STRATEGYQA require multistep implicit reasoning? </span>
+<br>
+Quality 측정의 위해 100 random sample 을 조사하였다.
+두 expert (=author) 가 조사하였다고 한다. 그 결과, 대부분(81%)이 valid multi-step implicit question 이었다고 한다.
+
+<span style='color:green;font-weight:bold'> Do questions in STRATEGYQA have a definitive answer? </span>
+<br>
+Expert 가 web 에 접근할 수 있는 환경에서 question 들을 분석한 결과, 94% 의 question 이 agree 하고 단 2% 에서만 disagree 했다고 한다. 나머지 4% 는 abimgiuous 했다.
+
+<span style='color:green;font-weight:bold'> What is the quality of the decompositions? </span>
+<br>
+Expert 는 decomposition 이 잘되었는지, 그리고 그것들이 explicit or implicit 한지 분석하였다.
+그 결과, 83% decomposition 이 valide 하게 sub-question 으로 break-down 되었으며, 17% 는 explicit 하게 decomposition 되었다고 한다.
+그러나 그 17% 중 14% 는 이미 original question 자체가 explicit 하다고 한다.
+
+
+<span style='color:green;font-weight:bold'> Would different annotators use the same decomposition strategy? </span>
+<br>
+50 개의 sample 을 뽑은 뒤, 다른 worker 들에게 question 을 decompose 하게 시켰다. 그 결과, 44개 (88%) 에서 같은 reasoning path 를 보였다. 이 결과는 다른 worker 들을 활용해도 decomposing 과정에 같은 strategy 를 사용한다는 것을 보여준다.
+
+<span style='color:green;font-weight:bold'> Is the evidence for strategy questions in Wikipedia? </span>
+<br>
+각각의 decomposed question 들이 evidence 와 matching 되는지 세 worker 가 매겼을 떄, 88.3% 의 대부분의 question 이 fully coverd 되었고, 86.9% question 이 최소한 하나의 worker 에게 evidence 와 match 된다고 한다.
+
 # 4.3. Data Diversity
 # 4.4. Human Performance
 
