@@ -92,10 +92,7 @@ If the question decomposition can be written with a vocabulary limited to words 
 
 
 ## 3. Data Collection Pipeline
-# 3.1. Creative Question Writing (CQW)
-# 3.2. Strategy Question Decomposition (SQD)
-# 3.3. Evidence Matching (EVM)
-# 3.4. Data Verification Mechanisms
+※ 논문참고
 
 ## 4. The STRATEGYQA Dataset
 # 4.1. Dataset Statistics
