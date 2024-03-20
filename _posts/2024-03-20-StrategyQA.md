@@ -56,7 +56,7 @@ Annotator 에게 창의성(creativity)를 요구해야 하는 과정이므로, �
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/332fe333-dd97-4034-8b82-fa38c76387e5)
 
-#2.1. Desiderata
+# 2.1. Desiderata
 QA 벤치마크 생성에는 여러 desired criteria 가 존재할 수 있다. Answerable 에 대한 연구도 많이 진행되고 있고, Hallucination 에 대한 연구도 많이 진행되고 있기 때문에 이러한 needs 에 따라 데이터셋이 존재할 수 있다. StrategyQA 에서는 이러한 측면보다는 implicit query 구성에 desiderata 를 맞춘다.
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/eddf9cc6-db70-49b3-90fe-131a425f5acc)
@@ -73,7 +73,7 @@ a precise definition of implicit questions based on lexical overlap is elusive, 
 If the question decomposition can be written with a vocabulary limited to words from the questions, their inflections, and function words, then it is an explicit question.
 ```
 
-#2.2. Decomposing Strategy Questions
+# 2.2. Decomposing Strategy Questions
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/12ea1eff-b297-47d1-87a0-52a645c2d235)
 
