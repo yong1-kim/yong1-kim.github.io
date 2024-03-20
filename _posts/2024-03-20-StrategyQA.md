@@ -16,3 +16,37 @@ categories: [Retrieval, LLM, PLM]
 
 # Abstract
 - 
+
+## 1. Introduction
+
+## 2. Strategy Qeustions
+#2.1. Desiderata
+#2.2. Decomposing Strategy Questions
+
+## 3. Data Collection Pipeline
+# 3.1. Creative Question Writing (CQW)
+# 3.2. Strategy Question Decomposition (SQD)
+# 3.3. Evidence Matching (EVM)
+# 3.4. Data Verification Mechanisms
+
+## 4. The STRATEGYQA Dataset
+# 4.1. Dataset Statistics
+# 4.2. Data Quality
+# 4.3. Data Diversity
+# 4.4. Human Performance
+
+
+## 5. Experimental Evaluation
+# 5.1. Baseline Models
+# 5.2. Results
+
+
+## Concclusion
+```
+We present STRATEGYQA, the first dataset of implicit multi-step questions requiring a widerange of reasoning skills. To build STRATEGYQA, we introduced a novel annotation pipeline for eliciting creative questions that use simple language, but cover a challenging range of diverse strategies. Questions in STRATEGYQA are annotated with decomposition into reasoning steps and evidence paragraphs, to guide the ongoing research towards addressing implicit multi-hop reasoning.
+```
+
+<span style='color:green;font-weight:bold'> 초록색볼드체 </span>
+<br>
+<span style='background-color: #dcffe4'> 초록색배경 </span>
+<span style='background-color: #ffdce0'> 빨간색배경 </span>
