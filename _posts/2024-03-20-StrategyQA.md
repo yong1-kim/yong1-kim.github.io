@@ -148,18 +148,36 @@ Expert 는 decomposition 이 잘되었는지, 그리고 그것들이 explicit or
 # 4.4. Human Performance
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/ada62c86-c082-417a-a102-1dcbcffb39aa)
 
+100개의 sample 을 뽑아 expert (=author)가 question 에 대답을 해본 결과이다.
+87% 정도의 정답률을 보이고, error analysis 에서 main reason to failure 는 evidence 를 찾기 힘들 때이다.
 
 ## 5. Experimental Evaluation
+세 가지 측면에서 벤치마크를 분석한다.
+- a) LM 이 strategyQA 를 잘 푸는가?
+- b) relevent context 를 retreival 하는 것이 helpful 한가?
+- c) decomposition 이 도움이 되는가?
+
 # 5.1. Baseline Models
+- Backbone model : BOOLQ, MNLI, TWENTY QUESTION, DROP 으로 finetuned 된 ROBERTA
+- Setting : No context / With context (by BM25 Retrieval)
+- Predicting Decompositions : BART 를 학습시켜, question 을 decomposition
+- Baseline dmodels : ROBERTa - No retrieval / REBERTA : retrieval with gold decomposition / ROBERTA gold decomp and gold paragraph
+  
 # 5.2. Results
 
+<span style='color:green;font-weight:bold'> Strategy QA performance </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/fdfa79b6-b93e-4ee6-b6af-d9b634fa91e5)
+
+- Maximum score : ACC 72.0
+
+<span style='color:green;font-weight:bold'> Retrieval Evaluation </span>
+<br>
+
+- Maximum score : Recall@10 0.282
 
 ## Concclusion
 ```
 We present STRATEGYQA, the first dataset of implicit multi-step questions requiring a widerange of reasoning skills. To build STRATEGYQA, we introduced a novel annotation pipeline for eliciting creative questions that use simple language, but cover a challenging range of diverse strategies. Questions in STRATEGYQA are annotated with decomposition into reasoning steps and evidence paragraphs, to guide the ongoing research towards addressing implicit multi-hop reasoning.
 ```
-
-<span style='color:green;font-weight:bold'> 초록색볼드체 </span>
-<br>
-<span style='background-color: #dcffe4'> 초록색배경 </span>
-<span style='background-color: #ffdce0'> 빨간색배경 </span>
