@@ -70,27 +70,38 @@ Input processing 은 두 가지로 구성되는데 (1) document comprehension an
 각각은 HP, 2W, MSQ 라고 지칭한다.
 
 ## 3. Results and Discussion
+<span style='color:green;font-weight:bold'> Main Results </span>
+<br>
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/92a5e305-2ffa-4230-b64c-a6822c1765a7)
 
+- <span style='background-color: #dcffe4'> Low entropy 의 token 들이 Global Memory 로 활용될 때 좋은 성능을 보인다. </span>
+
+<span style='color:green;font-weight:bold'> Improving ChatGPT performance </span>
+<br>
+
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/9e9b6310-91e1-4079-8949-5bd651fef5bb)
 
-![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/3a4d7a4f-3bf9-4624-a08a-21add9f69959)
+- <span style='background-color: #dcffe4'> Question only 와 비교했을 때 Retrieved passage 가 있어야 좋은 성능을 보인다. </span>
+- <span style='background-color: #dcffe4'> Retrieved Passage 에 Gloabl Memory 를 썼을 때는 오히려 성능이 안좋아졌지만 (Q+R > Q+M+R), Full context 를 썼을 때는 Global Memory 를 쓰는 게 더 좋다(Q+M+C > Q+C) </span>
 
 <span style='color:green;font-weight:bold'> Ablation Study </span>
 <br>
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/3a4d7a4f-3bf9-4624-a08a-21add9f69959)
+
+- <span style='background-color: #dcffe4'> Memory filling 을 위해서는 Question 이 필수불가결하고, Finetuning 은 도움이 되며, Rnadom memory 는 효과가 좋지 않다 </span>
+
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/7dfc8306-b8de-40bd-a3b5-526a14a1ed14)
 
+- <span style='background-color: #dcffe4'> 위의 그림처럼 학습과정에서 Supporting fact 의 entropy 가 낮아지기 때문에, random memory 를 활용하기보다는 low entropy rule 을 쓰는 것이 더 좋다는 것을 확인할 수 있다. </span>
 
 <span style='color:green;font-weight:bold'> Memory Analysis </span>
 <br>
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/0b4bc356-09d9-4267-9d89-1476f365ca3f)
 
-![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/24f0117a-ed50-41ac-b7ad-bf32ebb4dea2)
-
-![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/ef09a0f4-174d-4995-b077-47906f39e400)
+- <span style='background-color: #dcffe4'> Memory Size 가 크면 클 수록 좋다. </span>
 
 ## Conclusion
 ```
@@ -100,11 +111,3 @@ In this study, we demonstrated how utilizing uncertainty-based global explicit m
 ```
 There are several limitations to this work. First, the global explicit memory augmentation of the input sequence may increase the training time by shortening the context chunk lengths. Second, the current implementation of memory token selection results in storing a significant fraction of irrelevant tokens which interferes with the calculation of correct predictions. We will work on methods to improve the relevance of information stored in memory
 ```
-
-
-
-<span style='color:green;font-weight:bold'> 초록색볼드체 </span>
-<br>
-
-<span style='background-color: #dcffe4'> 초록색배경 </span>
-<span style='background-color: #ffdce0'> 빨간색배경 </span>
