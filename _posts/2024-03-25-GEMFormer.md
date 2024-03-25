@@ -20,6 +20,20 @@ categories: [LLM, PLM]
 - (<span style='color:green;font-weight:bold'> GEMFormer </span>) 저자들은, (1) entire document 에서 relevant information 을 찾아 memory 에 저장하고 (2) 그것들을 local context 에 결합하는 two-step approach 인 **GEMFormer** 를 제안한다.
 - (**Experiment**) memory-augmented input 과 함께 pre-trained model 을 finetuning 한 결과, 세 multihop QA dataset 에서 baseline 대비 향상을 이룬다. 추가적으로, global explicit memory 가 정확한 answer 를 위해 필요한 supporting fact 를 잘 담아내는 것을 확인한다.
 
+## 1. Introduction
+
+## 2. Global Explicit Memory
+
+## 3. Results and Discussion
+
+## Conclusion
+```
+In this study, we demonstrated how utilizing uncertainty-based global explicit memory can enhance the model performance on MHQA tasks. Our findings indicate that utilizing low entropy context tokens can aid the model in MHQA reasoning, but only when the entropy estimation model is specifically fine-tuned to the target task. Experiments show that higher-performing models use larger memory sizes with better coverage of supporting facts.
+```
+## Limitations
+```
+There are several limitations to this work. First, the global explicit memory augmentation of the input sequence may increase the training time by shortening the context chunk lengths. Second, the current implementation of memory token selection results in storing a significant fraction of irrelevant tokens which interferes with the calculation of correct predictions. We will work on methods to improve the relevance of information stored in memory
+```
 
 
 
