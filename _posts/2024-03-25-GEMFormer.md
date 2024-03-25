@@ -41,11 +41,56 @@ Token importance 는 language model uncertainty 로 정의된다.
 
 
 ## 2. Global Explicit Memory
+
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/f4fef6d5-4ddd-456a-8282-ed9276051956)
 
+GEMFormer 는 RoBERTa 를 backbone 으로 활용한다.
+<span style='background-color: #dcffe4'> Global explicit memory 는 정확한 reasoning 과 answer prediction 에 가장 중요한 document token 의 연속이다.  </span>
+Model 의 uncertainty 가 input 의 중요도로 활용된다.
+input sequence $x=[t_1,t_2,...,t_m]$ with $m$ tokens 에 대해, RoBERTa 의 LM head 를 통해 token probability vector $p=Softmax(LM-RoBERTa(x))$ 를 얻는다.
+이후, Entory $H= -\frac{1}{n} \sum_{j=1}^n p_j log p_j$ 을 각각 input position 에 대해 구한다.
+이 연구에서는 아래의 두 memory population condition 을 사용한다.
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/4aefbaab-1f9e-4e42-8c62-92e20eb2df7d)
+
+$\theta$ 는 threshold 이고, $k$ 는 memory size 이다.
+
+모델에 question 과 context 가 입력이 되면, 각각 contextual token 에 대한 entropy 가 결정된다.
+이 entropy 는 question 과 token-surrounding context 에의해 결정된다.(conditional 하다)
+Document 가 question-relevant collection 이라면, task-relevant token 의 entorpy 는 irrelevant one 보다 낮아야만 한다.
+
+GEMFormer architecture 는 위의 그림과 같다.
+RoBERTa 의 maximum sequence length limit 을 맞추기 위해, contextual document 는 여러 segment 로 나뉜 후, question 이 concat 된다.
+Input processing 은 두 가지로 구성되는데 (1) document comprehension and memory population 과 (2) task-prediction generation 이다.
+첫 번째 stage 에서, question-context segment 가 RoBERTa model 에 input 으로 들어간 후, LM head 에 의해 entropy 가 계산된다.
+이후 위의 식 (1) 에 해당하는 entropy condition 을 만족하는 token 들이 선택되어 Global Memory (GM) 로 구성된다.
+이후 두 번째 stage 에서는 question 과 globabl memory token 이 concate 되어 MHQA task training 에 사용된다.
+
+실험은 세 영어 MHQA dataset : HotpotQA, 2WikiMultiHopQA, MusiQue-Ans 에 대해 진행된다.
+각각은 HP, 2W, MSQ 라고 지칭한다.
 
 ## 3. Results and Discussion
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/92a5e305-2ffa-4230-b64c-a6822c1765a7)
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/9e9b6310-91e1-4079-8949-5bd651fef5bb)
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/3a4d7a4f-3bf9-4624-a08a-21add9f69959)
+
+<span style='color:green;font-weight:bold'> Ablation Study </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/7dfc8306-b8de-40bd-a3b5-526a14a1ed14)
+
+
+<span style='color:green;font-weight:bold'> Memory Analysis </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/0b4bc356-09d9-4267-9d89-1476f365ca3f)
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/24f0117a-ed50-41ac-b7ad-bf32ebb4dea2)
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/ef09a0f4-174d-4995-b077-47906f39e400)
 
 ## Conclusion
 ```
