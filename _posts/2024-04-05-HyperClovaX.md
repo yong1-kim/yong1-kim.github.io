@@ -122,9 +122,16 @@ Policy Network 는 post-SFT model 이고, reward model 은 앞서 언급한 모�
 
 저자들은 역시 이 문제도 발견하였고, <span style='background-color: #dcffe4'> PPO 에 sequence-level unliklihood training 를 추가하여, 최소한의 추가적인 training cost 로 repeition 문제를 해결하였다. </span>
 
+PPO 의 경우, 통상적으로 SFT 보다 네 배의 시간을 요구한다.
+이 과정을 optimize 하게 위하여, multi-node setting 으로 asynchrnous processing 을 통해 process 를 병렬화한다.
+<span style='background-color: #dcffe4'> 
+특히 각 iteration 의 rollout phase 에서 네 개의 네트워크에 inference 를 하기 위한 continous batching 을 employ 한다.
+ </span>
 
+# 2.2.3. The Alignment Learning Pipeline
+특정 checkpoint 에서 model 의 training 을 interuppt 하는 대신, check-point saving event 를 발견하고, 다른 computation resource 에서 asynchrnous 하게 evaluate 하는 **event-driven pipeline** 을 통해 효율적인 학습을 진행한다.
 
-# 2.2.3. The Alginment Learning Pipeline
+또한, SFT, RM, PPO learning process 를 하나의 스텝 이후에 자동적으로 시작되게하여 human intervention 을 최대한 줄인다.
 
 ### 3. Core Benchmarks
 ## 3.1. Comprehensive Korean LLM Benchmarks
