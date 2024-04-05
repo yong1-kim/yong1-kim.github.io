@@ -147,6 +147,23 @@ Reasoning, world knowledge, and mathematics transcend language 과 같은 핵심
 <span style='color:green;font-weight:bold'> Baselines. </span>
 <br>
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/d248a5a8-5b6c-4961-bc9d-1fdea627d7a6)
+
+HyperClOVA X 는 한국어와 영어 모두에 내재적 효율성을 위해 학습되었기 때문에, 그 평가 역시 counterpart 와의 직접적인 비교가 어렵다.
+따라서, 한국어 유창성에 관련한 비교는 한국어특화 LLM 들과 비교하고, langauge-agnostic task 에 대해서는 일반적인 foundational model 들과 비교한다. 한국어 평가를 위해, Korean LLM community 에 만연한 비교 방법인 Korean corpus 로 학습 된 후 target language 에 적용하는 방법으로 closed-, open- source LLM 들과 비교한다.
+
+- **Models Specializing in Korean** : (1) [Polyglot-Ko(TUNiB)](https://arxiv.org/pdf/2306.02254.pdf), (2) [SOLAR|SOLAR-chat(Upstage)](https://arxiv.org/pdf/2312.15166.pdf) (LLaMa2 아키텍쳐에 Mistral parameter 로 init), (3) LLaMa2 Ko|LLaMa2 KoEn(huggingface), (4) [KORani(Krafton-ai)](https://github.com/krafton-ai/KORani), (5) [EEVE-Korean-v(yanolja)](https://arxiv.org/pdf/2402.14714.pdf) (SOLAR 에 한국어를 위한 효율적인 vocab 활용한 모델)
+
+- **General Foundation Models** : (1) Falcon, (2) LLaMA2, (3) Mistral 7b
+
+<span style='color:green;font-weight:bold'> Evaluation Methods. </span>
+<br>
+두 가지 main evaluation method 를 택한다.
+- (1) Open-ended question-answering | free-form answer ( BigBench-Hard )
+- (2) Closed-ended question-answering | candidate answer
+
+
+
 ## 3.1. Comprehensive Korean LLM Benchmarks
 
 ## 3.2. Comprehensive English LLM Benchmarks
