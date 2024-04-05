@@ -21,6 +21,35 @@ math, chatting, instruction-following, and harmlessness 등 많은 benchmark 에
 - (**Multilingualism**) 한국어-영어 bilingual 특성 뿐 아니라, Multilingualism 로의 확장으로 기계 번역 등 다양한 언어로의 확장 가능성을 제시한다.
 
 ### 1. Introduction
+<span style='color:green;font-weight:bold'> ▶ Bias in English Corpus</span>
+<br>
+현재 다양한 LLM 들이 매우 좋은 성능을 보여주고 있지만, 대부분 North American culture 와 영미권 문화에 강하게 bias 가 되어있다.
+이는 pretrianing corpus 가 대부분 영어로 되어있기 때문이다.
+<span style='background-color: #ffdce0'> 따라서 한국어와 같은 non-English 언어에 대해서는 특정한 문화나 지리적인 특성 등을 반영하지 못하여 매우 압도적인 성능을 보여주지 못한다. </span>
+
+<span style='color:green;font-weight:bold'> ▶ HyperCLOVA X </span>
+<br>
+이에 저자들은 HyperCLOVA X family 를 공개한다.
+<span style='background-color: #dcffe4'> 이는 강력한 버전인 HCX-L 과 lightweight 버전인 HCX-S 로 구성되어있다. 
+ </span>
+두 모델 모두 한국어와 한국 문화적인 내용에 맞춰져 있으며(tailored),  영어 외의 다양한 언어에 대하여 좋은 성능을 보인다.
+<span style='background-color: #dcffe4'> 모델들은 한국어, 영어, 그리고 코드 데이터셋에 공평하게(evenly) 학습이 되었다.
+ </span>
+
+<span style='color:green;font-weight:bold'> ▶ Reasoning Capability </span>
+<br>
+HyperCLOVA X 모델은 reasoning, knowledge, commonsense, factuality, coding, math, chatting, instruction-following, harmlessness 등 9개의 task 에 대하여 한국어/영어에서 매우 좋은 성능을 보인다.
+특히 현존하는 closed-source 와 open-source 를 모두 포함하여, 한국어에 대해서는, 기존 모델들을 뛰어넘는 포괄적인 이해능력을 보여준다.
+
+<span style='color:green;font-weight:bold'> ▶ Multilingual Capability </span>
+<br>
+또한, 한국에서 자주 사용되는 세가지 다른 언어에 대해 기계번역을 통한 cross-lingual reasoning 능력을 실험하였을 때, state-of-the-art 수준의 machine translation 성능을 보인다.
+HyperCLOVA X 의 이러한 인상적인 multilingual ability 는 한국어-영어의 cross-lingual trasnfer 에 대해, <span style='background-color: #dcffe4'> 하나의 언어에 대한 instruction tuning 이 다른 언어에 대하여 intruction-following 능력을 나타내는 emergent ability 를 보인다. </span>
+
+<span style='color:green;font-weight:bold'> ▶ Safety </span>
+<br>
+Safety 에 대한 보장을 위해, red teaming 기법을 활용하였고, safety data collection process 가 NAVER AI Ethics 원칙에 강하게 기반되었다.
+다양한 safety evaluation (automatic & human evaluation) 으로 안정성을 보장한다.
 
 ### 2. Training Details
 ## 2.1. Pretraining
