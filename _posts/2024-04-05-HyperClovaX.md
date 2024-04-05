@@ -52,12 +52,77 @@ Safety 에 대한 보장을 위해, red teaming 기법을 활용하였고, safet
 다양한 safety evaluation (automatic & human evaluation) 으로 안정성을 보장한다.
 
 ### 2. Training Details
+HCX-L 과 HCX-S 모두 한국어/영어/코드 데이터셋에 pretraining 된 이후, Supervised Fine-tuning (SFT) 와 reinforcement learning form human feedback (RLHF) 를 통해 instruction-following ability 가 향상되었다.
+
 ## 2.1. Pretraining
+HYPERCLOVA X 는 [HYPERCLOVA](https://aclanthology.org/2021.emnlp-main.274/) 의 updated version 이며, trasnformer decoder 에 약간의 modification 이 추가된 버전이다.
+Context Length 향상을 위해 position embedding 으로 [rotary position embeddings](https://arxiv.org/pdf/2104.09864.pdf) 을 활용하였고, pre-normalization 과 [grouped-query attention](https://aclanthology.org/2023.emnlp-main.298.pdf) 을 사용하였다.
+
+
+<span style='color:green;font-weight:bold'> Data </span>
+<br>
+Pretraining data 는 한국어(Korean), Multilingual, Code segment 로 이뤄져 있다.
+Multilingual 은 대부분 영어로 이뤄져있지만, 일본어, 독일어, 프랑스어 등 다양한 언어로도 이뤄져 있고, 한국어에 특화시키기 위하여, 한국어 데이터셋을 전체 데이터 크기의 3 분의 1 이 되게 확보하였다.
+<span style='background-color: #dcffe4'> 
+결과적으로, 한국어, multilingual, code 데이터 세 개가 equal distribution 을 갖는다.
+ </span>
+데이터 퀄리티를 위하여 반복적인 문장, 너무 짧은 문장, 너무 낮은 퀄리티의 document 는 제외하였고, Personallyh identifiable information (PII); 개인 정보등은 제거하였다.
+<span style='background-color: #dcffe4'> 
+또한, Knowledge-containig data 를 upsample 하여 performance 향상을 이끌어낸다. </span>
+
+ <span style='color:green;font-weight:bold'> Tokenizer </span>
+<br>
+한국어 중심의 LLM을 위해 효과적인 Tokenizer 준비하는 것이 중요하다. 한국어는 어근 의미 형태소에 문법 형태소를 붙여 단어를 형성하는 응집형 언어이다. HyperCLOVA X 는 형태소 인식 byte-level BPE를 훈련하여 한국어 문서를 효율적으로 토큰화한다.
+아래 표에서 한국어에 강력하게 효율적임을 볼 수 있다.
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/312d4e30-98b6-4f02-851e-0d46d57663ee)
+
+<span style='color:green;font-weight:bold'> Pretraining Scheme </span>
+<br>
+Left-to-Right 에 한정짓지 않고, [PSM & SPM](https://arxiv.org/pdf/2207.14255.pdf) training 을 활용한다. (fill-in-the-middle 방법이다)
+이 학습 방법은 pre-training 동안 in-filling performance 를 얻기 위해서 고안된 것이다.
+90% 학습은 4096 context length 로 학습하고, 나머지 10% 는 32768 length 로 학습한다.
+또한 [flash attention](https://arxiv.org/pdf/2205.14135.pdf) 과 3D parallelism 을 활용하며, bf16 precision 을 활용한다.
 
 ## 2.2. Alignment Learning
 # 2.2.1. Supervised Fine-tuning (SFT)
+각각의 prompt 에 대하여 completion 의 likelihood 를 maximize 하게 SFT 를 통한 alignment learning 을 한다.
+이를 통해 instruction-following, problem-solving, coding, creative writing 능력 등을 향상시킨다.
+
+SFT 데이터셋에는 ‘<|user|>’, ‘<|assistant|>’, ‘<|endofturn|>’ 세 가지 special token 을 추가하여 turn 을 구분한다.
+<span style='background-color: #dcffe4'> 
+Multiturn sample 학습을 위해서는 assistant turn 을 제외한 나머지 turn 들에는 loss masking 을 적용한다. </span>
+SFT 학습에서 효율적인 GPU 활용을 위해, 효율적인 batching strategy 를 구사한다.
 
 # 2.2.2. Reinforcement Learning from Human Feedback (RLHF)
+SFT 만을 이용한 Alignment tuning 이 uninformative 하거나 harmful content 를 포함하는 것은 이제 공공연한 사실이다.
+이를 위해 대부분 RLHF 는 3H value 인 helpful, honest, harmless 를 학습시킨다.
+HyperCLOVA X 는 Proximal Plicy Optimization (PPO) 를 활용하였다.
+
+<span style='color:green;font-weight:bold'> Reward Model. </span>
+<br>
+SFT 학습이 끝난 모델에, random 하게 init 된 linear head 를 붙여 scalar reward 를 내뱉게 한다.
+모델은 Bradley-Terry model 에 기반한 ranking loss 로 학습되는데, 이는 chosen 과 rejected 의 차이를 reward negative log-likelihood 를 최소화하는 방법이다.
+이 모델은 한 에폭만 학습된다. ([InstructGPT](https://arxiv.org/pdf/2203.02155.pdf) 논문에 기반)
+
+<span style='color:green;font-weight:bold'> Reinforcement Learning </span>
+<br>
+<span style='background-color: #dcffe4'> 
+다른 모델들과 유사하게 PPO 를 활용하였고, KL penalty term([[1]](https://arxiv.org/abs/1907.00456),[[2]](https://proceedings.neurips.cc/paper_files/paper/2020/file/1f89885d556929e98d3ef9b86448f951-Paper.pdf))을 0.04 계수 와 함께 reward 에 추가한다. </span>
+Policy Network 는 post-SFT model 이고, reward model 은 앞서 언급한 모델이다.
+
+
+<span style='background-color: #ffdce0'> 
+많은 기존 연구([AlpacaFarm](https://arxiv.org/pdf/2305.14387.pdf), [[3]](https://arxiv.org/pdf/2310.03716.pdf), [[4]](https://arxiv.org/pdf/2307.04964.pdf))에서 RLHF 이후 output length 의 증가를 report 하였다.  </span>
+저자들 또한 같은 현상을 목격하였고, model 이 longer sequence 를 좋아하는 경향을 알아낸다.
+이를 해결하기 위해 <span style='background-color: #dcffe4'> iterative human feedback </span> 방법을 고안한다.
+또한, 특정한 length 와 format 에 한정된 instruction set 에 overfitting 되지 않기 위해, early stopping mechanism 을 추가하였다.
+
+<span style='background-color: #ffdce0'> 
+또한, Transformer 기반의 LLM 은 repetition 에 취약하다.  </span>
+
+저자들은 역시 이 문제도 발견하였고, <span style='background-color: #dcffe4'> PPO 에 sequence-level unliklihood training 를 추가하여, 최소한의 추가적인 training cost 로 repeition 문제를 해결하였다. </span>
+
+
 
 # 2.2.3. The Alginment Learning Pipeline
 
