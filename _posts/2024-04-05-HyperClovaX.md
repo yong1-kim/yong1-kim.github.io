@@ -160,7 +160,11 @@ HyperClOVA X 는 한국어와 영어 모두에 내재적 효율성을 위해 학
 <br>
 두 가지 main evaluation method 를 택한다.
 - (1) Open-ended question-answering | free-form answer ( BigBench-Hard )
+
+※ 자세한 세팅은 논문 참고
+
 - (2) Closed-ended question-answering | candidate answer
+
 
 
 
