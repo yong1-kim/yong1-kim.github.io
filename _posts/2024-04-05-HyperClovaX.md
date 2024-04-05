@@ -134,6 +134,12 @@ PPO 의 경우, 통상적으로 SFT 보다 네 배의 시간을 요구한다.
 또한, SFT, RM, PPO learning process 를 하나의 스텝 이후에 자동적으로 시작되게하여 human intervention 을 최대한 줄인다.
 
 ### 3. Core Benchmarks
+Multilingual  언어 모델의 발전에서 큰 constraint 는 영어 이외의 언어에 대한 철저한 평가 프레임워크의 부재이다. 특정 언어의 능력은 linguistic proficiency 뿐만 아니라 해당 언어 사용자에게 독특한 문화적 및 사회적 뉘앙스에 대한 깊은 이해도 필요하다. HyperCLOVA X 의 언어 능력을 평가하기 위해, 내/외부적으로 찾은 영어와 한국어 벤치마크를 활용한다.
+
+Reasoning, world knowledge, and mathematics transcend language 과 같은 핵심 역량은 언어를 초월하기 때문에(언어에 특화되지 않아도 되므로), 이런 벤치마크의 상당 부분은 언어 중립적 기술을 평가하기 위해 영어로 진행된다. 한편, 언어별 질문에 대한 다양한 측면을 모델이 얼마나 잘 포함하는지와 문화적 뉘앙스를 다루는 모델의 능력을 평가하기 위해, 각 언어에 맞게 구성된 두 가지 상세한 벤치마크 카테고리를 활용한다.
+
+또한, 한국어 데이터셋은 기계 번역된 것을 활용하지 않고, 전문가에 의해 세심하게 제작된 것을 활용하거나 이미 그렇다고 인정받은 것들을 활용한다. 이러한 벤치마크에는 KoBigBench (KBB)와 같은 지역 특화 질문과 내부 노력에서 구축된 포괄적인 한국어 벤치마크인 KMMLU 내의 한국어 특정 질문 세트가 포함되어 있어 모델의 한국 문화 및 사회적 맥락 이해를 엄격하게 평가한다. 
+
 ## 3.1. Comprehensive Korean LLM Benchmarks
 
 ## 3.2. Comprehensive English LLM Benchmarks
