@@ -293,9 +293,29 @@ Upstage社의 SOLAR 는 open-source 와 closed-source version 이 있는데 exac
 
 
 ### 4. Multilinguality
+HyperCLOVA X 는 한국어/영어/코드 데이터셋으로 학습이 되었지만, 다른 많은 언어를 지원한다.
+이 장에서는 HyperCLOVA X 의 multilinguality 를 (1)cross-lingual reasoning, (2)machine translation, (3)cross-lingual trasnfer 로 측정한다.
+
 ## 4.1. Cross-Lingual Reasoning
+Asian Language 로 테스트한다.
+- **XNLI**
+
+ ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/acd36484-c37c-44af-8316-e6987a1966b2)
+
+<span style='background-color: #dcffe4'> 중국어(2등)를 제외한 나머지 언어에서 1등을 기록한다.</span>
+
+- **Cross-Lingual CommonsenseQA (X-CSQA)**
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/f6f53d37-d769-49bb-a522-442cb5a86fd5)
+
+<span style='background-color: #dcffe4'> 역시 중국어(2등)를 제외한 나머지 언어에서 1등을 기록한다.</span>
 
 ## 4.2. Machine Translation
+- **FLORES+** : 영어, 중국어, 일본어 (한국에서 가장 많이 사용되는 언어들) 로의 번역 성능; 1-shot; Metric 은 **xCOMET** 이다(다른 metric 보다 human correlation 이 높다).
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/3b88217f-629e-4fb3-af8a-8125bf60cb54)
+
+<span style='background-color: #dcffe4'> 역시 중국어(2등)를 제외한 나머지 언어에서 1등을 기록한다.</span>
 
 ## 4.3. Cross-lingual Transfer
 
