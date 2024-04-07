@@ -176,8 +176,8 @@ HyperClOVA X 는 한국어와 영어 모두에 내재적 효율성을 위해 학
 
 ## 3.1. Comprehensive Korean LLM Benchmarks
 - **KoBigBench(KBB)** : zero-shot
-- **KMMLU** : 5-shot
-- **HAE-RAE Bench** : zero-shot
+- **KMMLU** : MMLU의 번역본이 아닌 한국 문화와 언어를 반영한 MMLU ; 5-shot
+- **HAE-RAE Bench** : Benchmark designed to challenge models in Korean cultural and linguistic knowledge ; 다음 네 개의 도메인으로 이뤄져 있다: vocabulary, history, general knowledge, and reading comprehension; zero-shot
 - <span style='color:green;font-weight:bold'> Results </span>
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/244c097b-9dc7-440f-921e-5901f6258408)
@@ -187,7 +187,7 @@ HyperClOVA X 는 한국어와 영어 모두에 내재적 효율성을 위해 학
 
 ## 3.2. Comprehensive English LLM Benchmarks
 - **MMLU (Massive Multi-task Language Understanding)** : 5-shot
-- **BBH (BigBench-Hard)** : 3-shot
+- **BBH (BigBench-Hard)** : 200개 task 에 달하는 Bigbench 중 어려운 23개 task ㅁ나 모은 것으로 SOTA model 이 human performance 를 넘지 못한 것들만 모아놓은 벤치마크; 3-shot
 - **[AGILEval](https://arxiv.org/pdf/2304.06364.pdf)** : human-centric standardized
 exams, such as college entrance and lawyer qualification exam ; zero-shot
 - <span style='color:green;font-weight:bold'> Results </span>
@@ -198,14 +198,18 @@ exams, such as college entrance and lawyer qualification exam ; zero-shot
 
 
 ## 3.3. Commonsense Reasoning
-- **Hellaswag** : 5-shot
+- **Hellaswag** : 인간에게는 쉬운 commonsense reasoning 을 다루는 task; 5-shot
 - **Winogrande** : cloze-style pronoun resolution problem ; 5-shot
-- **PIQA**
-- **AI2 Reasoning (ARC)**
-- **CommonsenseQA (CSQA)**
+- **PIQA** : Physical Interaction Question Answering ; zero-shot
+- **AI2 Reasoning (ARC)** :  grade-school level question-answers in two (easy and challenging) varieties; 25-shot
+- **CommonsenseQA (CSQA)** : 5-shot
+- <span style='color:green;font-weight:bold'> Results </span>
 
-- 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/608af21e-8834-4d91-a19f-8d75c15cafd4)
+
+- <span style='background-color: #dcffe4'> WinoGrande 와 CSQA 에서 주목할만한 성능을 보인다. </span>
+<span style='background-color: #ffdce0'> 그러나 Mistral 의 further training 버전인 SOLAR 와 EEVE 가 Hellaswag 와 PIQA 에서는 더 좋은 성능을 보인다. </span>
+
 
 ## 3.4. World Knowledge and Factuality
 
