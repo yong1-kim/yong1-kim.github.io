@@ -235,6 +235,14 @@ cultural intelligence in the Korean language 를 평가하는 따끈따끈한 �
 - <span style='background-color: #dcffe4'> 더 어려운 MATH 에서도 20점을 넘겨, 대부분 15점 미만인 다른 LLM 보다 우수한 성능을 보인다. </span>
 
 ## 3.6. Coding Capabilities
+- **HumanEval**
+- **MBPP**
+- **K-HumanEval** : Clova 팀의 in-house dataset ; HumanEval dataset 을 기계 번역과 manual review 로 한국어로 만든 것
+- <span style='color:green;font-weight:bold'> Results </span>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/a1d7d0cc-886b-43e4-ae63-fe6f78c646c0)
+
+- <span style='background-color: #dcffe4'> 모든 데이터셋과 메트릭에서 앞서고, 특히 K-HumanEval 에서는 매우 압도적으로 좋은 성능을 보인다. </span>
 
 ## 3.7. Chat and Instruction-Following
 
