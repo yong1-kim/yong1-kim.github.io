@@ -245,10 +245,52 @@ cultural intelligence in the Korean language 를 평가하는 따끈따끈한 �
 - <span style='background-color: #dcffe4'> 모든 데이터셋과 메트릭에서 앞서고, 특히 K-HumanEval 에서는 매우 압도적으로 좋은 성능을 보인다. </span>
 
 ## 3.7. Chat and Instruction-Following
+- **MT-Bench** : writing, extraction, stem, coding 을 포함한 multi-turn query 구성된다.
+- **Ko-MT-Bench** : MT-Bench 를 한국어로 번역한 후, internal review 로 수정한다. “Start every sentence with the letter A.” 를 “모든 문장의 시작을 ‘하’로 해줘.” 등으로 수동으로 고친다.
+
+참고 : [LLM-as-a-judge](https://openreview.net/pdf?id=uccHPGDlao)
+
+- **SuperNatural Instruction (SuperNI)** : 119task - 10 instance per sample. 
+- **KoIF** : CLOVA 내부적으로 만든 한국어 instruction-following test set; 18개 dataset 에서 뽑아낸 32 task - 600 instance
+
+- <span style='color:green;font-weight:bold'> Results </span>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/51b11576-bf82-4f2e-a88e-2bce560e681f)
+
+- <span style='background-color: #dcffe4'> HyperCLOVA X 와 EEVE 10.8B 를 제외하고는 대부분의 open-source LLM 이 Ko-MT 에서 성능이 좋지 못하다. </span>
+- <span style='background-color: #dcffe4'> LLaMa2 의 경우, Question 이 한국어여도 98%의 경우 영어로 답하는 language confusion 이 있는데, judge LLM 이 이 mismatch 에 상관없이 평가한다. </span>
+
 
 ## 3.8. Harmlessness
+- **TruthfulQA** : 흔한 misconception 과 false belief 로 인해 잘못 답변할 만한 문제들을 모아놓은 벤치마크; 이 벤치마크로 Pretraining 시 인간이 만든 모text 를 학습하여 잘못 답변하는지 검사할 수 있다; multi-answer multiple-shoice question set 을 구성(mc2)
+- **Bias in Open-Ended Language Generation (BOLD)** : LM 의 generation result 에 있는 social bias 를 측정하는 benchmark; Gemini 의 open version 인 Gemma 에서 채택됨;
+
+- <span style='color:green;font-weight:bold'> Results </span>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/379213cc-c44b-485e-82a9-34f6d6262749)
+
+- <span style='background-color: #dcffe4'> 모델인 크면 클수록 높은 safety level 을 보인다. </span>
+- ※ 자세한 Harmlessenss 에 대한 분석은 뒤의 section 5 에 나온다. 
 
 ## 3.9. Comparison with Closed Source Models
+GPT-3.5, GPT-4, SOLAR API 세 개의 closed-source model 과 비교한다.
+Upstage社의 SOLAR 는 open-source 와 closed-source version 이 있는데 exact technical difference 는 unclear 하다.
+
+<span style='color:green;font-weight:bold'> Results </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/1ed9e82b-7c1e-4298-8a6f-b0d712f2e933)
+
+- <span style='background-color: #dcffe4'> 한국어에서는 비교불가의 압도적인 성능을 보인다. 이는 이미 KMMLU dataset (24년 2월)이 공개될 때 입증된 것이다.</span>
+- <span style='background-color: #dcffe4'> 영어에서는 GPT4와 competitive(?) 하다.(64.26 vs 53.51 로 조금 차이나는 것 같긴하다) 한국어-영어 bilingual user 에게는 67.39 vs 67.06 으로 GPT-4 와 거의 유사하게 사용할 수 있다고 주장한다. </span>
+
+<span style='color:green;font-weight:bold'> Detailed results on HAE-RAE Bench </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/572b1bb9-1155-45de-8d1e-8fa00f1e6416)
+
+- <span style='background-color: #dcffe4'> General Knowledge(GK) 를 제외한 나머지 모든 area 에서 압도적인 성능을 보인다.</span>
+
 
 ### 4. Multilinguality
 ## 4.1. Cross-Lingual Reasoning
