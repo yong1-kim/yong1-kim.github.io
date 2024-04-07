@@ -165,14 +165,47 @@ HyperClOVA X 는 한국어와 영어 모두에 내재적 효율성을 위해 학
 
 - (2) Closed-ended question-answering | candidate answer
 
+<span style='background-color: #dcffe4'> 모든 벤치마크의 전체적인 결과는 아래의 Figure 와 Table 에서 볼 수 있다.
+ </span>
+각각의 항목에 대해서는 차례대로 알아본다.
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/3cb80c2c-dffb-488e-ad0c-c23fa3f72067)
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/7cfa6e48-021d-4967-a079-7190efef4378)
 
 
 ## 3.1. Comprehensive Korean LLM Benchmarks
+- **KoBigBench(KBB)** : zero-shot
+- **KMMLU** : 5-shot
+- **HAE-RAE Bench** : zero-shot
+- <span style='color:green;font-weight:bold'> Results </span>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/244c097b-9dc7-440f-921e-5901f6258408)
+
+- <span style='background-color: #dcffe4'>한국어에 HCX 가 매우 강력하다 </span>
+- <span style='background-color: #dcffe4'> This underscores the assertion that for language and region-specific Large Language Models (LLMs) to be successful, the acquisition of large-scale, high-quality data from the target group is crucial. </span>
 
 ## 3.2. Comprehensive English LLM Benchmarks
+- **MMLU (Massive Multi-task Language Understanding)** : 5-shot
+- **BBH (BigBench-Hard)** : 3-shot
+- **[AGILEval](https://arxiv.org/pdf/2304.06364.pdf)** : human-centric standardized
+exams, such as college entrance and lawyer qualification exam ; zero-shot
+- <span style='color:green;font-weight:bold'> Results </span>
+
+위의 Table4 에 결과가 있다. (오른쪽 English)
+- <span style='background-color: #dcffe4'> 영어에서 LLaMA2 와 거의 유사한 성능을 보인다. </span>
+- <span style='background-color: #dcffe4'> CoT 와 Self-consistency 를 쓸 경우 HCX 는 70.79로 성능이 증가하지만, LLaMA2 70B 는 오히려 66.65 가 떨어진다. </span>
+
 
 ## 3.3. Commonsense Reasoning
+- **Hellaswag** : 5-shot
+- **Winogrande** : cloze-style pronoun resolution problem ; 5-shot
+- **PIQA**
+- **AI2 Reasoning (ARC)**
+- **CommonsenseQA (CSQA)**
+
+- 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/608af21e-8834-4d91-a19f-8d75c15cafd4)
 
 ## 3.4. World Knowledge and Factuality
 
