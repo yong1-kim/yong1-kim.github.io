@@ -210,10 +210,29 @@ exams, such as college entrance and lawyer qualification exam ; zero-shot
 - <span style='background-color: #dcffe4'> WinoGrande 와 CSQA 에서 주목할만한 성능을 보인다. </span>
 <span style='background-color: #ffdce0'> 그러나 Mistral 의 further training 버전인 SOLAR 와 EEVE 가 Hellaswag 와 PIQA 에서는 더 좋은 성능을 보인다. </span>
 
-
 ## 3.4. World Knowledge and Factuality
+- **Natural Question (NQ)** : open-ended fact-seeking questions; multiple candidate answer 중에서 하나를 선택; 5-shot
+- **TriviaQA** : 600K Question-Evidence-Answer triplet 의 large-scale Reading comprehension benchmark; <span style='background-color: #dcffe4'> 최근에는 Evidence 를 뺴고 inherent knowledge 를 평가하기 위해 Question-answer pair 만을 사용하는 경향이 있다 </span>;  
+- **[CLIcK](https://arxiv.org/pdf/2403.06412.pdf)** : linguistic and
+cultural intelligence in the Korean language 를 평가하는 따끈따끈한 벤치마크; zero-shot
+- **[Factscore](https://aclanthology.org/2023.emnlp-main.741.pdf)** : 한국어 Wikipedia 에 맞게 prompt 들을 조금 손보았다;
+- <span style='color:green;font-weight:bold'> Results </span>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/655f0128-e6fc-49ce-9b3a-72c6d1c678d2)
+
+- <span style='background-color: #ffdce0'> NQ 와 TriviaQA 는 서양 문화를 기반으로 collect 되었기 때문에 HyperCLOVA X 가 잘못한다. </span>
+- <span style='background-color: #ffdce0'> KORani 와 EEVE 는 각각 Mistral 과 LLaMA2 라는 영어 기반 모델을 further training 한 것이라 이 데이터셋을 잘 푼다. </span>
+- <span style='background-color: #dcffe4'> 반대로, LLaMA2 와 Polyglot LLM 은 한국어 문화에 대한 이해가 부족하지만, HyperCLOVA X 와 EEVE-Korean-V1 은 잘한다. </span>
 
 ## 3.5. Mathematics
+- **GSM8K** : 초등 수준의 수학 문제; 8-shot
+- **MATH** : 4-shot
+- <span style='color:green;font-weight:bold'> Results </span>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/4bfff4f6-d343-4b65-adbb-66f46ce2e527)
+
+- <span style='background-color: #dcffe4'> GSM8K 에서 80점을 넘겨 다른 LLM 보다 월등히 우수한 성능을 보인다. </span>
+- <span style='background-color: #dcffe4'> 더 어려운 MATH 에서도 20점을 넘겨, 대부분 15점 미만인 다른 LLM 보다 우수한 성능을 보인다. </span>
 
 ## 3.6. Coding Capabilities
 
