@@ -318,6 +318,35 @@ Asian Language 로 테스트한다.
 <span style='background-color: #dcffe4'> 역시 중국어(2등)를 제외한 나머지 언어에서 1등을 기록한다.</span>
 
 ## 4.3. Cross-lingual Transfer
+영어와 한국어 사이의 corss-lingual transferability 를 평가한다.
+하나의 언어에서 instruction-tuning 을 진행한 후, 다른 언어에서 instruction-following ability 를 실험한다.
+- **LIMA**
+- **OpenOrca**
+- Metric : ROUGE-L, LLM-as-a-judge (※ 자세한 내용은 논문 참조)
+
+<span style='color:green;font-weight:bold'> Impact of language ratio on instruction-tuning </span>
+<br>
+English only (1:0) 에서 Korean only (0:1) 까지 한국어의 비율을 늘려가며, instruction-tuning 의 language ratio 의 영향을 조사한다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/1694d35a-0915-4151-a5a3-6cbc892fd447)
+
+- <span style='background-color: #dcffe4'> Figure (a), (b) 에서처럼 적은 비율의 한국어 데이터셋을 instruction-tuning 학습해도 좋은 한국어에서의 성능을 보인다.(0.5% 한국어로 학습하고 나머지는 영어로해도, 전부 영어보다 Rouge-L 이 13점이나 높아졌다).</span>
+- <span style='background-color: #dcffe4'> Figure (c), (d) 처럼 train-test distribution 이 다를경우 noise 가 좀 보인다.</span>
+
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/b3c5173b-fcc8-4892-a219-f0700d7bcfd8)
+
+
+<span style='color:green;font-weight:bold'> Cross-lingual instruction-following </span>
+<br>
+- Baseline models : HCX-S, HCX-L< Mistral7B, Yi-Ko-6B
+- Metric
+
+- <span style='color:green;font-weight:bold'> Results </span>
+  
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/bf6f98fb-46ec-4081-a095-a6e0acaa2911)
+
+<span style='background-color: #dcffe4'> 전체적인 평균값이 HCX 가 제일 높고, language 의 type 과 ratio 에 관계없이 linguistic performance 를 유지한다. (Mistral 의 경우 한국어로 instruction-tuning 할 경우, 거의 수행능력이 없어진다 (Ko->En))</span>
 
 ### 5. Safe and Responsible AI
 
