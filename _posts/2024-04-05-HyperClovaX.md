@@ -349,18 +349,65 @@ English only (1:0) 에서 Korean only (0:1) 까지 한국어의 비율을 늘려
 <span style='background-color: #dcffe4'> 전체적인 평균값이 HCX 가 제일 높고, language 의 type 과 ratio 에 관계없이 linguistic performance 를 유지한다. (Mistral 의 경우 한국어로 instruction-tuning 할 경우, 거의 수행능력이 없어진다 (Ko->En))</span>
 
 ### 5. Safe and Responsible AI
-
 ## 5.1. HyperCLOVA X Ethics Principles
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/68a1d0ff-5dc1-4d84-a62b-f9314729d5b6)
 
 ## 5.2. Red Teaming and Safety Data Collection
 
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/24f9eea5-d4b4-4460-b356-0f3a36224bf0)
+
+Ethics Principle 외에도 “social issues and biases”, “illegal activities”, “sexual matters”, “professional advice” 와 같은 hazardous topic 들이 존재한다.
+이에 저자들은 <span style='background-color: #dcffe4'> harmlessness-helpfulness trade-off, role-playing, false premises, jailbreak 같은 attack method 를 활용하여 다양한 red teaming query 들을 모은다.</span>
+
+Data collection pipeline 은 위의 그림과 같다.
+Annotator 가 attack scenario 를 상정하고 질문을 하면, 여러 HCX 모델들이 답변을 한다.
+Annotator들은 이 답변들에 harmelessness score 와 overall score 등의 점수를 매긴다.
+이 답변들의 overall score 는 RHLF training 을 위한 ranking pair 로 구성된다.
+
+Scoring 이 끝났을 때, 점수가 완벽했던 답변이 없다면 Annotator 들이 sefe, helpful, correct 한 새로운 답변을 직접 작성한다.
+이 완벽한 답변은 SFT 데이터셋으로 활용된다.
+
 ## 5.3. Safety Evaluation
+한국어와 영어에 대해 평가가 이뤄지면, 대부분의 LLM 이 Alignment tuning 을 통해 harmlessness 를 학습하므로, open-source LLM 들을 baseline으로 하여 비교평가한다.
 
-# 5.3.1. Toxicity
+# 5.3.1. Toxicity 
 
+Toxicity 평가는 [Perspective API](https://perspectiveapi.com/) 로 진행한다.
+
+- **RealToxicPrompts (RTP) - ENGLISH**
+- **Korean Offensive Language Dataset (KOLD)**
+
+<span style='color:green;font-weight:bold'> Results </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/78fc08d1-bfd8-4440-991d-c1a0b0ff0d51)
+
+  
 # 5.3.2. Social Bias
 
+- **Bias Benchmark for Question Answering (BBQ)**
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/485f317f-5bf3-42fe-bd48-71e372831b81)
+
+- **Korean Bias Benchmark for Question Answering (KoBBQ)**
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/b3832e39-9eca-48a6-9c52-4bff9bf7023b)
+
+
 # 5.3.3. Human Evaluation
+
+Rem Teamer 의 Attack Success Rate (ASR) 와 human preference 로 human evaluation 을 진행한다.
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/723cc8ba-1c04-48b3-a82b-ecca6585dda6)
+
+<span style='background-color: #dcffe4'> HCX-S is safer than HCX-L , and the safety preference of HCX-S is on par with GPT-4 </span> (다른 safety 은 모델의 크기가 크면 클수록 좋다고 했는데 HCX-L 가 지는 이유는 모르겠다)
+
+<span style='color:green;font-weight:bold'> Attack Category </span>
+<br>
+
+![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/5e76c17a-aff0-4387-ada9-d638562c84cd)
+
 
 ### Conclusion
 ```
@@ -373,10 +420,3 @@ Moreover, the commitment to responsible AI development and deployment is manifes
 As future work, we intend to explore multimodality, aiming to broaden HyperCLOVA X’s capabilities to seamlessly process and integrate diverse types of data, such as text, images, and audio. Moreover, we are set to explore the efficacy of model quantization techniques, with the goal of optimizing HyperCLOVA X ’s inference without sacrificing its accuracy or the quality of the output. Additionally, we are actively researching the integration of external tools and APIs to augment the model’s functionalities. This will enable HyperCLOVA X to access specialized datasets and services, significantly enriching and enhancing the factuality of its responses. Our team is committed to integrating these innovative research topics with the existing and future services at NAVER and its subsidiaries as we strive to advance AI technologies that benefit humanity
 ```
 
-<span style='color:green;font-weight:bold'> 초록색볼드체 </span>
-<br>
-<span style='background-color: #dcffe4'> 초록색배경 </span>
-<span style='background-color: #ffdce0'> 빨간색배경 </span>
-
-<span style='color:green;font-weight:bold'> ▶ </span>
-<br>
