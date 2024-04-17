@@ -16,3 +16,12 @@ categories: [LLM, PLM]
 
 ## Abstract
 - 
+
+
+<span style='color:green;font-weight:bold'> 초록색볼드체 </span>
+<br>
+<span style='background-color: #dcffe4'> 초록색배경 </span>
+<span style='background-color: #ffdce0'> 빨간색배경 </span>
+
+<span style='color:green;font-weight:bold'> ▶ </span>
+<br>
