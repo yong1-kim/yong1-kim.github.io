@@ -15,7 +15,21 @@ categories: [LLM, PLM]
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/assets/42200027/02a7fabe-3a4c-4303-8fdb-17b6ee11d6a3)
 
 ## Abstract
-- 
+- (**Finetuning chat Language model**) ChatGPT 와 같은 chat language model 을 instruction data 를 통한 fine-tuning 하는 것은, diversity 와 quality 가 받춰줄 때 좋은 성능을 끌어올릴 수 있는 방법이다.
+- (<span style='color:green;font-weight:bold'> UltraChat </span>) Human query 를 포함하지 않은 large-scale instructional conversation 을 담고 있는 UltraChat 을 제안한다. 이 데이터셋은 scale, average length, diversity, coherence 등에서 우수성을 보인다.
+- (**UltraLM**) UltraChat 을 활용하여 LLaMA 를 finetuning 하여, UltraLM 을 만들었고, WizardLM 과 Vicuna 를 포함한 open-source model 보다 좋은 성능을 보인다.
+
+## 1. Introduction
+
+## 2. Related Work
+
+## 3. Data Construction
+
+## 4. Data Analysis
+
+## 5. Experiments
+
+## 6. Conclusion
 
 
 <span style='color:green;font-weight:bold'> 초록색볼드체 </span>
