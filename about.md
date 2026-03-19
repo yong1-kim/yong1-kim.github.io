@@ -5,10 +5,16 @@ permalink: /about/
 ---
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/blob/master/_image/profile_yongil_kim.jpg?raw=true) <br>
-I'm a Ph.D student advised by [Prof. Kyoming Jung](http://milab.snu.ac.kr/kjung/index.html) in [Machine Intelligence Laboratory](http://milab.snu.ac.kr) in ECE at Seoul National University.  
-I'm interested in Multimodal learning and Natural Language Processing, especially about (i) Vision-and-Language Learning and (ii) Dialogue system.
+I'm a researcher at **LG AI Research**, where I contribute to the development of [EXAONE](https://github.com/LG-AI-EXAONE), a frontier-level Korean large language model, with a focus on **long-context modeling**.
+I received my Ph.D. in Electrical and Computer Engineering from [Seoul National University](https://www.snu.ac.kr), advised by [Prof. Kyomin Jung](http://milab.snu.ac.kr/kjung/index.html) at [Machine Intelligence Laboratory](http://milab.snu.ac.kr).
+
+**Research Interests:**
+- Large Language Models & Long-context Modeling
+- Retrieval-Augmented Generation (RAG)
+- LLM Evaluation and Robustness
+- Dialogue and Interactive System
 
 [Google Scholar](https://scholar.google.com/citations?hl=en&user=QXZ2GEAAAAAJ) <br>
 [[CV]](https://github.com/yong1-kim/yong1-kim.github.io/blob/master/_data/CV_yongil_kim.pdf?raw=True)
 
-Email: miles94192@gmail.com &emsp; miles94@snu.ac.kr
+Email: yong-il.kim@lgresearch.ai

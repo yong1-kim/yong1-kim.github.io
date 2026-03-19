@@ -1,7 +1,127 @@
-[	
+[
+	{
+		"slug": "EACL2026-Findings",
+		"name": "Findings of EACL 2026",
+		"image": "placeholder.jpg",
+		"url": "https://arxiv.org/abs/2505.16222",
+		"date": "2026",
+		"tags": ["LLM Evaluation"]
+	},
+	{
+		"slug": "K-EXAONE",
+		"name": "K-EXAONE Technical Report",
+		"image": "placeholder.jpg",
+		"url": "https://arxiv.org/abs/2601.01739",
+		"date": "Jan 2026",
+		"tags": ["Large Language Model"]
+	},
+	{
+		"slug": "NeurIPS2025",
+		"name": "NeurIPS 2025",
+		"image": "placeholder.jpg",
+		"url": "https://arxiv.org/abs/2505.14489",
+		"date": "Dec 2025",
+		"tags": ["LLM Evaluation"]
+	},
+	{
+		"slug": "EMNLP2025",
+		"name": "EMNLP 2025",
+		"image": "placeholder.jpg",
+		"url": "https://arxiv.org/abs/2505.15249",
+		"date": "Nov 2025",
+		"tags": ["LLM Evaluation"]
+	},
+	{
+		"slug": "EMNLP2025-Findings-Trick",
+		"name": "Findings of EMNLP 2025",
+		"image": "placeholder.jpg",
+		"url": "https://arxiv.org/abs/2508.07805",
+		"date": "Nov 2025",
+		"tags": ["LLM Evaluation"]
+	},
+	{
+		"slug": "EMNLP2025-Findings-KoLongRAG",
+		"name": "Findings of EMNLP 2025",
+		"image": "placeholder.jpg",
+		"url": "https://aclanthology.org/2025.findings-emnlp.938/",
+		"date": "Nov 2025",
+		"tags": ["RAG"]
+	},
+	{
+		"slug": "EXAONE4",
+		"name": "EXAONE 4.0 Technical Report",
+		"image": "placeholder.jpg",
+		"url": "https://arxiv.org/abs/2507.11407",
+		"date": "Jul 2025",
+		"tags": ["Large Language Model"]
+	},
+	{
+		"slug": "ACL2025",
+		"name": "ACL 2025",
+		"image": "placeholder.jpg",
+		"url": "#",
+		"date": "Jul 2025",
+		"tags": ["LLM Evaluation"]
+	},
+	{
+		"slug": "NAACL2025",
+		"name": "NAACL 2025 (Oral)",
+		"image": "placeholder.jpg",
+		"url": "#",
+		"date": "Apr 2025",
+		"tags": ["LLM Evaluation"]
+	},
+	{
+		"slug": "NAACL2025-Findings",
+		"name": "Findings of NAACL 2025",
+		"image": "placeholder.jpg",
+		"url": "#",
+		"date": "Apr 2025",
+		"tags": ["Large Language Model"]
+	},
+	{
+		"slug": "EXAONE-Deep",
+		"name": "EXAONE Deep Technical Report",
+		"image": "placeholder.jpg",
+		"url": "https://arxiv.org/abs/2503.12524",
+		"date": "Mar 2025",
+		"tags": ["Large Language Model"]
+	},
+	{
+		"slug": "EXAONE35",
+		"name": "EXAONE 3.5 Technical Report",
+		"image": "placeholder.jpg",
+		"url": "https://arxiv.org/abs/2412.04862",
+		"date": "Dec 2024",
+		"tags": ["Large Language Model"]
+	},
+	{
+		"slug": "EMNLP2024",
+		"name": "EMNLP 2024",
+		"image": "placeholder.jpg",
+		"url": "#",
+		"date": "Nov 2024",
+		"tags": ["Dialog System"]
+	},
+	{
+		"slug": "IEEEAccess2024",
+		"name": "IEEE Access 2024",
+		"image": "placeholder.jpg",
+		"url": "#",
+		"date": "Jun 2024",
+		"tags": ["Dialog System"]
+	},
+	{
+		"slug": "LREC-COLING2024",
+		"name": "LREC-COLING 2024",
+		"image": "placeholder.jpg",
+		"url": "#",
+		"date": "May 2024",
+		"tags": ["NLP"]
+	},
 	{
 		"slug": "EMNLP2023",
-		"name": "EMNLP2023",
+		"name": "EMNLP 2023",
 		"image": "Dialogizer.jpg",
 		"url": "#",
 		"date": "Dec 2023",
@@ -9,7 +129,7 @@
 	},
 	{
 		"slug": "EMNLP2023-Findings",
-		"name": "EMNLP2023-Findings",
+		"name": "Findings of EMNLP 2023",
 		"image": "PRMCS.jpg",
 		"url": "#",
 		"date": "Dec 2023",
@@ -17,7 +137,7 @@
 	},
 	{
 		"slug": "ACL2023-Findings",
-		"name": "ACL2023-Findings",
+		"name": "Findings of ACL 2023",
 		"image": "CBA.jpg",
 		"url": "#",
 		"date": "Jul 2023",
@@ -25,7 +145,7 @@
 	},
 	{
 		"slug": "NeurIPS2022",
-		"name": "NeurIPS2022-Workshop",
+		"name": "NeurIPS 2022 Workshop",
 		"image": "NeurIPS2022.jpg",
 		"url": "#",
 		"date": "Dec 2022",
@@ -33,25 +153,17 @@
 	},
 	{
 		"slug": "LREC2022",
-		"name": "LREC2022",
+		"name": "LREC 2022 (Oral)",
 		"image": "LREC2022.jpg",
 		"url": "#",
 		"date": "Jun 2022",
 		"tags": ["Vision-and-Language Learning"]
 	},
 	{
-		"slug": "Project_NIA",
-		"name": "Project_NIA",
-		"image": "NIA.jpg",
-		"url": "#",
-		"date": "Dec 2021",
-		"tags": ["Project"]
-	},
-	{
 		"slug": "IEEEAccess2021",
-		"name": "IEEEAccess2021",
+		"name": "IEEE Access 2021",
 		"image": "IEEE2021.jpg",
-		"url": "https://www.google.com", 
+		"url": "#",
 		"date": "Feb 2021",
 		"tags": ["Computer Vision"]
 	}
