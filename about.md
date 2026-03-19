@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Yongil Miles Kim
+title: Yongil Kim
 permalink: /about/
 ---
 

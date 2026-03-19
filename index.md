@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Yongil Miles Kim
+title: Yongil Kim
 ---
 
 ![image](https://github.com/yong1-kim/yong1-kim.github.io/blob/master/_image/profile_yongil_kim.jpg?raw=true) <br>
