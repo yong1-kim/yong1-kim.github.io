@@ -1,7 +1,7 @@
 [
 	{
 		"slug": "EACL2026-Findings",
-		"name": "Findings of EACL 2026 - LLM Judge Bias in Code Evaluation",
+		"name": "Findings of EACL 2026",
 		"image": "placeholder.jpg",
 		"url": "https://arxiv.org/abs/2505.16222",
 		"date": "2026",
@@ -9,7 +9,7 @@
 	},
 	{
 		"slug": "K-EXAONE",
-		"name": "K-EXAONE Technical Report - Frontier-Level MoE LLM",
+		"name": "K-EXAONE TR",
 		"image": "placeholder.jpg",
 		"url": "https://arxiv.org/abs/2601.01739",
 		"date": "Jan 2026",
@@ -17,7 +17,7 @@
 	},
 	{
 		"slug": "NeurIPS2025",
-		"name": "NeurIPS 2025 - Confidence Calibration in Reasoning Models",
+		"name": "NeurIPS 2025",
 		"image": "placeholder.jpg",
 		"url": "https://arxiv.org/abs/2505.14489",
 		"date": "Dec 2025",
@@ -25,7 +25,7 @@
 	},
 	{
 		"slug": "EMNLP2025",
-		"name": "EMNLP 2025 - Visual Biases in LVLM Judges",
+		"name": "EMNLP 2025",
 		"image": "placeholder.jpg",
 		"url": "https://arxiv.org/abs/2505.15249",
 		"date": "Nov 2025",
@@ -33,7 +33,7 @@
 	},
 	{
 		"slug": "EMNLP2025-Findings-Trick",
-		"name": "Findings of EMNLP 2025 - Adversarial Persuasion of LLM Judges",
+		"name": "Findings of EMNLP 2025 (1)",
 		"image": "placeholder.jpg",
 		"url": "https://arxiv.org/abs/2508.07805",
 		"date": "Nov 2025",
@@ -41,7 +41,7 @@
 	},
 	{
 		"slug": "EMNLP2025-Findings-KoLongRAG",
-		"name": "Findings of EMNLP 2025 - Ko-LongRAG: Korean Long-Context RAG Benchmark",
+		"name": "Findings of EMNLP 2025 (2)",
 		"image": "placeholder.jpg",
 		"url": "https://aclanthology.org/2025.findings-emnlp.938/",
 		"date": "Nov 2025",
@@ -49,7 +49,7 @@
 	},
 	{
 		"slug": "EXAONE4",
-		"name": "EXAONE 4.0 Technical Report - Unified Reasoning & Non-Reasoning LLM",
+		"name": "EXAONE 4.0 TR",
 		"image": "placeholder.jpg",
 		"url": "https://arxiv.org/abs/2507.11407",
 		"date": "Jul 2025",
@@ -57,7 +57,7 @@
 	},
 	{
 		"slug": "ACL2025",
-		"name": "ACL 2025 - Instructional Distractions in LLMs",
+		"name": "ACL 2025",
 		"image": "placeholder.jpg",
 		"url": "#",
 		"date": "Jul 2025",
@@ -65,7 +65,7 @@
 	},
 	{
 		"slug": "NAACL2025",
-		"name": "NAACL 2025 (Oral) - Epistemic Markers in LLM-based Evaluation",
+		"name": "NAACL 2025 (Oral)",
 		"image": "placeholder.jpg",
 		"url": "#",
 		"date": "Apr 2025",
@@ -73,7 +73,7 @@
 	},
 	{
 		"slug": "NAACL2025-Findings",
-		"name": "Findings of NAACL 2025 - SWITCH: Knowledge Distillation for LLMs",
+		"name": "Findings of NAACL 2025",
 		"image": "placeholder.jpg",
 		"url": "#",
 		"date": "Apr 2025",
@@ -81,7 +81,7 @@
 	},
 	{
 		"slug": "EXAONE-Deep",
-		"name": "EXAONE Deep Technical Report - Reasoning Enhanced LLM",
+		"name": "EXAONE Deep TR",
 		"image": "placeholder.jpg",
 		"url": "https://arxiv.org/abs/2503.12524",
 		"date": "Mar 2025",
@@ -89,7 +89,7 @@
 	},
 	{
 		"slug": "EXAONE35",
-		"name": "EXAONE 3.5 Technical Report - Real-world LLM Series",
+		"name": "EXAONE 3.5 TR",
 		"image": "placeholder.jpg",
 		"url": "https://arxiv.org/abs/2412.04862",
 		"date": "Dec 2024",
@@ -97,7 +97,7 @@
 	},
 	{
 		"slug": "EMNLP2024",
-		"name": "EMNLP 2024 - MP2D: Topic Shift Dialogue via Knowledge Graphs",
+		"name": "EMNLP 2024",
 		"image": "placeholder.jpg",
 		"url": "#",
 		"date": "Nov 2024",
@@ -105,7 +105,7 @@
 	},
 	{
 		"slug": "IEEEAccess2024",
-		"name": "IEEE Access 2024 - Flowlogue: Synthetic Dialogue Generation",
+		"name": "IEEE Access 2024",
 		"image": "placeholder.jpg",
 		"url": "#",
 		"date": "Jun 2024",
@@ -113,7 +113,7 @@
 	},
 	{
 		"slug": "LREC-COLING2024",
-		"name": "LREC-COLING 2024 - Kosmic: Korean Text Similarity with Honorifics",
+		"name": "LREC-COLING 2024",
 		"image": "placeholder.jpg",
 		"url": "#",
 		"date": "May 2024",
@@ -121,7 +121,7 @@
 	},
 	{
 		"slug": "EMNLP2023",
-		"name": "EMNLP 2023 - Dialogizer: Conversational-QA Generation",
+		"name": "EMNLP 2023",
 		"image": "Dialogizer.jpg",
 		"url": "#",
 		"date": "Dec 2023",
@@ -129,7 +129,7 @@
 	},
 	{
 		"slug": "EMNLP2023-Findings",
-		"name": "Findings of EMNLP 2023 - PR-MCS: Multilingual Image Captioning Metric",
+		"name": "Findings of EMNLP 2023",
 		"image": "PRMCS.jpg",
 		"url": "#",
 		"date": "Dec 2023",
@@ -137,7 +137,7 @@
 	},
 	{
 		"slug": "ACL2023-Findings",
-		"name": "Findings of ACL 2023 - Comparison Skills in Task-Oriented Dialogue",
+		"name": "Findings of ACL 2023",
 		"image": "CBA.jpg",
 		"url": "#",
 		"date": "Jul 2023",
@@ -145,7 +145,7 @@
 	},
 	{
 		"slug": "NeurIPS2022",
-		"name": "NeurIPS 2022 Workshop - Cross-Modal Attention via Object Detection",
+		"name": "NeurIPS 2022 Workshop",
 		"image": "NeurIPS2022.jpg",
 		"url": "#",
 		"date": "Dec 2022",
@@ -153,7 +153,7 @@
 	},
 	{
 		"slug": "LREC2022",
-		"name": "LREC 2022 (Oral) - Modality Alignment for Video-Language Learning",
+		"name": "LREC 2022 (Oral)",
 		"image": "LREC2022.jpg",
 		"url": "#",
 		"date": "Jun 2022",
@@ -161,7 +161,7 @@
 	},
 	{
 		"slug": "IEEEAccess2021",
-		"name": "IEEE Access 2021 - Pairwise Context Similarity for Image Retrieval",
+		"name": "IEEE Access 2021",
 		"image": "IEEE2021.jpg",
 		"url": "#",
 		"date": "Feb 2021",
